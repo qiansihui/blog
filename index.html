@@ -99,7 +99,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cjcvth8ch001li0tpaqqtw8w4" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cjcvtjw9v001w7wtpr02sq305" class="article-share-link">Share</a>
       
       
       
@@ -144,7 +144,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cjcvth8a00002i0tpcztbqzaq" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cjcvtjw7h00057wtp067ulpp0" class="article-share-link">Share</a>
       
       
       
@@ -180,65 +180,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- Table of Contents -->
+        <img src="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/符号表的各种实现优缺点.png">
         
+          <p class="article-more-link">
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/#more">继续阅读全文 »</a>
+          </p>
         
-<a id="more"></a>
-<h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><p>符号表：描述一张抽象的表格，信息存储其中，按照键值搜索获取。又称字典、索引。</p>
-<h2 id="有序数组中的二分查找"><a href="#有序数组中的二分查找" class="headerlink" title="有序数组中的二分查找"></a>有序数组中的二分查找</h2><p>她使用的数据结构是一对平行数组，一个存储键一个存储值。键数组有序，可通过二分查找高效查找。但put操作需要将比它大的元素后移一位。同时要维护数组长度。  </p>
-<p>在N个键的有序数组中进行二分查找最多需要<code>(lgN+1)</code>次比较。  </p>
-<p>核心问题在于我们能否找到同时保证查找和插入操作都是对数级别的算法和数据结构。需要一种链式结构。  </p>
-<h2 id="二叉查找树-BST"><a href="#二叉查找树-BST" class="headerlink" title="二叉查找树 BST"></a>二叉查找树 BST</h2><p>一颗二叉查找树是一颗二叉树，其中每个节点都含有一个键以及相关联的值，且每个节点的键都大于其左子树中的任意节点的键而小于右子树的任意节点。  </p>
-<p>使用二叉查找树的算法的运行时间取决于树的形状，而树的形状又取决于被插入的先后顺序。最好情况下N节点树平衡，每个空节点和根节点距离都为 lgN  </p>
-<p>二叉查找树得以广泛的应用的一个重要原因就是她能够保持键的有序性。  </p>
-<p>性能与树的高度成正比。  </p>
-<h2 id="平衡二叉查找树（红黑树RedBlackBST）"><a href="#平衡二叉查找树（红黑树RedBlackBST）" class="headerlink" title="平衡二叉查找树（红黑树RedBlackBST）"></a>平衡二叉查找树（红黑树RedBlackBST）</h2><p>树的高度始终 ~lgN 。<br>用标准的二叉查找树和一些额外的信息来表示2-3树。<br>链接分为两种类型：红链接将两个2-结点连接起来构成一个3-节点，黑链接则是2-3中的普通链接。<br>优点是无需修改就可以直接使用标准二叉查找树的get()方法。<br>能够将二叉查找树中简洁高效的查找方法和2-3树中高效的平衡插入算法。</p>
-<p>红黑树定义，含有红黑链接并满足以下条件的二叉查找数：  </p>
-<ol>
-<li>红链接均为左链接</li>
-<li>灭有任何一个节点同时和两条红链接相连</li>
-<li>该树是完美黑色平衡的，及任意空连接到根节点的路径上的黑连接数量相同。  </li>
-</ol>
-<p>左旋转：<br>有一条红色的右链接需要被转化为左链接。</p>
-<p>向单个2-结点插入新键：<br>一颗含有一个键的红黑树只含有一个2-结点。插入另一个键后，需要将他们旋转。如果新键小于老键，只需新增一个红色结点，新红黑树和单个3-结点完全等价。如果新键大于老键，那么新增的红色节点将会产生一条红色的右链接。需要用左旋转并修正根结点的链接。</p>
-<p>向一颗双键树即一个3-结点中插入新键：（产生两条连续红链接的情况）    </p>
-<ol>
-<li>新键大于原树中两个键，因此她被连接到3-结点的右链接。</li>
-<li>新键小于原树中两个键，被连接到最左边的空链接，长生了两条连续的红链接。只需将上层的红链接右旋转即可得到 1 的情况。</li>
-<li>新键介于原树两键之间，会产生两条连续红链接，一条红色左链接一条红色右链接。先将红色右链接左旋转得到 2 的情况，再重复2的右旋转得到1的情况。  </li>
-</ol>
-<p>以上分别通过0次、1次、2次旋转得到一个 根节点在中间，左右链接都是红链接的情况。</p>
-<p>颜色转换：<br>转换一个结点的两个红色子节点的颜色由红变黑，同时将父节点的颜色由黑变红。</p>
-<p>根节点总是黑色：<br>每次插入后将根节点设为黑色。每次根节点由红变黑时树的黑链接高度加1  </p>
-<p>规则：  </p>
-<ol>
-<li>若右子节点是红色的而左子节点是黑色的，进行左旋转。</li>
-<li>若左子结点是红色的且它的左子节点也为红色，右旋转。</li>
-<li>若左右子节点均为红色，进行颜色转换。</li>
-</ol>
-<p>红黑树的性质：  </p>
-<p>所有基于红黑树的符号表实现都能保证操作的运行时间为对数级别。<br>无论插入顺序如何，红黑树都几乎完美平衡。<br>一颗大小为N的红黑树高度不会超过2lgN。  </p>
-<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>获取索引：<br>用算术操作将键转化为数组的索引来访问数组中的键值对。  </p>
-<p>查找算法分为两步：  </p>
-<ol>
-<li>用散列函数将查找的键转化为数组的一个索引。</li>
-<li>处理碰撞冲突。两种解决方法：拉链法和线性探测法。  </li>
-</ol>
-<p>散列函数:<br>为一个数据类型实现一个优秀的散列方法需要满足三个条件，一致性，高效性，均匀性。</p>
-<p>拉链法：<br>将数组中每个元素指向一条链表，链表中的每个节点都存储了散列值为该元素的索引的键值对。</p>
-<p> 线性探测法：<br>用大小为M的数组保存N个键值对，依靠数组中的空位解决碰撞冲突。开放地址散列表中最简单方法叫做线性探测法。<br>当碰撞发生时，直接检查散列表中的下一个位置，达到结尾时折回开头，知道找到该键或遇到一个空元素。<br>删除操作：需要将簇中被删除键的右侧所有键重新插入散列表。  </p>
-<p>散列表能够支持数组大小无关的常数级别的查找和插入操作是可能的。但：</p>
-<ol>
-<li>每种类型的键都需要一个优秀的散列函数；</li>
-<li>性能保证来自于散列函数的质量</li>
-<li>散列函数的计算可能复杂且昂贵</li>
-<li>难以支持有序性相关的符号表操作。</li>
-</ol>
-
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjcvth8ai0006i0tp01nyt0zf" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjcvtjw7500027wtpokok4y9i" class="article-share-link">Share</a>
       
       
       
@@ -283,7 +234,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" data-id="cjcvth8a50004i0tp7savfj3x" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" data-id="cjcvtjw7a00047wtp5jbsdqfz" class="article-share-link">Share</a>
       
       
       
@@ -328,7 +279,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/" data-id="cjcvth89r0001i0tpjc85wlby" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/" data-id="cjcvtjw6x00017wtpwmty04h0" class="article-share-link">Share</a>
       
       
       
@@ -373,7 +324,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-05/" data-id="cjcvth8bd000ti0tph95nwta6" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-05/" data-id="cjcvtjw9a001f7wtpmweew5vd" class="article-share-link">Share</a>
       
       
       
@@ -418,7 +369,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjcvth8bb000ri0tp7bilythh" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjcvtjw9200187wtphjl5u3dq" class="article-share-link">Share</a>
       
       
       
@@ -463,7 +414,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjcvth8b9000oi0tpwb7se9op" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjcvtjw9000157wtplqjxbr7r" class="article-share-link">Share</a>
       
       
       
@@ -508,7 +459,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-02/" data-id="cjcvth8b1000fi0tpbl4t363x" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-02/" data-id="cjcvtjw8y00137wtpcu1wa66t" class="article-share-link">Share</a>
       
       
       
@@ -553,7 +504,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/" data-id="cjcvth8b4000ji0tpw3pgmmz9" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/" data-id="cjcvtjw93001a7wtpj40049q4" class="article-share-link">Share</a>
       
       
       
