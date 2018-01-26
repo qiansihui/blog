@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>C++  14 重载操作符与转换 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="重载操作符Cat.h1234567891011121314151617#pragma once#include &amp;lt;string&amp;gt;#include &amp;lt;iostream&amp;gt;using std::string; using std::ostream; using std::istream;class Cat &amp;#123;public:	Cat() &amp;#123;&amp;#125;	Cat(">
+<meta name="keywords" content="cpp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++  14 重载操作符与转换">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-14-operator/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="重载操作符Cat.h1234567891011121314151617#pragma once#include &amp;lt;string&amp;gt;#include &amp;lt;iostream&amp;gt;using std::string; using std::ostream; using std::istream;class Cat &amp;#123;public:	Cat() &amp;#123;&amp;#125;	Cat(">
+<meta property="og:updated_time" content="2018-01-26T06:50:10.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++  14 重载操作符与转换">
+<meta name="twitter:description" content="重载操作符Cat.h1234567891011121314151617#pragma once#include &amp;lt;string&amp;gt;#include &amp;lt;iostream&amp;gt;using std::string; using std::ostream; using std::istream;class Cat &amp;#123;public:	Cat() &amp;#123;&amp;#125;	Cat(">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-cpp-2018-01-26-cpp-14-operator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-14-operator/" class="article-date">
+  <time datetime="2018-01-26T06:33:22.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++  14 重载操作符与转换
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="重载操作符"><a href="#重载操作符" class="headerlink" title="重载操作符"></a>重载操作符</h1><p>Cat.h<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>; <span class="keyword">using</span> <span class="built_in">std</span>::ostream; <span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Cat() &#123;&#125;</span><br><span class="line">	Cat(<span class="built_in">string</span> name) :name(name) &#123;&#125;;</span><br><span class="line">	<span class="comment">// 重载输入、输出操作符</span></span><br><span class="line">	<span class="comment">// 若供外部使用，写非成员函数的样子 添加友元</span></span><br><span class="line">	<span class="comment">// 成员函数的写法只要一个左操作符参数</span></span><br><span class="line">	<span class="keyword">friend</span>	ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; out, Cat&amp; cat);</span><br><span class="line">	<span class="keyword">friend</span>	istream&amp; <span class="keyword">operator</span>&gt;&gt;(istream&amp; in , Cat&amp; cat);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">string</span> name;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>Cat.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Cat.h"</span></span></span><br><span class="line"></span><br><span class="line">ostream &amp; <span class="keyword">operator</span>&lt;&lt;(ostream &amp; out, Cat &amp; cat)</span><br><span class="line">&#123;</span><br><span class="line">	out &lt;&lt; cat.name;</span><br><span class="line">	<span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">istream &amp; <span class="keyword">operator</span> &gt;&gt; (istream &amp; in, Cat &amp; cat)</span><br><span class="line">&#123;</span><br><span class="line">	in &gt;&gt; cat.name;</span><br><span class="line">	<span class="keyword">return</span> in;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重载函数的使用 main.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Cat.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Cat cat ;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; cat; <span class="comment">// 输入</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; cat &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 输出</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="算术操作符重载"><a href="#算术操作符重载" class="headerlink" title="算术操作符重载"></a>算术操作符重载</h1><p>Book.h </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>; <span class="keyword">using</span> <span class="built_in">std</span>::ostream; <span class="keyword">using</span> <span class="built_in">std</span>::istream;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Book(<span class="keyword">const</span> Book&amp; b) &#123; name = b.name; count = b.count; &#125;</span><br><span class="line">	Book(<span class="built_in">string</span> name, <span class="keyword">int</span> count) :name(name), count(count) &#123;&#125;</span><br><span class="line">	<span class="keyword">friend</span> Book <span class="keyword">operator</span>+(<span class="keyword">const</span> Book&amp; lb, <span class="keyword">const</span> Book&amp; rb);</span><br><span class="line">	<span class="keyword">friend</span> <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Book&amp; lb, <span class="keyword">const</span> Book&amp; rb);</span><br><span class="line">	<span class="keyword">friend</span>	ostream&amp; <span class="keyword">operator</span>&lt;&lt;(ostream&amp; out, Book&amp; b);</span><br><span class="line">	Book <span class="keyword">operator</span>+=(<span class="keyword">const</span> Book&amp;rb);</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">string</span> name;</span><br><span class="line">	<span class="keyword">int</span> count; <span class="comment">// 数量</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Book <span class="keyword">operator</span>+(<span class="keyword">const</span> Book &amp; lb, <span class="keyword">const</span> Book &amp; rb)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="function">Book <span class="title">b</span><span class="params">(lb)</span></span>;</span><br><span class="line">	b += rb;</span><br><span class="line">	<span class="keyword">return</span> b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Book Book::<span class="keyword">operator</span>+=(<span class="keyword">const</span> Book &amp; rb)</span><br><span class="line">&#123;</span><br><span class="line">	count += rb.count;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> Book &amp; lb, <span class="keyword">const</span> Book &amp; rb)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> lb.name == rb.name &amp;&amp; lb.count == rb.count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ostream &amp; <span class="keyword">operator</span>&lt;&lt;(ostream &amp; out, Book &amp; b)</span><br><span class="line">&#123;</span><br><span class="line">	out &lt;&lt; <span class="string">"name:"</span> &lt;&lt; b.name &lt;&lt; <span class="string">"，count:"</span> &lt;&lt; b.count ;</span><br><span class="line">	<span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>算术符号重载后的使用</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Book.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">Book <span class="title">b1</span><span class="params">(<span class="string">"piao"</span>, <span class="number">1</span>)</span></span>;</span><br><span class="line">	<span class="function">Book <span class="title">b2</span><span class="params">(<span class="string">"piao"</span>, <span class="number">2</span>)</span></span>;</span><br><span class="line">	Book b3 = b1 + b2;</span><br><span class="line">	<span class="function">Book <span class="title">b4</span><span class="params">(<span class="string">"piao"</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line">	<span class="keyword">bool</span> is = b3 == b4;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"重载加号，数量想加后为："</span> &lt;&lt; b3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"重载相等符号，b3 == b4："</span> &lt;&lt; is &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="下标操作费、成员访问操作符"><a href="#下标操作费、成员访问操作符" class="headerlink" title="下标操作费、成员访问操作符"></a>下标操作费、成员访问操作符</h1><p>下标操作符重载示例</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">int</span> &amp;<span class="keyword">operator</span>[](<span class="keyword">const</span> <span class="keyword">size_t</span>);</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> &amp;<span class="keyword">operator</span>[](<span class="keyword">const</span> <span class="keyword">size_t</span>) <span class="keyword">const</span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; data;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> &amp; Foo::<span class="keyword">operator</span>[](<span class="keyword">const</span> <span class="keyword">size_t</span> index)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> data[index];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">const</span> <span class="keyword">int</span> &amp; Foo::<span class="keyword">operator</span>[](<span class="keyword">const</span> <span class="keyword">size_t</span> index) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> data[index];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用解引用操作符与箭头符号重载，构建智能指针</p>
+<p>指针计数类 ScrPtr.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ScreenPtr.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Screen.h"</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScrPtr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="comment">// 指针计数类</span></span><br><span class="line">	<span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">ScreenPtr</span>;</span></span><br><span class="line">	Screen *sp;</span><br><span class="line">	<span class="keyword">size_t</span> use;</span><br><span class="line">	ScrPtr(Screen *p) :sp(p), use(<span class="number">1</span>) &#123;&#125;;</span><br><span class="line">	~ScrPtr();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ScrPtr::~ScrPtr()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">delete</span> sp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>指针封装对象 ScreenPtr.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Screen.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ScrPtr.h"</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ScreenPtr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	ScreenPtr(Screen *p) :ptr(<span class="keyword">new</span> ScrPtr(p)) &#123;&#125;</span><br><span class="line">	ScreenPtr(<span class="keyword">const</span> ScreenPtr&amp; o) :ptr(o.ptr) &#123; ++ptr-&gt;use; &#125;</span><br><span class="line">	~ScreenPtr() &#123;</span><br><span class="line">		<span class="comment">// 若指针计数为0 则删除</span></span><br><span class="line">		<span class="keyword">if</span> (--ptr-&gt;use == <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">delete</span> ptr;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="comment">// 重载解引用操作符 返回安全指针</span></span><br><span class="line">	Screen &amp;<span class="keyword">operator</span>*() &#123; <span class="keyword">return</span> *ptr-&gt;sp; &#125;</span><br><span class="line">	<span class="comment">// 重载箭头操作符 -&gt;右操作数不是表达式，是对应类成员的标识符</span></span><br><span class="line">	Screen *<span class="keyword">operator</span>-&gt;() &#123; <span class="keyword">return</span> ptr-&gt;sp; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	ScrPtr *ptr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-14-operator/" data-id="cjcvkkd6u000lmotpqlh2a83i" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-13-copy-control/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">C++ 13 复制控制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/c/" style="font-size: 15px;">c</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-14-operator/">C++  14 重载操作符与转换</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-13-copy-control/">C++ 13 复制控制</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-12-class/">C++ 12 类</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-11-iterator/">C++  11 泛型算法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-10-map/">C++  10 关联容器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 qianqian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

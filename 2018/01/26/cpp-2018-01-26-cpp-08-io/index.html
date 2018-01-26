@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>C++  08 标准IO库 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="特点 IO对象不可复制或赋值 ifstream 由 istream 派生，提供读文件功能。 ofstream 由 ostream 派生，提供写文件功能。 fstream 由 iostream 派生，读写同一个文件。  流状态查询控制1234567891011121314151617181920212223242526272829#include &amp;lt;iostream&amp;gt;#include &amp;">
+<meta name="keywords" content="cpp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++  08 标准IO库">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-08-io/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="特点 IO对象不可复制或赋值 ifstream 由 istream 派生，提供读文件功能。 ofstream 由 ostream 派生，提供写文件功能。 fstream 由 iostream 派生，读写同一个文件。  流状态查询控制1234567891011121314151617181920212223242526272829#include &amp;lt;iostream&amp;gt;#include &amp;">
+<meta property="og:updated_time" content="2018-01-26T06:44:57.197Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++  08 标准IO库">
+<meta name="twitter:description" content="特点 IO对象不可复制或赋值 ifstream 由 istream 派生，提供读文件功能。 ofstream 由 ostream 派生，提供写文件功能。 fstream 由 iostream 派生，读写同一个文件。  流状态查询控制1234567891011121314151617181920212223242526272829#include &amp;lt;iostream&amp;gt;#include &amp;">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-cpp-2018-01-26-cpp-08-io" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-08-io/" class="article-date">
+  <time datetime="2018-01-26T06:30:27.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++  08 标准IO库
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ol>
+<li>IO对象不可复制或赋值</li>
+<li>ifstream 由 istream 派生，提供读文件功能。</li>
+<li>ofstream 由 ostream 派生，提供写文件功能。</li>
+<li>fstream 由 iostream 派生，读写同一个文件。</li>
+</ol>
+<h2 id="流状态查询控制"><a href="#流状态查询控制" class="headerlink" title="流状态查询控制"></a>流状态查询控制</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> ival;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span> &gt;&gt; ival, !<span class="built_in">cin</span>.eof())  <span class="comment">// 输入输出绑定 cout关联缓冲区被刷新</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">cin</span>.bad()) <span class="keyword">throw</span> <span class="built_in">std</span>::runtime_error(<span class="string">"IO stream corrupted"</span>); <span class="comment">// 流状态检查</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">cin</span>.fail()) &#123;</span><br><span class="line">			<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"bad data , try again"</span>;</span><br><span class="line">			<span class="built_in">cin</span>.clear(<span class="built_in">std</span>::istream::failbit);<span class="comment">// 重置输入流</span></span><br><span class="line">			<span class="built_in">std</span>::istream::iostate old_state = <span class="built_in">cin</span>.rdstate(); <span class="comment">// 流当前整个条件状态</span></span><br><span class="line">			<span class="built_in">cin</span>.clear(old_state);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"ok,"</span> &lt;&lt; ival &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"hi"</span> &lt;&lt; <span class="built_in">std</span>::flush; <span class="comment">// 刷新 无添加</span></span><br><span class="line">	    <span class="built_in">cout</span> &lt;&lt; <span class="string">"hi"</span> &lt;&lt; <span class="built_in">std</span>::ends;  <span class="comment">// 刷新 添加null</span></span><br><span class="line">    	<span class="built_in">cout</span> &lt;&lt; <span class="string">"hi"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;  <span class="comment">// 刷新 添加换行</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文件流对象使用"><a href="#文件流对象使用" class="headerlink" title="文件流对象使用"></a>文件流对象使用</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::ifstream; <span class="keyword">using</span> <span class="built_in">std</span>::ofstream; <span class="keyword">using</span> <span class="built_in">std</span>::fstream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> file1 = <span class="string">"/share/PostLoanData/file.txt"</span>;</span><br><span class="line">	<span class="built_in">string</span> file2 = <span class="string">"/share/PostLoanData/file2.txt"</span>;</span><br><span class="line">	ifstream infile(file1.c_str()); // 打开特点文件</span><br><span class="line">	ofstream outfile(file2.c_str());</span><br><span class="line"></span><br><span class="line">	ifstream infile2;</span><br><span class="line">	ofstream outfile2;</span><br><span class="line">	infile2.open(file1);  <span class="comment">// 打开流 再捆绑文件</span></span><br><span class="line">	outfile2.open(file2);</span><br><span class="line">	<span class="comment">// 判断文件是否打开成功</span></span><br><span class="line">	<span class="keyword">if</span> (!infile) &#123; </span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"error: unable to open input file:"</span> &lt;&lt; file1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	infile.close(); </span><br><span class="line">	infile.open(file2);<span class="comment">// 文件流重新捆绑</span></span><br><span class="line"></span><br><span class="line">	infile2.close(); <span class="comment">// 清空流</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文件模式"><a href="#文件模式" class="headerlink" title="文件模式"></a>文件模式</h2><table>
+<thead>
+<tr>
+<th>模式</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>in</td>
+<td>打开文件读，ifstream流对象默认模式</td>
+</tr>
+<tr>
+<td>out</td>
+<td>打开文件写,文件会被清空</td>
+</tr>
+<tr>
+<td>app</td>
+<td>文件尾追加</td>
+</tr>
+<tr>
+<td>ate</td>
+<td>打开文件后定位文件尾</td>
+</tr>
+<tr>
+<td>trunc</td>
+<td>打开文件时清空文件流</td>
+</tr>
+<tr>
+<td>binary</td>
+<td>二进制模式IO操作</td>
+</tr>
+<tr>
+<td>out + app</td>
+<td>打开文件写操作，文件尾写入</td>
+</tr>
+<tr>
+<td>in  + out</td>
+<td>打开文件做读写操作，定位文件开头</td>
+</tr>
+<tr>
+<td>out + app + trunc</td>
+<td>打开文件做读写操作，删除已有数据</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::ifstream; <span class="keyword">using</span> <span class="built_in">std</span>::ofstream; <span class="keyword">using</span> <span class="built_in">std</span>::fstream;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;<span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> file1 = <span class="string">"/share/PostLoanData/file.txt"</span>;</span><br><span class="line">	<span class="built_in">string</span> file2 = <span class="string">"/share/PostLoanData/file2.txt"</span>;</span><br><span class="line">	<span class="function">ofstream <span class="title">outfile</span><span class="params">(file1 , ofstream::app)</span></span>; <span class="comment">// 以追加模式打开</span></span><br><span class="line">	outfile &lt;&lt; <span class="string">"app add in end"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	outfile.close();</span><br><span class="line">	<span class="function">ifstream <span class="title">infile</span><span class="params">(file1)</span></span>;</span><br><span class="line">	<span class="built_in">string</span> line;</span><br><span class="line">	<span class="keyword">while</span> (infile &gt;&gt; line) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; line ;</span><br><span class="line">	&#125;</span><br><span class="line">	infile.close();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串流"><a href="#字符串流" class="headerlink" title="字符串流"></a>字符串流</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">istringstream</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">ostringstream</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">ostringstream</span> os;</span><br><span class="line">	os &lt;&lt; <span class="string">"val1: "</span> &lt;&lt; <span class="number">1024</span> &lt;&lt; <span class="string">"\n"</span></span><br><span class="line">		&lt;&lt; <span class="string">"val2: "</span> &lt;&lt; <span class="number">42</span> &lt;&lt; <span class="string">"\n"</span>;</span><br><span class="line">	istringstream is(os.str());</span><br><span class="line">	<span class="built_in">string</span> dump;</span><br><span class="line">	<span class="keyword">int</span> val1, val2;</span><br><span class="line">	is &gt;&gt; dump &gt;&gt; val1 &gt;&gt; dump &gt;&gt; val2;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; val1 &lt;&lt; <span class="string">","</span> &lt;&lt; val2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-08-io/" data-id="cjcvkkd6k000dmotpkx1ohvjh" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-09-container/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          C++  09 顺序容器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-07-function/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">C++  07 函数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/c/" style="font-size: 15px;">c</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-14-operator/">C++  14 重载操作符与转换</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-13-copy-control/">C++ 13 复制控制</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-12-class/">C++ 12 类</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-11-iterator/">C++  11 泛型算法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-10-map/">C++  10 关联容器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 qianqian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

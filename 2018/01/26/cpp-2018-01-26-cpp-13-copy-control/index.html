@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>C++ 13 复制控制 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="复制构造函数复制构造函数，传入同类型其他对象，初始化成员 。 1Message(const Message &amp;amp;m) :contents(m.contents), folders(m.folders)&amp;#123;&amp;#125; ; 操作符重载12// 操作符重载，左操作数为this,又操作数为参数Message&amp;amp; operator=(const Message&amp;amp;); 析构函数变">
+<meta name="keywords" content="cpp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 13 复制控制">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-13-copy-control/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="复制构造函数复制构造函数，传入同类型其他对象，初始化成员 。 1Message(const Message &amp;amp;m) :contents(m.contents), folders(m.folders)&amp;#123;&amp;#125; ; 操作符重载12// 操作符重载，左操作数为this,又操作数为参数Message&amp;amp; operator=(const Message&amp;amp;); 析构函数变">
+<meta property="og:updated_time" content="2018-01-26T06:48:50.851Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ 13 复制控制">
+<meta name="twitter:description" content="复制构造函数复制构造函数，传入同类型其他对象，初始化成员 。 1Message(const Message &amp;amp;m) :contents(m.contents), folders(m.folders)&amp;#123;&amp;#125; ; 操作符重载12// 操作符重载，左操作数为this,又操作数为参数Message&amp;amp; operator=(const Message&amp;amp;); 析构函数变">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-cpp-2018-01-26-cpp-13-copy-control" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-13-copy-control/" class="article-date">
+  <time datetime="2018-01-26T06:33:00.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++ 13 复制控制
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="复制构造函数"><a href="#复制构造函数" class="headerlink" title="复制构造函数"></a>复制构造函数</h2><p>复制构造函数，传入同类型其他对象，初始化成员 。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Message(<span class="keyword">const</span> Message &amp;m) :contents(m.contents), folders(m.folders)&#123;&#125; ;</span><br></pre></td></tr></table></figure>
+<h2 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 操作符重载，左操作数为this,又操作数为参数</span></span><br><span class="line">Message&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Message&amp;);</span><br></pre></td></tr></table></figure>
+<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>变量在超出作用域时自动撤销，动态分配对象被删除时调用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~Message();</span><br></pre></td></tr></table></figure>
+<h2 id="消息处理示例"><a href="#消息处理示例" class="headerlink" title="消息处理示例"></a>消息处理示例</h2><p>Message.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Folder.h"</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Message</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">Folder</span>;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Message(<span class="keyword">const</span> <span class="built_in">string</span> &amp;str = <span class="string">""</span>) :contents(str) &#123;&#125;;</span><br><span class="line">	<span class="comment">// 复制构造函数，传入同类型其他对象，初始化成员</span></span><br><span class="line">	Message(<span class="keyword">const</span> Message &amp;m) :contents(m.contents), folders(m.folders) &#123;</span><br><span class="line">		<span class="comment">// 将消息 放入对应文件夹中</span></span><br><span class="line">		put_msg_in_folders(folders);</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="comment">// 操作符重载，左操作数为this,又操作数为参数</span></span><br><span class="line">	Message&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Message&amp;);</span><br><span class="line">	<span class="comment">// 析构函数</span></span><br><span class="line">	~Message();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将消息保存到文件夹中</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">(Folder&amp;)</span></span>;</span><br><span class="line">	<span class="comment">// 从文件夹中移除消息</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(Folder&amp;)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Folder*&gt; get_folders();</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">print_message</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> contents; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">debug_print</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">string</span> contents; <span class="comment">// 消息内容</span></span><br><span class="line">	<span class="built_in">set</span>&lt;Folder*&gt; folders; <span class="comment">// 消息对应文件夹</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将消息放入文件夹</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">put_msg_in_folders</span><span class="params">(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Folder*&gt;&amp;)</span></span>;</span><br><span class="line">	<span class="comment">// 从文件夹移除消息</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">remove_msg_from_Folders</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">addFolder</span><span class="params">(Folder *f)</span> </span>&#123; folders.insert(f); &#125;;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">remFolder</span><span class="params">(Folder *f)</span> </span>&#123; folders.erase(f); &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Message.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Message.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Folder.h"</span></span></span><br><span class="line"></span><br><span class="line">Message::~Message()</span><br><span class="line">&#123;</span><br><span class="line">	remove_msg_from_Folders();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对原消息赋值，右操作数不改变，原消息改变成员和对应的文件夹关系</span></span><br><span class="line">Message &amp; Message::<span class="keyword">operator</span>=(<span class="keyword">const</span> Message &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (&amp;rhs != <span class="keyword">this</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		remove_msg_from_Folders(); <span class="comment">// 将原消息从文件夹中删除</span></span><br><span class="line">		contents = rhs.contents; <span class="comment">// 复制成员</span></span><br><span class="line">		folders = rhs.folders;</span><br><span class="line">		put_msg_in_folders(rhs.folders); <span class="comment">// 将原消息放入新文件夹中</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::save(Folder &amp;f)</span><br><span class="line">&#123;</span><br><span class="line">	folders.insert(&amp;f); <span class="comment">// 添加消息与文件夹的关联</span></span><br><span class="line">	f.addMsg(<span class="keyword">this</span>);		<span class="comment">// 添加文件夹与消息的关联</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::remove(Folder &amp;f)</span><br><span class="line">&#123;</span><br><span class="line">	folders.erase(&amp;f); <span class="comment">// 删除消息与文件夹的关联</span></span><br><span class="line">	f.remMsg(<span class="keyword">this</span>);		<span class="comment">// 删除文件夹与消息的关联</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;Folder*&gt; Message::get_folders()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">vector</span>&lt;Folder*&gt;(folders.begin(), folders.end());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::debug_print()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">cerr</span> &lt;&lt; <span class="string">"Message:\n\t"</span> &lt;&lt; contents &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cerr</span> &lt;&lt; <span class="string">"Appears in "</span> &lt;&lt; folders.size() &lt;&lt; <span class="string">" Folders "</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::put_msg_in_folders(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Folder*&gt; &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">set</span>&lt;Folder*&gt;::const_iterator beg = rhs.begin(); beg != rhs.end(); ++beg)</span><br><span class="line">		(*beg)-&gt;addMsg(<span class="keyword">this</span>); <span class="comment">// 遍历文件夹 添加消息</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Message::remove_msg_from_Folders()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">set</span>&lt;Folder*&gt;::const_iterator beg = folders.begin(); beg != folders.end(); ++beg)</span><br><span class="line">		(*beg)-&gt;remMsg(<span class="keyword">this</span>); <span class="comment">// 遍历文件夹 删除消息</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Folder.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Message.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Folder</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">Message</span>;</span> <span class="comment">// 设为友元以便访问私有成员</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	~Folder();</span><br><span class="line">	<span class="comment">// 复制构造函数</span></span><br><span class="line">	Folder(<span class="keyword">const</span> Folder&amp;);</span><br><span class="line">	Folder&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Folder&amp;);</span><br><span class="line"></span><br><span class="line">	Folder() &#123;&#125;;</span><br><span class="line">	<span class="comment">// 添加消息，保存消息与文件夹的关联</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">(Message&amp; msg)</span></span>; </span><br><span class="line">	<span class="comment">// 删除消息，删除消息与文件夹的关联</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">(Message&amp; msg)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;Message*&gt; messages();</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">debug_print</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">typedef</span> <span class="built_in">set</span>&lt;Message*&gt;::const_iterator Msg_iter;</span><br><span class="line">	<span class="built_in">set</span>&lt;Message*&gt; msgs;</span><br><span class="line">	<span class="comment">// 建立与消息的关联</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">copy_msgs</span><span class="params">(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Message*&gt;&amp;)</span></span>;</span><br><span class="line">	<span class="comment">// 删除消息列表与文件夹的关联</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">empty_msgs</span><span class="params">()</span></span>; </span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">addMsg</span><span class="params">(Message *m)</span> </span>&#123; msgs.insert(m); &#125;;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">remMsg</span><span class="params">(Message *m)</span> </span>&#123; msgs.erase(m); &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Folder.cpp<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Folder.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Message.h"</span></span></span><br><span class="line"></span><br><span class="line">Folder::~Folder()</span><br><span class="line">&#123;</span><br><span class="line">	empty_msgs();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Folder::Folder(<span class="keyword">const</span> Folder &amp;f)</span><br><span class="line">&#123;</span><br><span class="line">	copy_msgs(f.msgs);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Folder &amp; Folder::<span class="keyword">operator</span>=(<span class="keyword">const</span> Folder &amp;f)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (&amp;f != <span class="keyword">this</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		empty_msgs();</span><br><span class="line">		copy_msgs(f.msgs);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::save(Message &amp; msg)</span><br><span class="line">&#123;</span><br><span class="line">	msgs.insert(&amp;msg);</span><br><span class="line">	msg.addFolder(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::remove(Message &amp; msg)</span><br><span class="line">&#123;</span><br><span class="line">	msgs.erase(&amp;msg);</span><br><span class="line">	msg.remFolder(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;Message*&gt; Folder::messages()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">vector</span>&lt;Message*&gt;(msgs.begin(), msgs.end());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::debug_print()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">cerr</span> &lt;&lt; <span class="string">"Folder contains "</span> &lt;&lt; msgs.size() &lt;&lt; <span class="string">"messages "</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">int</span> ctr = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (Msg_iter beg = msgs.begin(); beg != msgs.end(); ++beg)</span><br><span class="line">		<span class="built_in">cerr</span> &lt;&lt; <span class="string">"Message "</span> &lt;&lt; ctr++ &lt;&lt; <span class="string">":\n\t"</span> &lt;&lt; (*beg)-&gt;print_message &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::copy_msgs(<span class="keyword">const</span> <span class="built_in">set</span>&lt;Message*&gt; &amp;m)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (Msg_iter beg = m.begin(); beg != m.end(); ++beg)</span><br><span class="line">		(*beg)-&gt;save(*<span class="keyword">this</span>); <span class="comment">// 遍历消息保存到文件夹中</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Folder::empty_msgs()</span><br><span class="line">&#123;</span><br><span class="line">	Msg_iter it = msgs.begin();</span><br><span class="line">	<span class="keyword">while</span> (it != msgs.end())</span><br><span class="line">	&#123;</span><br><span class="line">		Msg_iter next = it;</span><br><span class="line">		++next;</span><br><span class="line">		(*it)-&gt;remove(*<span class="keyword">this</span>); <span class="comment">// 遍历消息，删除消息与文件夹的关联</span></span><br><span class="line">		it = next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>通过记录指针被复制次数，避免产生悬垂指针。</p>
+<p>普通含有指针成员的类  HasPtr.h<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HasPtr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	HasPtr(<span class="keyword">int</span> *p, <span class="keyword">int</span> i) :ptr(p), val(i) &#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> *<span class="title">get_ptr</span><span class="params">()</span><span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> ptr; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">get_val</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> val; &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">set_ptr</span><span class="params">(<span class="keyword">int</span> *p)</span></span>&#123;ptr = p; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">set_val</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123; val = v; &#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">get_ptr_val</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> *ptr; &#125;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">set_ptr_val</span><span class="params">(<span class="keyword">int</span> val)</span><span class="keyword">const</span> </span>&#123; *ptr = val; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> *ptr;</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>main.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HasPtr.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> obj = <span class="number">0</span>;</span><br><span class="line">	<span class="function">HasPtr <span class="title">ptr1</span><span class="params">(&amp;obj, <span class="number">42</span>)</span></span>;</span><br><span class="line">	<span class="function">HasPtr <span class="title">ptr2</span><span class="params">(ptr1)</span></span>; <span class="comment">// 默认的复制构造函数，将复制两个成员，指针将指向同一个对象</span></span><br><span class="line"></span><br><span class="line">	ptr1.set_ptr_val(<span class="number">22</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; ptr2.get_ptr_val() &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 22</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>引入指针计数器 U_Ptr.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"HasPtr.h"</span></span></span><br><span class="line"><span class="comment">// 指针计数类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">U_Ptr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">HasPtr</span>;</span></span><br><span class="line">	<span class="keyword">int</span> *ip;</span><br><span class="line">	<span class="keyword">size_t</span> use;</span><br><span class="line">	U_Ptr(<span class="keyword">int</span> *p) :ip(p), use(<span class="number">1</span>) &#123;&#125;;</span><br><span class="line">	~U_Ptr() &#123; <span class="keyword">delete</span> ip; &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>HasPtr.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"U_Ptr.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HasPtr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	HasPtr(<span class="keyword">int</span> *p, <span class="keyword">int</span> i) :ptr(<span class="keyword">new</span> U_Ptr(p)), val(i) &#123;&#125;</span><br><span class="line">	HasPtr(<span class="keyword">const</span> HasPtr &amp;orig) :ptr(orig.ptr), val(orig.val) &#123;&#125;</span><br><span class="line"></span><br><span class="line">	HasPtr&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> HasPtr&amp;);</span><br><span class="line"></span><br><span class="line">	~HasPtr() &#123; <span class="keyword">if</span> (--ptr-&gt;use == <span class="number">0</span>) <span class="keyword">delete</span> ptr; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	U_Ptr *ptr;</span><br><span class="line">	<span class="keyword">int</span> val;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">HasPtr&amp; HasPtr::<span class="keyword">operator</span>=(<span class="keyword">const</span> HasPtr &amp;rhs)</span><br><span class="line">&#123;</span><br><span class="line">	++rhs.ptr-&gt;use;</span><br><span class="line">	<span class="keyword">if</span> (--ptr-&gt;use == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">delete</span> ptr;</span><br><span class="line">	ptr = rhs.ptr;</span><br><span class="line">	val = rhs.val;</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我好懒</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-13-copy-control/" data-id="cjcvkkd71000rmotprnos19e5" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-14-operator/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          C++  14 重载操作符与转换
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-12-class/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">C++ 12 类</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/c/" style="font-size: 15px;">c</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-14-operator/">C++  14 重载操作符与转换</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-13-copy-control/">C++ 13 复制控制</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-12-class/">C++ 12 类</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-11-iterator/">C++  11 泛型算法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-10-map/">C++  10 关联容器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 qianqian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

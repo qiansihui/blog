@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>C++  03 标准库类型 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="命名空间的using声明1234567891011121314#include &amp;lt;iostream&amp;gt;#include &amp;lt;string&amp;gt;using std::cin;using std::cout;using std::endl;using std::string;int main()&amp;#123;	string s;	cin &amp;gt;&amp;gt; s;	cout &amp;lt;&amp;lt;">
+<meta name="keywords" content="cpp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++  03 标准库类型">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-03-stdlib/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="命名空间的using声明1234567891011121314#include &amp;lt;iostream&amp;gt;#include &amp;lt;string&amp;gt;using std::cin;using std::cout;using std::endl;using std::string;int main()&amp;#123;	string s;	cin &amp;gt;&amp;gt; s;	cout &amp;lt;&amp;lt;">
+<meta property="og:image" content="http://note.youdao.com/favicon.ico">
+<meta property="og:updated_time" content="2018-01-26T06:43:04.606Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++  03 标准库类型">
+<meta name="twitter:description" content="命名空间的using声明1234567891011121314#include &amp;lt;iostream&amp;gt;#include &amp;lt;string&amp;gt;using std::cin;using std::cout;using std::endl;using std::string;int main()&amp;#123;	string s;	cin &amp;gt;&amp;gt; s;	cout &amp;lt;&amp;lt;">
+<meta name="twitter:image" content="http://note.youdao.com/favicon.ico">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-cpp-2018-01-26-cpp-03-stdlib" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-03-stdlib/" class="article-date">
+  <time datetime="2018-01-26T06:28:49.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++  03 标准库类型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="命名空间的using声明"><a href="#命名空间的using声明" class="headerlink" title="命名空间的using声明"></a>命名空间的using声明</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> s;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; s;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="string对象"><a href="#string对象" class="headerlink" title="string对象"></a><code>string</code>对象</h2><p><code>string</code>输入输出  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::getline;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// string 对象初始化</span></span><br><span class="line">	<span class="built_in">string</span> s1;</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(s1)</span></span>;</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">s3</span><span class="params">(<span class="string">"value"</span>)</span></span>;</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">s4</span><span class="params">(<span class="number">3</span>, <span class="string">'c'</span>)</span></span>;  <span class="comment">// "ccc"</span></span><br><span class="line"><span class="comment">//	while (cin &gt;&gt; s1) cout &lt;&lt; s1 &lt;&lt; endl;</span></span><br><span class="line">	<span class="comment">// 使用getline() 读取整行</span></span><br><span class="line">	<span class="built_in">string</span> line;</span><br><span class="line">	<span class="keyword">while</span> (getline(<span class="built_in">cin</span>, line))</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; line &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>string</code>对象操作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::getline;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">st</span><span class="params">(<span class="string">"Hi boy"</span>)</span></span>;</span><br><span class="line">	<span class="comment">// size() </span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"The size of "</span> &lt;&lt; st &lt;&lt; <span class="string">"is "</span> &lt;&lt; st.size()</span><br><span class="line">		&lt;&lt; <span class="string">" characters , including the newline"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// empty()</span></span><br><span class="line">	<span class="keyword">if</span> (!st.empty())</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"string "</span> &lt;&lt; st &lt;&lt; <span class="string">" is not empty"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// == &lt; &gt; &lt;= &gt;=</span></span><br><span class="line">	<span class="keyword">if</span> (st == <span class="string">"Hi boy"</span>)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"Two word is same"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// + </span></span><br><span class="line">	<span class="built_in">string</span> s3 = st + <span class="string">" Hi girl"</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"string + is "</span> &lt;&lt; s3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// string中字符</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">string</span>::size_type ix = <span class="number">0</span>; ix != st.size(); ++ix)</span><br><span class="line">		st[ix] = <span class="string">'*'</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"usage of string::size_type , st is "</span> &lt;&lt; st &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>字符处理操作 <code>cctype</code></p>
+<p><img src="http://note.youdao.com/favicon.ico" alt="cctype"></p>
+<h2 id="vector-容器类型"><a href="#vector-容器类型" class="headerlink" title="vector 容器类型"></a><code>vector</code> 容器类型</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">vector</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// vector 初始化</span></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vals(<span class="number">10</span>); <span class="comment">// 10 个0 </span></span><br><span class="line">	<span class="built_in">string</span> word;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; text;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; word;</span><br><span class="line">	text.push_back(word); <span class="comment">// 添加元素</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::size_type ix = <span class="number">0</span>; ix != text.size(); ++ix) <span class="comment">// 遍历</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; ix &lt;&lt; <span class="string">":"</span> &lt;&lt; text[ix] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="comment">// 迭代器</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::iterator iter = text.begin(); iter != text.end(); iter++)</span><br><span class="line">		*iter = <span class="string">"x"</span>;</span><br><span class="line">	<span class="comment">// 不可修改内容的迭代器</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::const_iterator iter = text.begin(); iter != text.end(); iter++)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt;  *iter &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="bitset-位操作"><a href="#bitset-位操作" class="headerlink" title="bitset 位操作"></a><code>bitset</code> 位操作</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bitset&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">bitset</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// vector 初始化</span></span><br><span class="line">	<span class="built_in">bitset</span>&lt;32&gt; bitvec; <span class="comment">// 32bits , all zero</span></span><br><span class="line">	<span class="built_in">bitset</span>&lt;16&gt; bitvec1(<span class="number">0xffff</span>); <span class="comment">//0...15 are set to 1 一个16进制数，</span></span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">strval</span><span class="params">(<span class="string">"1100"</span>)</span></span>;</span><br><span class="line">	<span class="built_in">bitset</span>&lt;32&gt; bitvec4(strval); <span class="comment">// 1100</span></span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">str</span><span class="params">(<span class="string">"11111110000000011"</span>)</span></span>;</span><br><span class="line">	<span class="built_in">bitset</span>&lt;32&gt; bitvec5(str, <span class="number">5</span>, <span class="number">4</span>); <span class="comment">// 4 bits start str[5] , 1100</span></span><br><span class="line">	<span class="comment">// bitset对象操作 </span></span><br><span class="line">	<span class="keyword">bool</span> is_set = bitvec.any(); <span class="comment">// false</span></span><br><span class="line">	<span class="keyword">bool</span> is_not_set = bitvec.none(); <span class="comment">// true </span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">size_t</span> size = bitvec.size(); <span class="comment">// 32</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index != size; index += <span class="number">2</span>)</span><br><span class="line">		bitvec.<span class="built_in">set</span>(index); <span class="comment">// bitvec[index] = 1;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (bitvec.test(<span class="number">0</span>));</span><br><span class="line">	<span class="keyword">if</span> (bitvec[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">	bitvec.reset(); <span class="comment">// all to 0</span></span><br><span class="line">	bitvec.<span class="built_in">set</span>();	<span class="comment">// all to 1</span></span><br><span class="line"></span><br><span class="line">	bitvec.flip(<span class="number">0</span>);<span class="comment">// 反转第一位</span></span><br><span class="line">	bitvec[<span class="number">0</span>].flip();</span><br><span class="line">	bitvec.flip(); <span class="comment">// 反转全部</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">bitset</span>&lt;128&gt; bitvec3(<span class="number">0xffff</span>);</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> ulong = bitvec3.to_ullong(); <span class="comment">// 取值与 二进制位输出 </span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"bitvec3 = "</span> &lt;&lt; ulong &lt;&lt; <span class="string">" = "</span> &lt;&lt; bitvec3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-03-stdlib/" data-id="cjcvkkd6c0005motpt9uenj9q" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-04-array-pointer/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          cpp-04-array-pointer
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-02-data-type/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">C++  02 变量和基本类型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/c/" style="font-size: 15px;">c</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-14-operator/">C++  14 重载操作符与转换</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-13-copy-control/">C++ 13 复制控制</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-12-class/">C++ 12 类</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-11-iterator/">C++  11 泛型算法</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/cpp-2018-01-26-cpp-10-map/">C++  10 关联容器</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 qianqian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
