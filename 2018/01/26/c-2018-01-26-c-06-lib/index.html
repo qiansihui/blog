@@ -3,8 +3,6 @@
 <head>
   <meta charset="utf-8">
   
-
-  
   <title>C - 基础 - C预处理器和C库 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="#define 宏123456789101112131415161718192021#include &amp;lt;stdio.h&amp;gt;#define TWO 2#define OW &quot;woow&quot;#define FOUR TWO * TWO#define PX printf(&quot;X is %d \n&quot;,x) // 宏 定义函数#define FMT &quot;X is %d \n&quot;	// 定义格式模版#defi">
@@ -22,12 +20,14 @@
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.png">
   
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
   
   <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
 
 <body>
@@ -36,30 +36,34 @@
       <header id="header">
   <div id="banner"></div>
   <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
         <a href="/" id="logo">前前的Blog</a>
       </h1>
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
-      </div>
     </div>
   </div>
 </header>
@@ -86,6 +90,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+        <!-- Table of Contents -->
+        
         <h2 id="define-宏"><a href="#define-宏" class="headerlink" title="#define 宏"></a><code>#define</code> 宏</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TWO 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> OW <span class="meta-string">"woow"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FOUR TWO * TWO</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PX printf(<span class="meta-string">"X is %d \n"</span>,x) <span class="comment">// 宏 定义函数</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FMT <span class="meta-string">"X is %d \n"</span>	<span class="comment">// 定义格式模版</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SQUARE(X) X*X	<span class="comment">// 带参数宏</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> XNAME(n) x ## n	<span class="comment">// ## 运算符</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x = TWO;</span><br><span class="line">	PX;</span><br><span class="line">	x = FOUR;</span><br><span class="line">	<span class="built_in">printf</span>(FMT, x);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"square(2) is %d \n"</span>, SQUARE(<span class="number">2</span>));</span><br><span class="line">	<span class="function"><span class="keyword">char</span> * <span class="title">XNAME</span><span class="params">(<span class="number">4</span>)</span> </span>= <span class="string">"x4"</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"预处理器粘合剂 ##运算符：%s .\n"</span>, XNAME(<span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="其他指令"><a href="#其他指令" class="headerlink" title="其他指令"></a>其他指令</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> c9x on <span class="comment">// 编译器设置都可以定义 强大到没朋友</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TWO 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> TWO <span class="comment">// 取消宏</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> TWO	<span class="comment">// 条件编译 相反为 #ifndef</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TWO 23</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TWO 3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> TWO</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"TOW is %d \n"</span>, TWO);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// TWO</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> TWO == 3    <span class="comment">// 条件判断</span></span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"oh , 3 \n"</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">elif</span> TWO ==2</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"oh , 2 \n"</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h2><p>就是不需要声明，直接定义然后调用的使用inline修饰函数，无法获取地址，可放在头文件供外部调用。<br>相当于将方法体拷贝到调用处。  </p>
@@ -95,7 +101,8 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-06-lib/" data-id="cjcvnpu57000f9ctp6954h736" class="article-share-link">Teilen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-06-lib/" data-id="cjcvp4war001xnwtpb1fw97ej" class="article-share-link">Поделиться</a>
+      
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
@@ -104,10 +111,52 @@
   </div>
   
     
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
 <nav id="article-nav">
   
     <a href="/2018/01/26/cpp-2018-01-26-cpp-01-firstblood/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
+      <strong class="article-nav-caption">Следующий</strong>
       <div class="article-nav-title">
         
           C++  01 初体验
@@ -117,7 +166,7 @@
   
   
     <a href="/2018/01/26/c-2018-01-26-c-05-bitset/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Предыдущий</strong>
       <div class="article-nav-title">C - 基础 - 位操作</div>
     </a>
   
@@ -125,97 +174,148 @@
 
   
 </article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
 
 </section>
-        
-          <aside id="sidebar">
+           
+    <aside id="sidebar">
   
     
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习方法/">学习方法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#define-宏"><span class="toc-number">1.</span> <span class="toc-text">#define 宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他指令"><span class="toc-number">2.</span> <span class="toc-text">其他指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内联函数"><span class="toc-number">3.</span> <span class="toc-text">内联函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C库"><span class="toc-number">4.</span> <span class="toc-text">C库</span></a></li></ol>
+          </div>
+      </div>
     </div>
-  </div>
-
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 17.5px;">C</a> <a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/react/" style="font-size: 15px;">react</a> <a href="/tags/学习方法/" style="font-size: 10px;">学习方法</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
-    </div>
-  </div>
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
-    </div>
-  </div>
-
+  
+    
+  
+    
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/">拖延心理学</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/">算法-各种图</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/">算法-各种查找</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/">算法-各种排序</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/">算法-基础</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+  
+    <!--微信公众号二维码-->
+
 
   
 </aside>
-        
+
       </div>
       <footer id="footer">
   
   <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 qianqian<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    <div id="footer-left">
+      &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
+      Создано с помощью <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
+ <script src="/jquery/jquery.min.js"></script>
     </div>
     <nav id="mobile-nav">
   
-    <a href="/" class="mobile-nav-link">Home</a>
+    <a href="/" class="mobile-nav-link">首页</a>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
   
 </nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
     
 
-<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
@@ -223,9 +323,7 @@
 
 
 <script src="/js/script.js"></script>
-
-
-
+<script src="/js/elevator.js"></script>
   </div>
 </body>
 </html>

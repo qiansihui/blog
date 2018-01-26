@@ -3,8 +3,6 @@
 <head>
   <meta charset="utf-8">
   
-
-  
   <title>react-03-前端工事搭建-react服务器端渲染 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="概览:react的使用 , 服务器端渲染    前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去 尝试服务器端渲染关键在于用 React.renderToString(Component({})) 方法将组件转为html插入到页面">
@@ -24,12 +22,14 @@
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.png">
   
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
   
   <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
 
 <body>
@@ -38,30 +38,34 @@
       <header id="header">
   <div id="banner"></div>
   <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
         <a href="/" id="logo">前前的Blog</a>
       </h1>
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
-      </div>
     </div>
   </div>
 </header>
@@ -88,6 +92,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+        <!-- Table of Contents -->
+        
         <p>概览:react的使用 , 服务器端渲染   </p>
 <p>前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.<br>现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去</p>
 <h1 id="尝试服务器端渲染"><a href="#尝试服务器端渲染" class="headerlink" title="尝试服务器端渲染"></a>尝试服务器端渲染</h1><p>关键在于用 <code>React.renderToString(Component({}))</code> 方法将组件转为html插入到页面去.<br>接着遇到了一个坑 , 报错 React.renderToString is not a function 郁闷一天 , 发现用 <code>npm install react --save</code> 下载的react是15.xx.xx版本 , 改成 <code>&quot;react&quot;: &quot;~0.12.0&quot;,</code> 就好了<br>接着有一个问题,isomorphic-server项目用的是jade模版引擎 , 折腾一番发现只要在视图名加上ejs后缀就可以了 , 好智能.</p>
@@ -104,7 +110,8 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjcvnpu6j001j9ctp4b9iai7a" class="article-share-link">Teilen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjcvp4wa30017nwtp27o0woyt" class="article-share-link">Поделиться</a>
+      
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
@@ -113,10 +120,52 @@
   </div>
   
     
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
 <nav id="article-nav">
   
     <a href="/2018/01/26/react-2018-01-26-react-app-04/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
+      <strong class="article-nav-caption">Следующий</strong>
       <div class="article-nav-title">
         
           react-04-前端工事搭建-react客户端渲染
@@ -126,7 +175,7 @@
   
   
     <a href="/2018/01/26/react-2018-01-26-react-app-02/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Предыдущий</strong>
       <div class="article-nav-title">react-02-又是起手式:同构js</div>
     </a>
   
@@ -134,97 +183,148 @@
 
   
 </article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
 
 </section>
-        
-          <aside id="sidebar">
+           
+    <aside id="sidebar">
   
     
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习方法/">学习方法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#尝试服务器端渲染"><span class="toc-number">1.</span> <span class="toc-text">尝试服务器端渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义组件"><span class="toc-number">1.1.</span> <span class="toc-text">定义组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用和渲染"><span class="toc-number">1.2.</span> <span class="toc-text">调用和渲染</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由和页面"><span class="toc-number">1.3.</span> <span class="toc-text">路由和页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预览"><span class="toc-number">1.4.</span> <span class="toc-text">预览</span></a></li></ol></li></ol>
+          </div>
+      </div>
     </div>
-  </div>
-
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 17.5px;">C</a> <a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/react/" style="font-size: 15px;">react</a> <a href="/tags/学习方法/" style="font-size: 10px;">学习方法</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
-    </div>
-  </div>
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
-    </div>
-  </div>
-
+  
+    
+  
+    
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/">拖延心理学</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/">算法-各种图</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/">算法-各种查找</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/">算法-各种排序</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/">算法-基础</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+  
+    <!--微信公众号二维码-->
+
 
   
 </aside>
-        
+
       </div>
       <footer id="footer">
   
   <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 qianqian<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    <div id="footer-left">
+      &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
+      Создано с помощью <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
+ <script src="/jquery/jquery.min.js"></script>
     </div>
     <nav id="mobile-nav">
   
-    <a href="/" class="mobile-nav-link">Home</a>
+    <a href="/" class="mobile-nav-link">首页</a>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
   
 </nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
     
 
-<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
@@ -232,9 +332,7 @@
 
 
 <script src="/js/script.js"></script>
-
-
-
+<script src="/js/elevator.js"></script>
   </div>
 </body>
 </html>

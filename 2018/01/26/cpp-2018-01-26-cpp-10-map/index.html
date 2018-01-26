@@ -3,8 +3,6 @@
 <head>
   <meta charset="utf-8">
   
-
-  
   <title>C++  10 关联容器 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="map 使用1234567891011121314151617181920212223242526272829303132333435363738394041424344#include &amp;lt;iostream&amp;gt;#include &amp;lt;utility&amp;gt;#include &amp;lt;map&amp;gt;#include &amp;lt;string&amp;gt;using std::pair; using">
@@ -22,12 +20,14 @@
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.png">
   
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+    
   
   <link rel="stylesheet" href="/css/style.css">
+  
+
 </head>
 
 <body>
@@ -36,30 +36,34 @@
       <header id="header">
   <div id="banner"></div>
   <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS-каналы"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Поиск"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
         <a href="/" id="logo">前前的Blog</a>
       </h1>
       
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
-      </div>
     </div>
   </div>
 </header>
@@ -86,6 +90,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
+        <!-- Table of Contents -->
+        
         <h2 id="map-使用"><a href="#map-使用" class="headerlink" title="map 使用"></a>map 使用</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::pair; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">map</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	pair&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; author(<span class="string">"Jom"</span>, <span class="string">"Tom"</span>);</span><br><span class="line">	author = <span class="built_in">std</span>::make_pair(<span class="string">"Tom"</span>, <span class="string">"Jerry"</span>);			<span class="comment">// pair 对象使用</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"author : "</span> &lt;&lt; author.first &lt;&lt; <span class="string">"&amp;"</span> &lt;&lt; author.second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; word_cout;</span><br><span class="line">	word_cout[<span class="string">"A"</span>] = <span class="number">1</span>;		<span class="comment">// map 对象使用</span></span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator map_it = word_cout.begin();</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; map_it-&gt;first &lt;&lt; <span class="string">":"</span> &lt;&lt; map_it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	++word_cout[<span class="string">"A"</span>];</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"count for A: "</span> &lt;&lt; word_cout[<span class="string">"A"</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	word_cout.insert(<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::value_type(<span class="string">"B"</span>, <span class="number">1</span>));</span><br><span class="line">	pair&lt;<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator, <span class="keyword">bool</span>&gt; ret = word_cout.insert(<span class="built_in">std</span>::make_pair(<span class="string">"B"</span>, <span class="number">1</span>)); <span class="comment">// map插入 返回插入键迭代器和 是否插入</span></span><br><span class="line">	<span class="keyword">if</span> (!ret.second) ++ret.first-&gt;second;		<span class="comment">// 若键已存在 ， 则+1</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> occurs = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (word_cout.count(<span class="string">"B"</span>))</span><br><span class="line">		occurs = word_cout[<span class="string">"B"</span>];		<span class="comment">// map 统计是否存在</span></span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator it = word_cout.find(<span class="string">"A"</span>);	<span class="comment">// map查找 若不存在 等于尾迭代器</span></span><br><span class="line">	<span class="keyword">if</span> (it != word_cout.end())	</span><br><span class="line">		occurs = it-&gt;second;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (word_cout.erase(<span class="string">"A"</span>))		<span class="comment">// map删除 0,1</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"delete success : "</span> &lt;&lt; <span class="string">"A"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"delete word not found"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			</span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::const_iterator map_iter = word_cout.begin();  <span class="comment">// map 遍历</span></span><br><span class="line">	<span class="keyword">while</span> (map_iter != word_cout.end()) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; map_iter-&gt;first &lt;&lt; <span class="string">" : "</span> &lt;&lt; map_iter-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		++map_iter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="单词统计"><a href="#单词统计" class="headerlink" title="单词统计"></a>单词统计</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::pair; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">map</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="function">ifstream <span class="title">in_file</span><span class="params">(<span class="string">"out.txt"</span>)</span></span>;</span><br><span class="line">	<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; word_count;</span><br><span class="line">	<span class="built_in">string</span> word;</span><br><span class="line">	<span class="keyword">while</span> (in_file &gt;&gt; word) &#123;</span><br><span class="line">		pair&lt;<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator, <span class="keyword">bool</span>&gt; ret = word_count.insert(<span class="built_in">std</span>::make_pair(word,<span class="number">1</span>));</span><br><span class="line">		<span class="keyword">if</span> (!ret.second) ++ret.first-&gt;second;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt;::iterator it = word_count.begin(); it != word_count.end(); ++it)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; it-&gt;first &lt;&lt; <span class="string">":"</span> &lt;&lt; it-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="multimap、multiset用法"><a href="#multimap、multiset用法" class="headerlink" title="multimap、multiset用法"></a>multimap、multiset用法</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::pair; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">map</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">set</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">multimap</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">multiset</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>; <span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; set1;</span><br><span class="line">	set1.insert(<span class="string">"A"</span>);</span><br><span class="line">	<span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; set2;</span><br><span class="line">	set2.insert(set1.begin(), set1.end());	<span class="comment">// set 插入</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt;::iterator it = set2.find(<span class="string">"A"</span>);</span><br><span class="line">	set2.count(<span class="string">"A"</span>); <span class="comment">// 0 , 1</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">multimap</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; mapping;</span><br><span class="line">	mapping.insert(<span class="built_in">std</span>::make_pair(<span class="string">"A"</span>, <span class="string">"B"</span>));</span><br><span class="line">	mapping.insert(<span class="built_in">std</span>::make_pair(<span class="string">"A"</span>, <span class="string">"C"</span>));	<span class="comment">// multimap 插入</span></span><br><span class="line">	<span class="function"><span class="built_in">string</span> <span class="title">search_item</span><span class="params">(<span class="string">"A"</span>)</span></span>;</span><br><span class="line">	<span class="built_in">multimap</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;::size_type enties = mapping.count(search_item); <span class="comment">// multimap 统计</span></span><br><span class="line">	<span class="built_in">multimap</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;::iterator it2 = mapping.find(search_item);	<span class="comment">// multimap 查找</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">multimap</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;::size_type i = <span class="number">0</span>; i != enties; ++i, ++it2)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; it2-&gt;first &lt;&lt; <span class="string">":"</span> &lt;&lt; it2-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">multimap</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;::iterator beg = mapping.lower_bound(search_item), end = mapping.upper_bound(search_item); <span class="comment">//multimap 读取键对应范围</span></span><br><span class="line">	<span class="keyword">while</span> (beg != end) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; beg-&gt;first &lt;&lt; <span class="string">":"</span> &lt;&lt; beg-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		++beg;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="built_in">multimap</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;::iterator map_it;</span><br><span class="line">	pair&lt;map_it, map_it&gt; pos = mapping.equal_range(search_item); <span class="comment">// multimap一次性获取键对应范围</span></span><br><span class="line">	<span class="keyword">while</span> (pos.first != pos.second)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; pos.first-&gt;first &lt;&lt; <span class="string">":"</span> &lt;&lt; pos.first-&gt;second &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		++pos.first;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">multimap</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;::size_type cnt = mapping.erase(search_item); <span class="comment">// multimap 删除</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"remove :"</span> &lt;&lt; cnt &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -93,7 +99,8 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-10-map/" data-id="cjcvnpu6700189ctpe6k36tlw" class="article-share-link">Teilen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-10-map/" data-id="cjcvp4w9r000snwtpq6zzgu7u" class="article-share-link">Поделиться</a>
+      
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li></ul>
@@ -102,10 +109,52 @@
   </div>
   
     
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
 <nav id="article-nav">
   
     <a href="/2018/01/26/cpp-2018-01-26-cpp-11-iterator/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
+      <strong class="article-nav-caption">Следующий</strong>
       <div class="article-nav-title">
         
           C++  11 泛型算法
@@ -115,7 +164,7 @@
   
   
     <a href="/2018/01/26/cpp-2018-01-26-cpp-09-container/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Предыдущий</strong>
       <div class="article-nav-title">C++  09 顺序容器</div>
     </a>
   
@@ -123,97 +172,148 @@
 
   
 </article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
 
 </section>
-        
-          <aside id="sidebar">
+           
+    <aside id="sidebar">
   
     
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/学习方法/">学习方法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#map-使用"><span class="toc-number">1.</span> <span class="toc-text">map 使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单词统计"><span class="toc-number">2.</span> <span class="toc-text">单词统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#multimap、multiset用法"><span class="toc-number">3.</span> <span class="toc-text">multimap、multiset用法</span></a></li></ol>
+          </div>
+      </div>
     </div>
-  </div>
-
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 17.5px;">C</a> <a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/react/" style="font-size: 15px;">react</a> <a href="/tags/学习方法/" style="font-size: 10px;">学习方法</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
-    </div>
-  </div>
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
-    </div>
-  </div>
-
+  
+    
+  
+    
 
   
     
-  <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/">拖延心理学</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/">算法-各种图</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/">算法-各种查找</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/">算法-各种排序</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/">算法-基础</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+  
+    <!--微信公众号二维码-->
+
 
   
 </aside>
-        
+
       </div>
       <footer id="footer">
   
   <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2018 qianqian<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    <div id="footer-left">
+      &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
+      Создано с помощью <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
+ <script src="/jquery/jquery.min.js"></script>
     </div>
     <nav id="mobile-nav">
   
-    <a href="/" class="mobile-nav-link">Home</a>
+    <a href="/" class="mobile-nav-link">首页</a>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
   
 </nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
     
 
-<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
@@ -221,9 +321,7 @@
 
 
 <script src="/js/script.js"></script>
-
-
-
+<script src="/js/elevator.js"></script>
   </div>
 </body>
 </html>
