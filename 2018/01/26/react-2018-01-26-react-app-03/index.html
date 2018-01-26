@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>react-03-前端工事搭建-react服务器端渲染 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概览:react的使用 , 服务器端渲染    前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去 尝试服务器端渲染关键在于用 React.renderToString(Component({})) 方法将组件转为html插入到页面">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-03-前端工事搭建-react服务器端渲染">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="概览:react的使用 , 服务器端渲染    前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去 尝试服务器端渲染关键在于用 React.renderToString(Component({})) 方法将组件转为html插入到页面">
+<meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/server03.png">
+<meta property="og:updated_time" content="2018-01-26T07:47:35.450Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-03-前端工事搭建-react服务器端渲染">
+<meta name="twitter:description" content="概览:react的使用 , 服务器端渲染    前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去 尝试服务器端渲染关键在于用 React.renderToString(Component({})) 方法将组件转为html插入到页面">
+<meta name="twitter:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/server03.png">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-react-2018-01-26-react-app-03" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/react-2018-01-26-react-app-03/" class="article-date">
+  <time datetime="2018-01-26T07:23:37.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      react-03-前端工事搭建-react服务器端渲染
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>概览:react的使用 , 服务器端渲染   </p>
+<p>前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.<br>现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去</p>
+<h1 id="尝试服务器端渲染"><a href="#尝试服务器端渲染" class="headerlink" title="尝试服务器端渲染"></a>尝试服务器端渲染</h1><p>关键在于用 <code>React.renderToString(Component({}))</code> 方法将组件转为html插入到页面去.<br>接着遇到了一个坑 , 报错 React.renderToString is not a function 郁闷一天 , 发现用 <code>npm install react --save</code> 下载的react是15.xx.xx版本 , 改成 <code>&quot;react&quot;: &quot;~0.12.0&quot;,</code> 就好了<br>接着有一个问题,isomorphic-server项目用的是jade模版引擎 , 折腾一番发现只要在视图名加上ejs后缀就可以了 , 好智能.</p>
+<h2 id="定义组件"><a href="#定义组件" class="headerlink" title="定义组件"></a>定义组件</h2><p>/components/MyTable.js   </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"><span class="keyword">var</span> React = <span class="built_in">require</span>(<span class="string">'react'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MyTable = React.createClass(&#123;</span><br><span class="line">        render() &#123;</span><br><span class="line">            <span class="keyword">var</span> tableStyle = &#123;<span class="attr">border</span>: <span class="string">'solid 1px pink'</span>&#125;;</span><br><span class="line">            <span class="keyword">return</span> (</span><br><span class="line">                &lt;table style=&#123;tableStyle&#125;&gt;</span><br><span class="line">                    &#123;<span class="keyword">this</span>.props.users.map(<span class="function">(<span class="params">user, index</span>)=&gt;</span></span><br><span class="line">                        &lt;tr key=&#123;index&#125;&gt;</span><br><span class="line">                            &lt;td&gt;&#123;user.name&#125;&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">                        &lt;/</span>tr&gt;)&#125;</span><br><span class="line">                &lt;<span class="regexp">/table&gt;</span></span><br><span class="line"><span class="regexp">            )</span></span><br><span class="line"><span class="regexp">        &#125;</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">);</span></span><br><span class="line"><span class="regexp">module.exports = MyTable;</span></span><br></pre></td></tr></table></figure>
+<h2 id="调用和渲染"><a href="#调用和渲染" class="headerlink" title="调用和渲染"></a>调用和渲染</h2><p>/controllers/users.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> React = <span class="built_in">require</span>(<span class="string">'react'</span>);</span><br><span class="line"><span class="keyword">var</span> MyTable = React.createFactory(<span class="built_in">require</span>(<span class="string">"../components/MyTable"</span>));</span><br><span class="line"></span><br><span class="line">exports.index2 = <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    User.find(&#123;&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err, users</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            res.send(err);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> html = React.renderToString(MyTable(&#123;<span class="attr">users</span>: users&#125;));</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'html:'</span>, +html);</span><br><span class="line">            res.render(<span class="string">'user2.ejs'</span>, &#123;<span class="attr">title</span>: <span class="string">'user'</span>, <span class="attr">html</span>: html&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>React.renderToString()</code>方法将组件渲染为html插入到页面中</p>
+<h2 id="路由和页面"><a href="#路由和页面" class="headerlink" title="路由和页面"></a>路由和页面</h2><p>/routes/users.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/2'</span>, users.index2);</span><br></pre></td></tr></table></figure>
+<p>/views/user2.ejs</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">    &lt;title&gt;&lt;%= title %&gt;&lt;/title&gt;</span><br><span class="line">&lt;<span class="regexp">/head&gt;</span></span><br><span class="line"><span class="regexp">&lt;body&gt;</span></span><br><span class="line"><span class="regexp">welcome to &lt;%= title %&gt;</span></span><br><span class="line"><span class="regexp">&lt;%- html %&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h2><img src="/2018/01/26/react-2018-01-26-react-app-03/server03.png">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjcvmkxd6001l7gtp8iusgt3p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/26/react-2018-01-26-react-app-04/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          react-04-前端工事搭建-react客户端渲染
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/26/react-2018-01-26-react-app-02/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">react-02-又是起手式:同构js</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/c/" style="font-size: 17.5px;">c</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/react/" style="font-size: 15px;">react</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/">算法-各种图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/">算法-各种查找</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/">算法-各种排序</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/">算法-基础</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/react-2018-01-26-react-app-05/">react-05-前端工事搭建-redux的使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 qianqian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

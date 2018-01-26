@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>react-01-起手式:技术准备 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="需求名词定义:  投票热点=由用户发起的投票,包含热点详情,投票记录,用户评论  用户管理: 注册/登录/修改 投票热点管理: 创建/修改/删除/投票/评论 评论管理: 创建/评论的评论 消息管理: 评论的消息  技术方案及难点后端用express+mongodb提供restful接口 , 前端用react+redux+webpack,前后端数据交互     cookie及session使用 图片">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-01-起手式:技术准备">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="需求名词定义:  投票热点=由用户发起的投票,包含热点详情,投票记录,用户评论  用户管理: 注册/登录/修改 投票热点管理: 创建/修改/删除/投票/评论 评论管理: 创建/评论的评论 消息管理: 评论的消息  技术方案及难点后端用express+mongodb提供restful接口 , 前端用react+redux+webpack,前后端数据交互     cookie及session使用 图片">
+<meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/server01.png">
+<meta property="og:updated_time" content="2018-01-26T07:46:00.980Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-01-起手式:技术准备">
+<meta name="twitter:description" content="需求名词定义:  投票热点=由用户发起的投票,包含热点详情,投票记录,用户评论  用户管理: 注册/登录/修改 投票热点管理: 创建/修改/删除/投票/评论 评论管理: 创建/评论的评论 消息管理: 评论的消息  技术方案及难点后端用express+mongodb提供restful接口 , 前端用react+redux+webpack,前后端数据交互     cookie及session使用 图片">
+<meta name="twitter:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/server01.png">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-react-2018-01-26-react-app-01" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/react-2018-01-26-react-app-01/" class="article-date">
+  <time datetime="2018-01-26T07:20:00.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      react-01-起手式:技术准备
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>名词定义:  投票热点=由用户发起的投票,包含热点详情,投票记录,用户评论</p>
+<ol>
+<li>用户管理: 注册/登录/修改</li>
+<li>投票热点管理: 创建/修改/删除/投票/评论</li>
+<li>评论管理: 创建/评论的评论</li>
+<li>消息管理: 评论的消息</li>
+</ol>
+<h3 id="技术方案及难点"><a href="#技术方案及难点" class="headerlink" title="技术方案及难点"></a>技术方案及难点</h3><p>后端用express+mongodb提供restful接口 , 前端用react+redux+webpack,前后端数据交互   </p>
+<ol>
+<li>cookie及session使用</li>
+<li>图片上传</li>
+</ol>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><ol>
+<li>使用express创建后端项目 express-server <code>express express-server</code>   <img src="/2018/01/26/react-2018-01-26-react-app-01/server01.png">
+</li>
+</ol>
+<p>bin：存放启动项目的脚本文件，默认www。<br>node_modules：存放所有的项目依赖库，默认body-parser、cookie-parser、debug、jade、express、morgan、serve-favicon。   </p>
+<pre><code>bodyParser：用于解析客户端请求的body中的内容，内部使用JSON编码处理,，url编码处理以及对于文件的上传处理。
+cookieParser：中间件用于获取web浏览器发送的cookie中的内容。
+debug：小的调试工具，打印的是开发者自己在 控制台 打印的信息。
+jade：一个高性能的模板引擎，它深受 Haml 影响，它是用 JavaScript 实现的，并且可以供 Node 使用。
+morgan：打印的nodejs 服务器接受到的请求的信息。
+serve-favicon：favicon服务中间件和缓存。
+</code></pre><p>public：静态资源文件夹，默认images、javascripts、stylesheets。<br>routes：路由文件相当于MVC中的Controller，默认index.js、users.js。<br>views：页面文件，相当于MVC中的view，Ejs模板或者jade模板，默认error.jade、index.jade、layout.jade。<br>package.json：项目依赖配置及开发者信息。<br>app.js：应用核心配置文件，项目入口，相当于php项目中的 index.php、index.html。   </p>
+<p>使用 <code>npm install</code> 下载依赖 <code>npm start</code> 启动项目 , 浏览器打开 <code>localhost:3000</code>即可访问</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/" data-id="cjcvmkxd8001n7gtppf6l967o" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/26/react-2018-01-26-react-app-02/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          react-02-又是起手式:同构js
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-14-operator/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">C++  14 重载操作符与转换</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/c/" style="font-size: 17.5px;">c</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/react/" style="font-size: 15px;">react</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/">算法-各种图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/">算法-各种查找</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/">算法-各种排序</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/">算法-基础</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/react-2018-01-26-react-app-05/">react-05-前端工事搭建-redux的使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 qianqian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

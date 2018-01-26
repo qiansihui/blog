@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>react-04-前端工事搭建-react客户端渲染 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概览: react,sass,webpack的使用 , 客户端渲染    react原本就是用来客户端渲染的, redux则是flux思想的实现,用来处理单向的数据绑定. 现在也可以都拿来在服务器端渲染首屏页面.现在先从它原本的职责浏览器端渲染开始熟悉. 项目又切换到 express-server 作为服务器在建立一个react项目作为客户端,使用webpack打包构建   webpack文档 预">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-04-前端工事搭建-react客户端渲染">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="概览: react,sass,webpack的使用 , 客户端渲染    react原本就是用来客户端渲染的, redux则是flux思想的实现,用来处理单向的数据绑定. 现在也可以都拿来在服务器端渲染首屏页面.现在先从它原本的职责浏览器端渲染开始熟悉. 项目又切换到 express-server 作为服务器在建立一个react项目作为客户端,使用webpack打包构建   webpack文档 预">
+<meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/scss.png">
+<meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/react-demo.png">
+<meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/react-scss.png">
+<meta property="og:updated_time" content="2018-01-26T07:47:35.451Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-04-前端工事搭建-react客户端渲染">
+<meta name="twitter:description" content="概览: react,sass,webpack的使用 , 客户端渲染    react原本就是用来客户端渲染的, redux则是flux思想的实现,用来处理单向的数据绑定. 现在也可以都拿来在服务器端渲染首屏页面.现在先从它原本的职责浏览器端渲染开始熟悉. 项目又切换到 express-server 作为服务器在建立一个react项目作为客户端,使用webpack打包构建   webpack文档 预">
+<meta name="twitter:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/scss.png">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-react-2018-01-26-react-app-04" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/react-2018-01-26-react-app-04/" class="article-date">
+  <time datetime="2018-01-26T07:24:56.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      react-04-前端工事搭建-react客户端渲染
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>概览: react,sass,webpack的使用 , 客户端渲染   </p>
+<p>react原本就是用来客户端渲染的, redux则是flux思想的实现,用来处理单向的数据绑定. 现在也可以都拿来在服务器端渲染首屏页面.<br>现在先从它原本的职责浏览器端渲染开始熟悉. 项目又切换到 express-server 作为服务器<br>在建立一个react项目作为客户端,使用webpack打包构建   <a href="http://webpack.github.io/docs/tutorials/getting-started/" target="_blank" rel="noopener">webpack文档</a></p>
+<h2 id="预备工作"><a href="#预备工作" class="headerlink" title="预备工作"></a>预备工作</h2><h3 id="使用-CSS预处理器-sass"><a href="#使用-CSS预处理器-sass" class="headerlink" title="使用 CSS预处理器 sass"></a>使用 CSS预处理器 sass</h3><p>文档:  <a href="http://www.w3cplus.com/sassguide/" target="_blank" rel="noopener">sass十分钟入门</a> , <a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="noopener">阮一峰的blog</a><br>安装命令 <code>npm uninstall node-sass</code> , <code>npm install sass-loader node-sass webpack --save-dev</code><br>webpack 配置 sass的加载器 见 <a href="https://github.com/jtangelder/sass-loader" target="_blank" rel="noopener">sass-loader</a><br>目录结构:<br><img src="/2018/01/26/react-2018-01-26-react-app-04/scss.png" title="sass的使用"></p>
+<p>/index.html , 引入的bundle.js是 将js和css打包后的结果</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>index<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> <span class="attr">src</span>=<span class="string">"bundle.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>/index.js , webpack的想法就是万物皆可require</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'./style.scss'</span>);</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">'&lt;div&gt;你是这个世界上无与伦比的美丽&lt;/div&gt;'</span>);</span><br></pre></td></tr></table></figure>
+<p>/package.json , devDependencies的意思是开发依赖工具,不会被打包到最终的js中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"react-client"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"start"</span>: <span class="string">"webpack-dev-server"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"node-sass"</span>: <span class="string">"^3.9.3"</span>,</span><br><span class="line">    <span class="string">"sass-loader"</span>: <span class="string">"^4.0.2"</span>,</span><br><span class="line">    <span class="string">"webpack"</span>: <span class="string">"^1.13.2"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>/style.scss 这里示例了scss变量,Mixin的使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$bodyColor: pink;</span><br><span class="line">$divColor: blue;</span><br><span class="line">@mixin divFacade($width:<span class="number">100</span>px,<span class="attr">$height</span>:<span class="number">100</span>px,<span class="attr">$color</span>:yellow) &#123;</span><br><span class="line">  width: $width;</span><br><span class="line">  height: $height;</span><br><span class="line">  background-color: $color;</span><br><span class="line">&#125;</span><br><span class="line">body &#123;</span><br><span class="line">  background: $bodyColor;</span><br><span class="line">&#125;</span><br><span class="line">div &#123;</span><br><span class="line">  @include divFacade(<span class="number">330</span>px, <span class="number">140</span>px, $divColor)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>/webpack.config.js ,webpack打包配置,entry入口,output出口,loaders指定加载器,这里使用正则匹配到scss文件并使用sass加载器编译</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: <span class="string">'./index.js'</span>,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: __dirname,</span><br><span class="line">        filename: <span class="string">'bundle.js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;</span><br><span class="line">                test: <span class="regexp">/\.scss$/</span>,</span><br><span class="line">                loaders: [<span class="string">"style"</span>, <span class="string">"css"</span>, <span class="string">"sass"</span>]</span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="react的使用"><a href="#react的使用" class="headerlink" title="react的使用"></a>react的使用</h3><p>参考文档 : <a href="https://segmentfault.com/a/1190000005863630" target="_blank" rel="noopener">React.createClass和extends Component的区别</a> ,  <a href="http://www.ruanyifeng.com/blog/2015/03/react.html" target="_blank" rel="noopener">React 入门实例教程</a>   </p>
+<p>这里开始要把工程结构变得合理一点 , 如图:</p>
+<img src="/2018/01/26/react-2018-01-26-react-app-04/react-demo.png" title="react目录结构">
+<p>/dist/ 目录为编译后js存放之地 , 一般有一个应用js和应用依赖库的打包文件,这里是把react,redux等库打包到vendors.js.在html里需要将这两个文件引入.<br>/src/components/ 为组件目录 , 一个组件一个目录,对应一个样式文件 ,这里是css in js写法,参考 <a href="https://github.com/gajus/react-css-modules" target="_blank" rel="noopener">react-css-modules</a> 打包时会统统打包进app.js . variables.scss为全局的样式定义文件<br>/src/index.js 为打包路径的入口 , webpack会根据依赖进行打包.   </p>
+<p>/webpack.config.js   , 加了sass编译器,将scss样式文件转为普通css, 加入babel编译器, 将jsx和es6语法转为大多浏览器兼容的es5语法.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    entry: &#123;</span><br><span class="line">        app: path.join(__dirname, <span class="string">'src'</span>),</span><br><span class="line">        vendors: [<span class="string">'react'</span>, <span class="string">'redux'</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    output: &#123;</span><br><span class="line">        path: path.join(__dirname, <span class="string">'dist'</span>),</span><br><span class="line">        publicPath: <span class="string">"/dist/"</span>,</span><br><span class="line">        filename: <span class="string">'[name].js'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">        loaders: [</span><br><span class="line">            &#123;<span class="attr">test</span>: <span class="regexp">/\.scss$/</span>, <span class="attr">loaders</span>: [<span class="string">"style"</span>, <span class="string">"css"</span>, <span class="string">"sass"</span>]&#125;,</span><br><span class="line">            &#123;<span class="attr">test</span>: <span class="regexp">/\.js?$/</span>, <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span>, <span class="attr">loader</span>: <span class="string">'babel'</span>, <span class="attr">query</span>: &#123;<span class="attr">presets</span>: [<span class="string">'react'</span>, <span class="string">'es2015'</span>]&#125;&#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> webpack.optimize.CommonsChunkPlugin(<span class="string">'vendors'</span>, <span class="string">'vendors.js'</span>)</span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>/package.json <code>webpack-dev-server</code> 是个开发服务器,可对js/css文件热部署</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"react-client"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"build"</span>: <span class="string">"webpack"</span>,</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"webpack-dev-server"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"node-sass"</span>: <span class="string">"^3.9.3"</span>,</span><br><span class="line">    <span class="attr">"sass-loader"</span>: <span class="string">"^4.0.2"</span>,</span><br><span class="line">    <span class="attr">"webpack"</span>: <span class="string">"^1.13.2"</span>,</span><br><span class="line">    <span class="attr">"babel-core"</span>: <span class="string">"^6.4.0"</span>,</span><br><span class="line">    <span class="attr">"babel-loader"</span>: <span class="string">"^6.2.1"</span>,</span><br><span class="line">    <span class="attr">"babel-preset-es2015"</span>: <span class="string">"^6.3.13"</span>,</span><br><span class="line">    <span class="attr">"babel-preset-react"</span>: <span class="string">"^6.3.13"</span>,</span><br><span class="line">    <span class="attr">"path"</span>: <span class="string">"^0.12.7"</span>,</span><br><span class="line">    <span class="attr">"react"</span>: <span class="string">"^0.14.6"</span>,</span><br><span class="line">    <span class="attr">"react-dom"</span>: <span class="string">"^0.14.6"</span>,</span><br><span class="line">    <span class="attr">"react-redux"</span>: <span class="string">"^4.0.6"</span>,</span><br><span class="line">    <span class="attr">"redux"</span>: <span class="string">"^3.0.5"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>/index.html   </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>index<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"dist/vendors.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span> <span class="attr">src</span>=<span class="string">"dist/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>/src/index.js   <code>render</code> 方法将react组件渲染到html节点</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;render&#125; <span class="keyword">from</span> <span class="string">"react-dom"</span>;</span><br><span class="line"><span class="keyword">import</span> Demo <span class="keyword">from</span> <span class="string">'./components/Demo/Demo'</span>;</span><br><span class="line"></span><br><span class="line">render(<span class="xml"><span class="tag">&lt;<span class="name">Demo</span> /&gt;</span>, document.getElementById('app'));</span></span><br></pre></td></tr></table></figure>
+<p>/src/components/variables.scss  组件共用的样式 ,一般放置全局变量和mixin , 在组件的样式文件中通过 <code>@import &quot;../variables&quot;;</code> 引入</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$bodyColor</span>: pink;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="variable">$bodyColor</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>/src/components/Demo/Demo.js   这个react组件语法要记住,另外引入外部样式,使用 <code>className</code> 属性 , 尝试了 <code>className={s.demo}</code> 没有成功,尚不清楚原因</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">"react"</span>;</span><br><span class="line"><span class="keyword">import</span> s <span class="keyword">from</span> <span class="string">"./style.scss"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span></span>&#123;</span><br><span class="line">    render()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"demo"</span>&gt;</span>你是这个世界上无与伦比的美丽~<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>/src/components/Demo/style.scss    </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">"../variables"</span>;</span><br><span class="line"></span><br><span class="line">$divColor: lightblue;</span><br><span class="line">$demoColor: seashell;</span><br><span class="line"></span><br><span class="line">@mixin divFacade($width:<span class="number">100</span>px,<span class="attr">$height</span>:<span class="number">100</span>px,<span class="attr">$color</span>:yellow) &#123;</span><br><span class="line">  width: $width;</span><br><span class="line">  height: $height;</span><br><span class="line">  background-color: $color;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div &#123;</span><br><span class="line">  @include divFacade(<span class="number">330</span>px, <span class="number">140</span>px, $divColor)</span><br><span class="line">&#125;</span><br><span class="line">.demo &#123;</span><br><span class="line">  background-color: $demoColor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="预览"><a href="#预览" class="headerlink" title="预览"></a>预览</h3><img src="/2018/01/26/react-2018-01-26-react-app-04/react-scss.png">
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjcvmkxdc001q7gtpds6103l0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/26/react-2018-01-26-react-app-05/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          react-05-前端工事搭建-redux的使用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/26/react-2018-01-26-react-app-03/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">react-03-前端工事搭建-react服务器端渲染</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp/">cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 12.5px;">algorithm</a> <a href="/tags/c/" style="font-size: 17.5px;">c</a> <a href="/tags/cpp/" style="font-size: 20px;">cpp</a> <a href="/tags/react/" style="font-size: 15px;">react</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/">算法-各种图</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/">算法-各种查找</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/">算法-各种排序</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/">算法-基础</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/react-2018-01-26-react-app-05/">react-05-前端工事搭建-redux的使用</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 qianqian<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
