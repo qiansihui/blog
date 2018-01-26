@@ -5,18 +5,18 @@
   
   <title>react-03-前端工事搭建-react服务器端渲染 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概览:react的使用 , 服务器端渲染    前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去 尝试服务器端渲染关键在于用 React.renderToString(Component({})) 方法将组件转为html插入到页面">
+  <meta name="description" content="概览:react的使用 , 服务器端渲染">
 <meta name="keywords" content="react">
 <meta property="og:type" content="article">
 <meta property="og:title" content="react-03-前端工事搭建-react服务器端渲染">
 <meta property="og:url" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/index.html">
 <meta property="og:site_name" content="前前的Blog">
-<meta property="og:description" content="概览:react的使用 , 服务器端渲染    前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去 尝试服务器端渲染关键在于用 React.renderToString(Component({})) 方法将组件转为html插入到页面">
+<meta property="og:description" content="概览:react的使用 , 服务器端渲染">
 <meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/server03.png">
-<meta property="og:updated_time" content="2018-01-26T07:47:35.450Z">
+<meta property="og:updated_time" content="2018-01-26T10:59:22.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-03-前端工事搭建-react服务器端渲染">
-<meta name="twitter:description" content="概览:react的使用 , 服务器端渲染    前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去 尝试服务器端渲染关键在于用 React.renderToString(Component({})) 方法将组件转为html插入到页面">
+<meta name="twitter:description" content="概览:react的使用 , 服务器端渲染">
 <meta name="twitter:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/server03.png">
   
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
@@ -44,7 +44,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -95,6 +95,7 @@
         <!-- Table of Contents -->
         
         <p>概览:react的使用 , 服务器端渲染   </p>
+<a id="more"></a>
 <p>前面用户列表展示出来后,需要做的就是增删改查各种操作,用jquery? , 真心累了 .换react试下.<br>现在想用js加载用户列表动态渲染页面,渲染方式有两种: 1,浏览器端渲染 2,服务器端渲染,然后传递html回去</p>
 <h1 id="尝试服务器端渲染"><a href="#尝试服务器端渲染" class="headerlink" title="尝试服务器端渲染"></a>尝试服务器端渲染</h1><p>关键在于用 <code>React.renderToString(Component({}))</code> 方法将组件转为html插入到页面去.<br>接着遇到了一个坑 , 报错 React.renderToString is not a function 郁闷一天 , 发现用 <code>npm install react --save</code> 下载的react是15.xx.xx版本 , 改成 <code>&quot;react&quot;: &quot;~0.12.0&quot;,</code> 就好了<br>接着有一个问题,isomorphic-server项目用的是jade模版引擎 , 折腾一番发现只要在视图名加上ejs后缀就可以了 , 好智能.</p>
 <h2 id="定义组件"><a href="#定义组件" class="headerlink" title="定义组件"></a>定义组件</h2><p>/components/MyTable.js   </p>
@@ -110,7 +111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjcvs83eh000oh4tp5h9ve60t" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjcvs83eh000oh4tp5h9ve60t" class="article-share-link">Share</a>
       
       
       
@@ -122,7 +123,7 @@
     
  <script src="/jquery/jquery.min.js"></script>
   <div id="random_posts">
-    <h2>推荐文章</h2>
+    <h2>Recommended Posts</h2>
     <div class="random_posts_ul">
       <script>
           var random_count =4
@@ -165,7 +166,7 @@
 <nav id="article-nav">
   
     <a href="/2018/01/26/react-2018-01-26-react-app-04/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           react-04-前端工事搭建-react客户端渲染
@@ -175,7 +176,7 @@
   
   
     <a href="/2018/01/26/react-2018-01-26-react-app-02/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">react-02-又是起手式:同构js</div>
     </a>
   
@@ -210,7 +211,7 @@
     
       <div class="widget" id="toc-widget-fixed">
       
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
               <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#尝试服务器端渲染"><span class="toc-number">1.</span> <span class="toc-text">尝试服务器端渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定义组件"><span class="toc-number">1.1.</span> <span class="toc-text">定义组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用和渲染"><span class="toc-number">1.2.</span> <span class="toc-text">调用和渲染</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由和页面"><span class="toc-number">1.3.</span> <span class="toc-text">路由和页面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#预览"><span class="toc-number">1.4.</span> <span class="toc-text">预览</span></a></li></ol></li></ol>
           </div>
@@ -242,10 +243,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      联系方式&nbsp;|&nbsp;fyszsqq@163.com
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>

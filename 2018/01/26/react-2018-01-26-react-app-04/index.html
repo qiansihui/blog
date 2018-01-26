@@ -5,20 +5,20 @@
   
   <title>react-04-前端工事搭建-react客户端渲染 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概览: react,sass,webpack的使用 , 客户端渲染    react原本就是用来客户端渲染的, redux则是flux思想的实现,用来处理单向的数据绑定. 现在也可以都拿来在服务器端渲染首屏页面.现在先从它原本的职责浏览器端渲染开始熟悉. 项目又切换到 express-server 作为服务器在建立一个react项目作为客户端,使用webpack打包构建   webpack文档 预">
+  <meta name="description" content="概览: react,sass,webpack的使用 , 客户端渲染">
 <meta name="keywords" content="react">
 <meta property="og:type" content="article">
 <meta property="og:title" content="react-04-前端工事搭建-react客户端渲染">
 <meta property="og:url" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/index.html">
 <meta property="og:site_name" content="前前的Blog">
-<meta property="og:description" content="概览: react,sass,webpack的使用 , 客户端渲染    react原本就是用来客户端渲染的, redux则是flux思想的实现,用来处理单向的数据绑定. 现在也可以都拿来在服务器端渲染首屏页面.现在先从它原本的职责浏览器端渲染开始熟悉. 项目又切换到 express-server 作为服务器在建立一个react项目作为客户端,使用webpack打包构建   webpack文档 预">
+<meta property="og:description" content="概览: react,sass,webpack的使用 , 客户端渲染">
 <meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/scss.png">
 <meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/react-demo.png">
 <meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/react-scss.png">
-<meta property="og:updated_time" content="2018-01-26T07:47:35.451Z">
+<meta property="og:updated_time" content="2018-01-26T10:59:31.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-04-前端工事搭建-react客户端渲染">
-<meta name="twitter:description" content="概览: react,sass,webpack的使用 , 客户端渲染    react原本就是用来客户端渲染的, redux则是flux思想的实现,用来处理单向的数据绑定. 现在也可以都拿来在服务器端渲染首屏页面.现在先从它原本的职责浏览器端渲染开始熟悉. 项目又切换到 express-server 作为服务器在建立一个react项目作为客户端,使用webpack打包构建   webpack文档 预">
+<meta name="twitter:description" content="概览: react,sass,webpack的使用 , 客户端渲染">
 <meta name="twitter:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/scss.png">
   
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
@@ -46,7 +46,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -97,6 +97,7 @@
         <!-- Table of Contents -->
         
         <p>概览: react,sass,webpack的使用 , 客户端渲染   </p>
+<a id="more"></a>
 <p>react原本就是用来客户端渲染的, redux则是flux思想的实现,用来处理单向的数据绑定. 现在也可以都拿来在服务器端渲染首屏页面.<br>现在先从它原本的职责浏览器端渲染开始熟悉. 项目又切换到 express-server 作为服务器<br>在建立一个react项目作为客户端,使用webpack打包构建   <a href="http://webpack.github.io/docs/tutorials/getting-started/" target="_blank" rel="noopener">webpack文档</a></p>
 <h2 id="预备工作"><a href="#预备工作" class="headerlink" title="预备工作"></a>预备工作</h2><h3 id="使用-CSS预处理器-sass"><a href="#使用-CSS预处理器-sass" class="headerlink" title="使用 CSS预处理器 sass"></a>使用 CSS预处理器 sass</h3><p>文档:  <a href="http://www.w3cplus.com/sassguide/" target="_blank" rel="noopener">sass十分钟入门</a> , <a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="noopener">阮一峰的blog</a><br>安装命令 <code>npm uninstall node-sass</code> , <code>npm install sass-loader node-sass webpack --save-dev</code><br>webpack 配置 sass的加载器 见 <a href="https://github.com/jtangelder/sass-loader" target="_blank" rel="noopener">sass-loader</a><br>目录结构:<br><img src="/2018/01/26/react-2018-01-26-react-app-04/scss.png" title="sass的使用"></p>
 <p>/index.html , 引入的bundle.js是 将js和css打包后的结果</p>
@@ -131,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjcvs83ek000sh4tp5cz2nkxr" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjcvs83ek000sh4tp5cz2nkxr" class="article-share-link">Share</a>
       
       
       
@@ -143,7 +144,7 @@
     
  <script src="/jquery/jquery.min.js"></script>
   <div id="random_posts">
-    <h2>推荐文章</h2>
+    <h2>Recommended Posts</h2>
     <div class="random_posts_ul">
       <script>
           var random_count =4
@@ -186,7 +187,7 @@
 <nav id="article-nav">
   
     <a href="/2018/01/26/react-2018-01-26-react-app-05/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           react-05-前端工事搭建-redux的使用
@@ -196,7 +197,7 @@
   
   
     <a href="/2018/01/26/react-2018-01-26-react-app-03/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">react-03-前端工事搭建-react服务器端渲染</div>
     </a>
   
@@ -231,7 +232,7 @@
     
       <div class="widget" id="toc-widget-fixed">
       
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
               <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#预备工作"><span class="toc-number">1.</span> <span class="toc-text">预备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-CSS预处理器-sass"><span class="toc-number">1.1.</span> <span class="toc-text">使用 CSS预处理器 sass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#react的使用"><span class="toc-number">1.2.</span> <span class="toc-text">react的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#预览"><span class="toc-number">1.3.</span> <span class="toc-text">预览</span></a></li></ol></li></ol>
           </div>
@@ -263,10 +264,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      联系方式&nbsp;|&nbsp;fyszsqq@163.com
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>

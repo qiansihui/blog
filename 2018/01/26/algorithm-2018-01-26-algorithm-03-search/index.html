@@ -5,17 +5,17 @@
   
   <title>算法-各种查找 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="查找符号表：描述一张抽象的表格，信息存储其中，按照键值搜索获取。又称字典、索引。 有序数组中的二分查找她使用的数据结构是一对平行数组，一个存储键一个存储值。键数组有序，可通过二分查找高效查找。但put操作需要将比它大的元素后移一位。同时要维护数组长度。   在N个键的有序数组中进行二分查找最多需要(lgN+1)次比较。   核心问题在于我们能否找到同时保证查找和插入操作都是对数级别的算法和数据结">
+  <meta name="description" content="查找符号表：描述一张抽象的表格，信息存储其中，按照键值搜索获取。又称字典、索引。 有序数组中的二分查找她使用的数据结构是一对平行数组，一个存储键一个存储值。键数组有序，可通过二分查找高效查找。但put操作需要将比它大的元素后移一位。同时要维护数组长度。   在N个键的有序数组中进行二分查找最多需要(lgN+1)次比较。   核心问题在于我们能否找到同时保证查找和插入操作都是对数级别的算法和数据">
 <meta name="keywords" content="algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法-各种查找">
 <meta property="og:url" content="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/index.html">
 <meta property="og:site_name" content="前前的Blog">
-<meta property="og:description" content="查找符号表：描述一张抽象的表格，信息存储其中，按照键值搜索获取。又称字典、索引。 有序数组中的二分查找她使用的数据结构是一对平行数组，一个存储键一个存储值。键数组有序，可通过二分查找高效查找。但put操作需要将比它大的元素后移一位。同时要维护数组长度。   在N个键的有序数组中进行二分查找最多需要(lgN+1)次比较。   核心问题在于我们能否找到同时保证查找和插入操作都是对数级别的算法和数据结">
-<meta property="og:updated_time" content="2018-01-26T07:46:00.983Z">
+<meta property="og:description" content="查找符号表：描述一张抽象的表格，信息存储其中，按照键值搜索获取。又称字典、索引。 有序数组中的二分查找她使用的数据结构是一对平行数组，一个存储键一个存储值。键数组有序，可通过二分查找高效查找。但put操作需要将比它大的元素后移一位。同时要维护数组长度。   在N个键的有序数组中进行二分查找最多需要(lgN+1)次比较。   核心问题在于我们能否找到同时保证查找和插入操作都是对数级别的算法和数据">
+<meta property="og:updated_time" content="2018-01-26T11:00:07.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法-各种查找">
-<meta name="twitter:description" content="查找符号表：描述一张抽象的表格，信息存储其中，按照键值搜索获取。又称字典、索引。 有序数组中的二分查找她使用的数据结构是一对平行数组，一个存储键一个存储值。键数组有序，可通过二分查找高效查找。但put操作需要将比它大的元素后移一位。同时要维护数组长度。   在N个键的有序数组中进行二分查找最多需要(lgN+1)次比较。   核心问题在于我们能否找到同时保证查找和插入操作都是对数级别的算法和数据结">
+<meta name="twitter:description" content="查找符号表：描述一张抽象的表格，信息存储其中，按照键值搜索获取。又称字典、索引。 有序数组中的二分查找她使用的数据结构是一对平行数组，一个存储键一个存储值。键数组有序，可通过二分查找高效查找。但put操作需要将比它大的元素后移一位。同时要维护数组长度。   在N个键的有序数组中进行二分查找最多需要(lgN+1)次比较。   核心问题在于我们能否找到同时保证查找和插入操作都是对数级别的算法和数据">
   
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
   
@@ -42,7 +42,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -93,6 +93,7 @@
         <!-- Table of Contents -->
         
         
+<a id="more"></a>
 <h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><p>符号表：描述一张抽象的表格，信息存储其中，按照键值搜索获取。又称字典、索引。</p>
 <h2 id="有序数组中的二分查找"><a href="#有序数组中的二分查找" class="headerlink" title="有序数组中的二分查找"></a>有序数组中的二分查找</h2><p>她使用的数据结构是一对平行数组，一个存储键一个存储值。键数组有序，可通过二分查找高效查找。但put操作需要将比它大的元素后移一位。同时要维护数组长度。  </p>
 <p>在N个键的有序数组中进行二分查找最多需要<code>(lgN+1)</code>次比较。  </p>
@@ -147,7 +148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjcvs83d00002h4tpu1l9ory0" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjcvs83d00002h4tpu1l9ory0" class="article-share-link">Share</a>
       
       
       
@@ -159,7 +160,7 @@
     
  <script src="/jquery/jquery.min.js"></script>
   <div id="random_posts">
-    <h2>推荐文章</h2>
+    <h2>Recommended Posts</h2>
     <div class="random_posts_ul">
       <script>
           var random_count =4
@@ -202,7 +203,7 @@
 <nav id="article-nav">
   
     <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           算法-各种图
@@ -212,7 +213,7 @@
   
   
     <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">算法-各种排序</div>
     </a>
   
@@ -247,7 +248,7 @@
     
       <div class="widget" id="toc-widget-fixed">
       
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
               <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查找"><span class="toc-number">1.</span> <span class="toc-text">查找</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#有序数组中的二分查找"><span class="toc-number">1.1.</span> <span class="toc-text">有序数组中的二分查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二叉查找树-BST"><span class="toc-number">1.2.</span> <span class="toc-text">二叉查找树 BST</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#平衡二叉查找树（红黑树RedBlackBST）"><span class="toc-number">1.3.</span> <span class="toc-text">平衡二叉查找树（红黑树RedBlackBST）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#散列表"><span class="toc-number">1.4.</span> <span class="toc-text">散列表</span></a></li></ol></li></ol>
           </div>
@@ -279,10 +280,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      联系方式&nbsp;|&nbsp;fyszsqq@163.com
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
