@@ -1,5 +1,5 @@
 ---
-title: cpp-04-array-pointer
+title: C++ 04 数组和指针
 date: 2018-01-26 14:29:04
 tags: cpp
 ---
