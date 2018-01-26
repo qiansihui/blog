@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>C - 基础 - 文件输入、输出 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="二进制 I/O fread() 、 fwrite()函数12345678910111213141516171819202122232425262728/** 将二进制数据写入文件 size_t是sizeof运算符返回类型，    ptr为要写入的数据块地址，不确定类型    size表示要写入的数据块大小（字节单位）    nmemb 数据块数目。    fp 要写入的文件    返回成写入的项目">
+<meta name="keywords" content="C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C - 基础 - 文件输入、输出">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-02-io/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="二进制 I/O fread() 、 fwrite()函数12345678910111213141516171819202122232425262728/** 将二进制数据写入文件 size_t是sizeof运算符返回类型，    ptr为要写入的数据块地址，不确定类型    size表示要写入的数据块大小（字节单位）    nmemb 数据块数目。    fp 要写入的文件    返回成写入的项目">
+<meta property="og:updated_time" content="2018-01-26T02:21:40.738Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C - 基础 - 文件输入、输出">
+<meta name="twitter:description" content="二进制 I/O fread() 、 fwrite()函数12345678910111213141516171819202122232425262728/** 将二进制数据写入文件 size_t是sizeof运算符返回类型，    ptr为要写入的数据块地址，不确定类型    size表示要写入的数据块大小（字节单位）    nmemb 数据块数目。    fp 要写入的文件    返回成写入的项目">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-c-2018-01-26-c-02-io" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/c-2018-01-26-c-02-io/" class="article-date">
+  <time datetime="2018-01-26T02:20:05.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C - 基础 - 文件输入、输出
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="二进制-I-O-fread-、-fwrite-函数"><a href="#二进制-I-O-fread-、-fwrite-函数" class="headerlink" title="二进制 I/O fread() 、 fwrite()函数"></a>二进制 I/O fread() 、 fwrite()函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 将二进制数据写入文件 size_t是sizeof运算符返回类型，</span></span><br><span class="line"><span class="comment">    ptr为要写入的数据块地址，不确定类型</span></span><br><span class="line"><span class="comment">    size表示要写入的数据块大小（字节单位）</span></span><br><span class="line"><span class="comment">    nmemb 数据块数目。</span></span><br><span class="line"><span class="comment">    fp 要写入的文件</span></span><br><span class="line"><span class="comment">    返回成写入的项目数，正常情况与nmemb相等</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">size_t</span> fwrite(<span class="keyword">const</span> <span class="keyword">void</span> * <span class="keyword">restrict</span> ptr , <span class="keyword">size_t</span> size , <span class="keyword">size_t</span> nmemb , FILE * <span class="keyword">restrict</span> fp);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 256字节大小数据对象写入文件</span></span><br><span class="line"><span class="keyword">double</span> buffer[<span class="number">10</span>];</span><br><span class="line">fwrite(buffer,<span class="keyword">sizeof</span>(<span class="keyword">double</span>),<span class="number">10</span>,fp);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 读取文件 size_t是sizeof运算符返回类型，</span></span><br><span class="line"><span class="comment">    ptr 读入文件数据的内存存储地址</span></span><br><span class="line"><span class="comment">    size表示要写入的数据块大小（字节单位）</span></span><br><span class="line"><span class="comment">    nmemb 数据块数目。</span></span><br><span class="line"><span class="comment">    fp 要读取的文件</span></span><br><span class="line"><span class="comment">    返回成写入的项目数，正常情况与nmemb相等</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">size_t</span> fread(<span class="keyword">void</span> * <span class="keyword">restrict</span> ptr , <span class="keyword">size_t</span> size , <span class="keyword">size_t</span> nmemb , FILE * <span class="keyword">restrict</span> fp);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从文件读取到缓冲区</span></span><br><span class="line"><span class="keyword">double</span> buffer[<span class="number">10</span>];</span><br><span class="line">fread(buffer,<span class="keyword">sizeof</span>(<span class="keyword">double</span>),<span class="number">10</span>,fp);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">feof</span><span class="params">(FILE *fp)</span> </span>; <span class="comment">//读取到结尾返回非零值</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ferror</span><span class="params">(FILE *fp)</span> </span>; <span class="comment">//读写错误返回非零值</span></span><br></pre></td></tr></table></figure>
+<p>示例： 将文件追加到另一个文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SLEN 50</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFSIZE 1024</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">appen</span><span class="params">(FILE *source, FILE *dest)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将文件追加到另一个文件</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE *fp , *ft;</span><br><span class="line">	<span class="keyword">char</span> source[SLEN] = <span class="string">"/share/PostLoanData/file.txt"</span>; <span class="comment">// 源文件</span></span><br><span class="line">	<span class="keyword">char</span> targe[SLEN] = <span class="string">"/share/PostLoanData/file2.txt"</span>; <span class="comment">// 源文件</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> ch;</span><br><span class="line">	<span class="keyword">long</span> count, last;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((fp = fopen(source, <span class="string">"r"</span>)) == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"open source fail %s\n"</span>, source);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((ft = fopen(targe, <span class="string">"a"</span>)) == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"open targe fail %s\n"</span>, targe);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (setvbuf(fp, <span class="literal">NULL</span>, _IOFBF, BUFSIZE) != <span class="number">0</span>)	<span class="comment">// 替代默认缓冲区</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">fputs</span>(<span class="string">"Can't create input buffer\n"</span>, <span class="built_in">stderr</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	appen(fp, ft);</span><br><span class="line">	<span class="keyword">if</span> (ferror(fp) != <span class="number">0</span>) <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error in read file %s \n"</span>, source);</span><br><span class="line">	<span class="keyword">if</span> (ferror(ft) != <span class="number">0</span>) <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error in read file %s \n"</span>, targe);</span><br><span class="line">	fclose(fp);</span><br><span class="line">	fclose(ft);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">appen</span><span class="params">(FILE * source, FILE * dest)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">size_t</span> bytes;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">char</span> temp[BUFSIZE]; <span class="comment">// 分配一次</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> ((bytes = fread(temp, <span class="keyword">sizeof</span>(<span class="keyword">char</span>), BUFSIZE, source)) &gt; <span class="number">0</span>) <span class="comment">// 读取到缓冲区</span></span><br><span class="line">		fwrite(temp, <span class="keyword">sizeof</span>(<span class="keyword">char</span>), bytes, dest);	<span class="comment">// 从缓冲区写入文件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-02-io/" data-id="cjcvaxpve00026ctpvw3fj50a" class="article-share-link">Compartir</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/26/c-2018-01-26-c-01-basic/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Viejo</strong>
+      <div class="article-nav-title">C - 基础 - 存储类、链接、内存管理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工具/">工具</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nube de Tags</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C/" style="font-size: 20px;">C</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archivos</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Posts recientes</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/26/c-2018-01-26-c-02-io/">C - 基础 - 文件输入、输出</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/26/c-2018-01-26-c-01-basic/">C - 基础 - 存储类、链接、内存管理</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/util-2018-01-25-markdown/">markdown 语法复习</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 qianqian<br>
+      Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
