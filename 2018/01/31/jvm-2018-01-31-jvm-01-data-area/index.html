@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Jvm笔记-01-Java运行时数据区域与对象 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="运行时数据区域1. 程序计数器  Program Counter Register通过改变计数器值选取下一条指令完成分支、循环、跳转、异常处理、线程恢复等基础功能。线程私有，互不影响。 2. Java虚拟机栈 JVM Stacks线程私有，生命周期与线程相同。每个方法执行时创建栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等，方法调用与完成对应入栈和出栈。Java内存区粗略分为堆和栈，栈即虚">
+<meta name="keywords" content="jvm笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jvm笔记-01-Java运行时数据区域与对象">
+<meta property="og:url" content="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="运行时数据区域1. 程序计数器  Program Counter Register通过改变计数器值选取下一条指令完成分支、循环、跳转、异常处理、线程恢复等基础功能。线程私有，互不影响。 2. Java虚拟机栈 JVM Stacks线程私有，生命周期与线程相同。每个方法执行时创建栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等，方法调用与完成对应入栈和出栈。Java内存区粗略分为堆和栈，栈即虚">
+<meta property="og:updated_time" content="2018-01-31T06:45:03.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jvm笔记-01-Java运行时数据区域与对象">
+<meta name="twitter:description" content="运行时数据区域1. 程序计数器  Program Counter Register通过改变计数器值选取下一条指令完成分支、循环、跳转、异常处理、线程恢复等基础功能。线程私有，互不影响。 2. Java虚拟机栈 JVM Stacks线程私有，生命周期与线程相同。每个方法执行时创建栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等，方法调用与完成对应入栈和出栈。Java内存区粗略分为堆和栈，栈即虚">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jvm-2018-01-31-jvm-01-data-area" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" class="article-date">
+  <time datetime="2018-01-31T06:36:27.000Z" itemprop="datePublished">2018-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Jvm笔记-01-Java运行时数据区域与对象
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><h2 id="1-程序计数器-Program-Counter-Register"><a href="#1-程序计数器-Program-Counter-Register" class="headerlink" title="1. 程序计数器  Program Counter Register"></a>1. 程序计数器  <code>Program Counter Register</code></h2><p>通过改变计数器值选取下一条指令完成分支、循环、跳转、异常处理、线程恢复等基础功能。<br>线程私有，互不影响。</p>
+<h2 id="2-Java虚拟机栈-JVM-Stacks"><a href="#2-Java虚拟机栈-JVM-Stacks" class="headerlink" title="2. Java虚拟机栈 JVM Stacks"></a>2. Java虚拟机栈 <code>JVM Stacks</code></h2><p>线程私有，生命周期与线程相同。<br>每个方法执行时创建栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等，方法调用与完成对应入栈和出栈。<br>Java内存区粗略分为堆和栈，栈即虚拟机栈。<br>配置 <code>-Xss</code> 参数设定栈帧大小</p>
+<h2 id="3-本地方法栈-Native-Method-Stack"><a href="#3-本地方法栈-Native-Method-Stack" class="headerlink" title="3. 本地方法栈 Native Method Stack"></a>3. 本地方法栈 <code>Native Method Stack</code></h2><p>执行本地方法的栈。  </p>
+<h2 id="4-Java堆-Java-Heap"><a href="#4-Java堆-Java-Heap" class="headerlink" title="4. Java堆 Java Heap"></a>4. Java堆 <code>Java Heap</code></h2><p>线程共享，虚拟机启动时创建，几乎所有对象在这里分配内存。<br>Java堆分为新生代（<code>Eden</code>、<code>From Survivor</code>、<code>To Survivor</code>）和老年代。<br><code>-Xms</code> 最小值，<code>-Xmx</code> 最大值  </p>
+<h2 id="5-方法区-Method-Area"><a href="#5-方法区-Method-Area" class="headerlink" title="5. 方法区 Method Area"></a>5. 方法区 <code>Method Area</code></h2><p>线程共享，用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等。<br>被成为永久代 <code>Permanent Generation</code>，配置 <code>-XX:MaxPermSize</code> 上限。  </p>
+<h2 id="6-运行时常量池-Runtime-Constant-Pool"><a href="#6-运行时常量池-Runtime-Constant-Pool" class="headerlink" title="6. 运行时常量池 Runtime Constant Pool"></a>6. 运行时常量池 <code>Runtime Constant Pool</code></h2><p>运行时常量池是方法区中一部分，jdk8被放到 <code>MetaSpace</code> 空间。<br>类的版本、字段、方法、接口等描述信息，还有常量池(<code>Constant Pool Table</code> )，存放编译期生成的各种字面量和符号引用。<br>jdk7之前，字符串常量池在方法区中，使用 <code>String.intern()</code> 方法可将字符串放入。  </p>
+<h2 id="7-直接内存-Direct-Memory"><a href="#7-直接内存-Direct-Memory" class="headerlink" title="7. 直接内存  Direct Memory"></a>7. 直接内存  Direct Memory</h2><p>不是虚拟机运行时数据区的一部分，也可能OOM异常。<br>jdk1.4加入NIO，是一种基于通道 <code>Channel</code> 和缓冲区 <code>Buffer</code> 的I/O方式，可以使用 <code>Native</code> 函数库直接分配对外内存，然后通过堆中 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作，避免Java堆与Native堆中数据复制来提高效率。  </p>
+<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><h2 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h2><ol>
+<li>遇到new指令时，首先检查指令参数能否在常量池中定位到一个类的符号引用，并检查这个这个符号引用代表的类是否被加载、解析和初始化过。  </li>
+<li>如果没有，执行相应的类加载过程。  </li>
+<li><p>类加载通过后，虚拟机为新生对象分配内存。  </p>
+<pre><code>如何分配内存？
+对象所需内存大小在加载完成后便完全确定，所以将一块确定大小内存从Java堆中划分出来即可。  
+若内存规整，采用指针碰撞分配算法，将指针向空闲空间挪动。
+若非连续存放，须维护空闲列表，找到足够大空间划分。
+`Serial` 串行收集器、`ParNew` 多线程串行收集器等带 `Compact` 过程收集器，分配算法采用指针碰撞。
+`CMS` 这种基于 `Mark-Sweep` 算法，采用空闲列表。
+</code></pre></li>
+<li><p>内存分配完成后，将分配到的内存空间初始化为零值。   </p>
+</li>
+<li>虚拟机对对象进行必要设置，该实例所属类、类的元数据信息、对象哈希姆、对象GC分代年龄信息等，存放在对象头中。  </li>
+<li>执行 <code>&lt;init&gt;</code> 构造方法，按照程序员的意愿进行初始化，对象引用入栈。  </li>
+</ol>
+<h2 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h2><p>对象在内存中存储布局分为 3 块区域：对象头(<code>Header</code>)、实例数据(<code>Instance Data</code>)和对齐填充(<code>Padding</code>)。  </p>
+<ol>
+<li><p>对象头包括两部分信息</p>
+<p> 第一部分是存储对象自身的运行时数据 <code>Mark Word</code>。  </p>
+<pre><code>如哈希码、GC分代年龄、锁状态标识、线程持有锁、偏向线程ID、偏向时间戳等。
+</code></pre><p> 另一部分是类型指针，即对象指向它的元数据的指针。</p>
+<pre><code>虚拟机通过这个指针来确定该对象是那个类的实例。
+</code></pre></li>
+</ol>
+<ol>
+<li><p>实例数据</p>
+<pre><code>对象真正存储的有效信息，即代码中定义的各类型字段内容。
+</code></pre></li>
+<li><p>对齐填充</p>
+<pre><code>仅是占位符作用。
+</code></pre></li>
+</ol>
+<h2 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h2><p>通过栈上的引用 <code>reference</code> 来操作堆上具体对象，主流的访问方式有使用句柄和直接指针两种。  </p>
+<ol>
+<li><p>句柄访问。</p>
+<pre><code>Java堆中将划分出句柄池，&apos;reference&apos; 指向句柄地址，句柄中存放了对象实例数据与类型数据各自的具体地址信息。  
+优势：在对象被移动时只会改变句柄中实例数据指针，reference本身不需要修改。
+</code></pre></li>
+<li><p>直接指针访问。</p>
+<pre><code>&apos;reference&apos; 直接存储对象地址，Java堆中对象布局中须防止访问类型数据信息。
+优势： 访问速度快，因节省了一次指针定位的时间开销。
+HotSpot使用直接指针进行对象访问。
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cjd2pjkx10006lgtpb0zgoi9b" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm笔记/">jvm笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/31/jvm-2018-01-31-jvm-02-gc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          jvm笔记-02-垃圾收集器与内存分配策略
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">拖延心理学</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#运行时数据区域"><span class="toc-number">1.</span> <span class="toc-text">运行时数据区域</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-程序计数器-Program-Counter-Register"><span class="toc-number">1.1.</span> <span class="toc-text">1. 程序计数器  Program Counter Register</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Java虚拟机栈-JVM-Stacks"><span class="toc-number">1.2.</span> <span class="toc-text">2. Java虚拟机栈 JVM Stacks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-本地方法栈-Native-Method-Stack"><span class="toc-number">1.3.</span> <span class="toc-text">3. 本地方法栈 Native Method Stack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Java堆-Java-Heap"><span class="toc-number">1.4.</span> <span class="toc-text">4. Java堆 Java Heap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-方法区-Method-Area"><span class="toc-number">1.5.</span> <span class="toc-text">5. 方法区 Method Area</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-运行时常量池-Runtime-Constant-Pool"><span class="toc-number">1.6.</span> <span class="toc-text">6. 运行时常量池 Runtime Constant Pool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-直接内存-Direct-Memory"><span class="toc-number">1.7.</span> <span class="toc-text">7. 直接内存  Direct Memory</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对象"><span class="toc-number">2.</span> <span class="toc-text">对象</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的创建"><span class="toc-number">2.1.</span> <span class="toc-text">对象的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的内存布局"><span class="toc-number">2.2.</span> <span class="toc-text">对象的内存布局</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的访问定位"><span class="toc-number">2.3.</span> <span class="toc-text">对象的访问定位</span></a></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'qiansihui',
+    repo: 'qiansihui.github.io',
+    oauth: {
+    client_id: 'd42bc31612b69e9bed4d',
+    client_secret: '25895beb3ddbbf0f5b330308a71a5fae2715a9ae',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>

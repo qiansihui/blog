@@ -68,6 +68,113 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-c-2018-01-26-c-02-io" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/c-2018-01-26-c-02-io/" class="article-date">
+  <time datetime="2018-01-26T02:20:05.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/26/c-2018-01-26-c-02-io/">C - 基础 - 文件输入、输出</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="二进制-I-O-fread-、-fwrite-函数"><a href="#二进制-I-O-fread-、-fwrite-函数" class="headerlink" title="二进制 I/O fread() 、 fwrite()函数"></a>二进制 I/O fread() 、 fwrite()函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 将二进制数据写入文件 size_t是sizeof运算符返回类型，</span></span><br><span class="line"><span class="comment">    ptr为要写入的数据块地址，不确定类型</span></span><br><span class="line"><span class="comment">    size表示要写入的数据块大小（字节单位）</span></span><br><span class="line"><span class="comment">    nmemb 数据块数目。</span></span><br><span class="line"><span class="comment">    fp 要写入的文件</span></span><br><span class="line"><span class="comment">    返回成写入的项目数，正常情况与nmemb相等</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">size_t</span> fwrite(<span class="keyword">const</span> <span class="keyword">void</span> * <span class="keyword">restrict</span> ptr , <span class="keyword">size_t</span> size , <span class="keyword">size_t</span> nmemb , FILE * <span class="keyword">restrict</span> fp);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 256字节大小数据对象写入文件</span></span><br><span class="line"><span class="keyword">double</span> buffer[<span class="number">10</span>];</span><br><span class="line">fwrite(buffer,<span class="keyword">sizeof</span>(<span class="keyword">double</span>),<span class="number">10</span>,fp);</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 读取文件 size_t是sizeof运算符返回类型，</span></span><br><span class="line"><span class="comment">    ptr 读入文件数据的内存存储地址</span></span><br><span class="line"><span class="comment">    size表示要写入的数据块大小（字节单位）</span></span><br><span class="line"><span class="comment">    nmemb 数据块数目。</span></span><br><span class="line"><span class="comment">    fp 要读取的文件</span></span><br><span class="line"><span class="comment">    返回成写入的项目数，正常情况与nmemb相等</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="keyword">size_t</span> fread(<span class="keyword">void</span> * <span class="keyword">restrict</span> ptr , <span class="keyword">size_t</span> size , <span class="keyword">size_t</span> nmemb , FILE * <span class="keyword">restrict</span> fp);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从文件读取到缓冲区</span></span><br><span class="line"><span class="keyword">double</span> buffer[<span class="number">10</span>];</span><br><span class="line">fread(buffer,<span class="keyword">sizeof</span>(<span class="keyword">double</span>),<span class="number">10</span>,fp);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">feof</span><span class="params">(FILE *fp)</span> </span>; <span class="comment">//读取到结尾返回非零值</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ferror</span><span class="params">(FILE *fp)</span> </span>; <span class="comment">//读写错误返回非零值</span></span><br></pre></td></tr></table></figure>
+<p>示例： 将文件追加到另一个文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SLEN 50</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFSIZE 1024</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">appen</span><span class="params">(FILE *source, FILE *dest)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将文件追加到另一个文件</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE *fp , *ft;</span><br><span class="line">	<span class="keyword">char</span> source[SLEN] = <span class="string">"/share/PostLoanData/file.txt"</span>; <span class="comment">// 源文件</span></span><br><span class="line">	<span class="keyword">char</span> targe[SLEN] = <span class="string">"/share/PostLoanData/file2.txt"</span>; <span class="comment">// 源文件</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> ch;</span><br><span class="line">	<span class="keyword">long</span> count, last;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((fp = fopen(source, <span class="string">"r"</span>)) == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"open source fail %s\n"</span>, source);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((ft = fopen(targe, <span class="string">"a"</span>)) == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"open targe fail %s\n"</span>, targe);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">2</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (setvbuf(fp, <span class="literal">NULL</span>, _IOFBF, BUFSIZE) != <span class="number">0</span>)	<span class="comment">// 替代默认缓冲区</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">fputs</span>(<span class="string">"Can't create input buffer\n"</span>, <span class="built_in">stderr</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	appen(fp, ft);</span><br><span class="line">	<span class="keyword">if</span> (ferror(fp) != <span class="number">0</span>) <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error in read file %s \n"</span>, source);</span><br><span class="line">	<span class="keyword">if</span> (ferror(ft) != <span class="number">0</span>) <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error in read file %s \n"</span>, targe);</span><br><span class="line">	fclose(fp);</span><br><span class="line">	fclose(ft);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">appen</span><span class="params">(FILE * source, FILE * dest)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">size_t</span> bytes;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">char</span> temp[BUFSIZE]; <span class="comment">// 分配一次</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> ((bytes = fread(temp, <span class="keyword">sizeof</span>(<span class="keyword">char</span>), BUFSIZE, source)) &gt; <span class="number">0</span>) <span class="comment">// 读取到缓冲区</span></span><br><span class="line">		fwrite(temp, <span class="keyword">sizeof</span>(<span class="keyword">char</span>), bytes, dest);	<span class="comment">// 从缓冲区写入文件</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-02-io/" data-id="cjd2pjkx50009lgtp86b1rjzx" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-c-2018-01-26-c-01-basic" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/c-2018-01-26-c-01-basic/" class="article-date">
+  <time datetime="2018-01-26T02:09:20.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/26/c-2018-01-26-c-01-basic/">C - 基础 - 存储类、链接、内存管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>存储类：即存储模型 自动、寄存器、具有外部链接的静态、具有内部链接的静态、空链接的静态，还有基于指针的类型。<br>作用域：作用范围<br>链接  ： 是否可被外部引用<br>存储时期：变量在内存中保留的时间  </p>
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p>代码块作用域：即方法体等类似范围<br>函数原型作用域：函数声明时范围<br>文件作用域：文件内函数外声明的范围，可被内部任何地方和其他文件引用，也称全局变量  </p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>外部链接： 文件作用域，不用<code>static</code>修饰<br>内部链接： 文件作用域，使用<code>static</code>修饰<br>空链接：   代码块作用域 和 函数原型作用域 变量具有空链接  </p>
+<h2 id="存储时期"><a href="#存储时期" class="headerlink" title="存储时期"></a>存储时期</h2><p>静态存储时期： 静态变量在程序执行期间一直存在，具有文件作用域变量具有静态存储时期。<br>自动存储时期： 局部变量属于自动类型。</p>
+<h2 id="存储类"><a href="#存储类" class="headerlink" title="存储类"></a>存储类</h2><ul>
+<li>寄存器变量 比自动变量访问快、无法获取地址</li>
+<li>代码块作用域的静态变量</li>
+<li>外部链接的静态变量 extern声明在其他文件中定义的变量</li>
+<li>具有内部链接的静态变量</li>
+<li></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">count</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	count();</span><br><span class="line">	count();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">count</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 代码块作用域的静态变量</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">	count++;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"count = %d \n"</span>, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="函数示例"><a href="#函数示例" class="headerlink" title="函数示例"></a>函数示例</h2><p>掷骰子，随机数生成</p>
+<p>头文件 <code>dice.h</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">roll</span><span class="params">(<span class="keyword">int</span> max)</span></span>;</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> count;</span><br></pre></td></tr></table></figure>
+<p>实现 <code>dice.c</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"dice.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> count;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">roll</span><span class="params">(<span class="keyword">int</span> max)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	count++;</span><br><span class="line">	<span class="keyword">return</span> rand() % max + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用 <code>main.c</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"dice.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"掷骰子 1 次 ： %d \n"</span>, roll(<span class="number">100</span>));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"掷骰子 2 次 ： %d \n"</span>, roll(<span class="number">100</span>));</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"总次数 : %d \n"</span>, count);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="内存管理-malloc-和-free"><a href="#内存管理-malloc-和-free" class="headerlink" title="内存管理 malloc() 和 free()"></a>内存管理 malloc() 和 free()</h2><p>创建动态数组,记得要free释放</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> * money;</span><br><span class="line">	<span class="keyword">int</span> max;</span><br><span class="line">	<span class="keyword">int</span> number;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">"要整个多大的数组啊？\b"</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;max);</span><br><span class="line"></span><br><span class="line">	money = (<span class="keyword">double</span> *)<span class="built_in">malloc</span>(max * <span class="keyword">sizeof</span>(<span class="keyword">double</span>)); <span class="comment">// 类型指派 c不是必要，c艹必要</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="literal">NULL</span> == money)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">"空间不足"</span>);</span><br><span class="line">		<span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">"往数组放数吧 \n"</span>);</span><br><span class="line">	<span class="keyword">while</span> (i &lt; max &amp;&amp; <span class="built_in">scanf</span>(<span class="string">"%lf"</span>, &amp;money[i]) == <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"你输入的是： %d \n"</span>, number = i);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; number; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%7.2f "</span>, money[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">"over. \n"</span>);</span><br><span class="line">	<span class="built_in">free</span>(money);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-01-basic/" data-id="cjd2pjkxc000blgtpz0tb25gi" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-util-2018-01-25-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/25/util-2018-01-25-hello-world/" class="article-date">
@@ -105,7 +212,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/25/util-2018-01-25-hello-world/" data-id="cjcvtjw9u001u7wtptmoygu7r" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/25/util-2018-01-25-hello-world/" data-id="cjd2pjkyt001elgtpne2ckd14" class="article-share-link">Share</a>
       
       
       
@@ -189,7 +296,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/25/util-2018-01-25-markdown/" data-id="cjcvtjwam00267wtp8vbvmb8g" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/25/util-2018-01-25-markdown/" data-id="cjd2pjkz9001tlgtp6kry3c5x" class="article-share-link">Share</a>
       
       
       
@@ -229,6 +336,14 @@
       <ul>
         
           <li>
+            <a href="/2018/01/31/jvm-2018-01-31-jvm-02-gc/">jvm笔记-02-垃圾收集器与内存分配策略</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/">Jvm笔记-01-Java运行时数据区域与对象</a>
+          </li>
+        
+          <li>
             <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/">拖延心理学</a>
           </li>
         
@@ -238,14 +353,6 @@
         
           <li>
             <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/">算法-各种查找</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/">算法-各种排序</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/">算法-基础</a>
           </li>
         
       </ul>

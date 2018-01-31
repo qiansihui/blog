@@ -68,6 +68,309 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-jvm-2018-01-31-jvm-02-gc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/31/jvm-2018-01-31-jvm-02-gc/" class="article-date">
+  <time datetime="2018-01-31T06:37:42.000Z" itemprop="datePublished">2018-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/31/jvm-2018-01-31-jvm-02-gc/">jvm笔记-02-垃圾收集器与内存分配策略</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="对象的生存与死亡"><a href="#对象的生存与死亡" class="headerlink" title="对象的生存与死亡"></a>对象的生存与死亡</h1><h2 id="如何判定一个对象的生与死"><a href="#如何判定一个对象的生与死" class="headerlink" title="如何判定一个对象的生与死"></a>如何判定一个对象的生与死</h2><ol>
+<li><p>引用计数法 <code>Reference Counting</code></p>
+<p> 给对象中添加一个引用计数器，被引用加1，引用失效减1，计数器为0则对象可以被回收。<br> 缺点：很难解决对象之间互相循环引用的问题。  </p>
+</li>
+<li><p>可达性分析法 <code>Reachability Analysis</code></p>
+<p> 通过一系列 <code>GC Roots</code> 的对象作为起点，向下搜索，遍历路径称为引用链。当一个对象到 <code>GC Roots</code> 不可达时，证明此对象是不可用的。<br> <code>GC Roots</code>对象包括：  </p>
+<ol>
+<li>虚拟机栈中引用的对象</li>
+<li>方法区中静态常量引用对象</li>
+<li>方法区中常量引用对象</li>
+<li>本地方法栈中引用的对象</li>
+</ol>
+</li>
+</ol>
+<h2 id="死亡面前，各种引用不平等"><a href="#死亡面前，各种引用不平等" class="headerlink" title="死亡面前，各种引用不平等"></a>死亡面前，各种引用不平等</h2><p>这样的一类对象：当内存空间足够是，保存在内存之中。若内存空间在垃圾回收之后仍不足，则可以抛弃这些对象。应用场景如系统的缓存功能。</p>
+<ol>
+<li><p>强引用</p>
+<p> 普遍存在的引用，只要引用关系存在，就不会被回收。</p>
+</li>
+<li><p>软引用</p>
+<p> 还有用但非必须的对象，系统将要发生内存溢出之前，将会把这些对象列入回收范围之内。 <code>SoftReference</code> 类实现。</p>
+</li>
+<li><p>弱引用</p>
+<p> 描述非必须对象，比软引用更弱一些，被弱引用关联对象只能生存到下一次垃圾收集之前。 <code>WeakReference</code> 类实现。</p>
+</li>
+<li><p>虚引用</p>
+<p> 幽灵引用或幻影引用，不会对对象生存时间造成影响，也无法通过虚引用获取对象实例。<br> 为对象设置虚引用关联唯一目的就是能在这个对象被回收时收到一个系统通知。 <code>PhantomReference</code> 类实现。</p>
+</li>
+</ol>
+<h2 id="死亡，不过如此-finalize-方法"><a href="#死亡，不过如此-finalize-方法" class="headerlink" title="死亡，不过如此 finalize()方法"></a>死亡，不过如此 <code>finalize()方法</code></h2><p>可达性分析算法中不可达的对象，到被回收之间至少经历两次标记过程：  </p>
+<ol>
+<li><p>对象在进行可达性分析之后发现没有与 <code>GC Roots</code>的引用链，会被第一次标记并筛选。<br> 筛选的条件是对象是否有必要去执行 <code>finalize()</code> 方法。<br> 当对象没有覆盖该方法，或该方法已经被虚拟机调用过，则没必要执行。  </p>
+</li>
+<li><p>有必要执行 <code>finalize()</code> 方法的对象，被放入 <code>F-Queue</code> 队列中触发该方法。<br> 这是对象自我拯救的最后一次机会：将自己赋值给某个类变量或成员变量。<br> 稍后 GC 将对 <code>F-Queue</code> 中对象进行第二次标记，正式宣告对象死亡。</p>
+</li>
+</ol>
+<p>有点像寻梦环游记里的，如果活着的人没人记得你，你就会在亡灵世界里终极死亡。</p>
+<h2 id="回收方法区（永久代）"><a href="#回收方法区（永久代）" class="headerlink" title="回收方法区（永久代）"></a>回收方法区（永久代）</h2><p>永久代垃圾回收主要是两部分内容：废弃常量与无用的类。  </p>
+<p>判断常量废弃的条件：</p>
+<pre><code>没有任何对象引用常量池中的常量，如字面量、接口、方法、字段的符号引用，垃圾回收时必要时会被回收。
+</code></pre><p>判断类无用的条件：</p>
+<pre><code>1. 该类的所有实例已被回收
+2. 加载该类的 ClassLoader 已被回收
+3. 该类对应的 java.lang.Class对象没有被引用，即无法通过反射访问该类方法。
+</code></pre><p>回收无用的类型，使用 <code>-Xnoclassgc</code> 控制。<br>在大量使用反射、动态代理、CGLib等字节码框架、动态生成JSP以及OSGI频繁自定义ClassLoader的场景，需要虚拟机具备类卸载功能。</p>
+<h1 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h1><h2 id="标记-清除算法-Mark-Sweep"><a href="#标记-清除算法-Mark-Sweep" class="headerlink" title="标记-清除算法 Mark-Sweep"></a>标记-清除算法 <code>Mark-Sweep</code></h2><p>原理：  </p>
+<ol>
+<li>标记阶段：对于不可达的对象进行标记。</li>
+<li>清除阶段：对两次标记的对象进行回收。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>效率问题：标记和清除的效率都不高</li>
+<li>空间问题：会产生大亮不连续的空间碎片，须分配较大对象时，会因为无法找到足够大的内存而提前触发垃圾收集动作。  </li>
+</ol>
+<h2 id="复制算法-Copying"><a href="#复制算法-Copying" class="headerlink" title="复制算法 Copying"></a>复制算法 <code>Copying</code></h2><p>原理：  </p>
+<p>将内存划分为两块，每次使用其中一块，使用完时将其中存活对象复制到另一块，将已经使用的内测空间清理掉。  </p>
+<p>优缺点：</p>
+<p>实现简单，运行高效。<br>可用内存空间变小，且只适用于年轻代。</p>
+<p>内存分配：  </p>
+<p>新生代分为较大的 <code>Eden</code> 空间和两块较小的 <code>Survivor</code> 空间。每次使用 <code>Eden</code> 和 其中一块 <code>Survivor</code>空间。<br>HotSpot虚拟机默认 <code>Eden</code>：<code>Survivor</code> = 8：1<br>当回收时 <code>Survivor</code> 空间不足，需要老年代进行分配担保。</p>
+<h2 id="标记整理算法-Mark-Compact"><a href="#标记整理算法-Mark-Compact" class="headerlink" title="标记整理算法 Mark-Compact"></a>标记整理算法 <code>Mark-Compact</code></h2><p>原理：</p>
+<ol>
+<li>标记同 <code>标记-清除算法</code> 中的标记阶段。</li>
+<li>整理：让所有存活对象向一端移动，然后清理掉边界以外的内存。  </li>
+</ol>
+<p>优点：</p>
+<ol>
+<li>解决 <code>复制算法</code> 在对象存活率较高时复制操作效率低问题。适用于老年代。</li>
+<li>不会浪费内存空间。</li>
+</ol>
+<h2 id="分代收集算法-Generational-Collection"><a href="#分代收集算法-Generational-Collection" class="headerlink" title="分代收集算法 Generational Collection"></a>分代收集算法 <code>Generational Collection</code></h2><p>根据对象存活周期不同将内存划分为新生代和老年代。  </p>
+<p>新生代对象存活少，选用 <strong>复制算法</strong>。<br>老年代对象存活率高、没有额外空间分配担保，选用 <strong>标记-清除算法</strong> 或 <strong>标记整理算法</strong>  </p>
+<h1 id="hotspot的算法实现"><a href="#hotspot的算法实现" class="headerlink" title="hotspot的算法实现"></a>hotspot的算法实现</h1><h2 id="枚举根节点-GC-Roots"><a href="#枚举根节点-GC-Roots" class="headerlink" title="枚举根节点 GC Roots"></a>枚举根节点 <code>GC Roots</code></h2><p>原理：</p>
+<p>作为<code>GC Roots</code>的节点主要在全局性的引用（常量和静态属性）和执行上下文（栈帧的本地变量表）中。</p>
+<p>难点：  </p>
+<ol>
+<li>方法区可能较大，逐个检查引用效率低。</li>
+<li>GC停顿，整个执行系统中引用关系不断变化会影响分析结果准确性。<code>Stop The Word</code></li>
+</ol>
+<p>解决：</p>
+<ol>
+<li>使用一组称为 <code>OopMap</code> 的数据结构，直接得知执行上下文和全局引用的位置。</li>
+<li>使用 <code>OopMap</code> 可快速完成 <code>GC Roots</code>枚举，但前提是枚举时引用关系不会变化。这个使用安全点 <code>Safepoint</code> 解决。</li>
+</ol>
+<h2 id="安全点-Safepoint"><a href="#安全点-Safepoint" class="headerlink" title="安全点 Safepoint"></a>安全点 <code>Safepoint</code></h2><p>问题：</p>
+<p><code>GC Roots</code>枚举时可能引用关系变化，或者说，导致 <code>OopMap</code> 内容变化的指令非常多，若为每条指令生成 <code>OopMap</code>，将会需要大量额外空间。  </p>
+<p>解决： </p>
+<p>只在特定位置记录 <code>OopMap</code>  信息，这些位置即安全点。<br>程序执行到安全点才可以GC。</p>
+<p>安全点的选定：  </p>
+<p>是以程序<strong>是否具有让程序长时间执行的特征</strong>为标准选定的，特征是指令序列复用，如方法调用、循环跳转、异常跳转等。<br>意思是在你经常路过的地方堵着你。  </p>
+<p>如何在GC发生时让所有线程都泡到安全点上停顿下来？</p>
+<ol>
+<li><p>抢先式中断</p>
+<p> 先把所有线程全部中断，如果有线程中断的地方不在安全点上，就恢复线程让它跑到安全点上。</p>
+</li>
+<li><p>主动式中断</p>
+<p> 当GC需要中断线程时，见设置一个标识，个线程执行时主动轮询该标识，发现为真时就自己中断挂起。轮询标志的地方与安全点重合。</p>
+</li>
+</ol>
+<h2 id="安全区域-SafeRegion"><a href="#安全区域-SafeRegion" class="headerlink" title="安全区域 SafeRegion"></a>安全区域 <code>SafeRegion</code></h2><p><code>Safepoint</code> 的问题：</p>
+<p>若程序不执行如处于 <code>Sleep</code> 或 <code>Blocked</code> 状态的线程，无法响应JVM的中断请求。</p>
+<p>解决：</p>
+<p>安全区域指在一端代码片段中，引用关系不会发生变化。可以看作扩展的 <code>Safepoint</code>。<br>线程执行到 <code>SafeRegion</code> 时标识自己已经进入到 <code>SafeRegion</code> ，若这段时间JVM发起GC，就不用管这样状态的线程了。<br>在线程离开 <code>SafeRegion</code> 时检查系统是否已经完成根节点枚举，如果没有完成，必须等待收到可以离开 <code>SafeRegion</code> 的信号为止。  </p>
+<h1 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h1><h2 id="Serial-串行收集器"><a href="#Serial-串行收集器" class="headerlink" title="Serial 串行收集器"></a><code>Serial</code> 串行收集器</h2><p>原理：  </p>
+<p>进行垃圾收集工作时，必须暂停其他所有工作线程，即GC线程需要和用户线程串行。</p>
+<p>优点：</p>
+<p>简单高效，<code>Clent</code> 模式下默认新生代收集器。</p>
+<p>缺点：</p>
+<p><code>Stop The Word</code> 停顿时间长。  </p>
+<h2 id="ParNew（颇牛）-多线程串行收集器"><a href="#ParNew（颇牛）-多线程串行收集器" class="headerlink" title="ParNew（颇牛） 多线程串行收集器"></a><code>ParNew（颇牛）</code> 多线程串行收集器</h2><p>原理：</p>
+<p><code>Serial</code>收集器的多线程版本，GC线程并发执行，暂停所有用户线程。</p>
+<p>特点：</p>
+<p><code>ParNew</code>作为新生代收集器 可以和 <code>CMS</code>老年代收集器搭配使用。<br>是使用 <code>-XX:+UserConcMarkSweepGC</code>选项后的默认新生代收集器，也可以使用 <code>-XX:+UserParNewGC</code> 选项使用它。</p>
+<h2 id="Parallel-Scavenge-并行的多线程收集器"><a href="#Parallel-Scavenge-并行的多线程收集器" class="headerlink" title="Parallel Scavenge 并行的多线程收集器"></a><code>Parallel Scavenge</code> 并行的多线程收集器</h2><p><code>Parallel Scavenge</code> 收集器目的是达到一个可控制的吞吐量，吞吐量优先收集器。  </p>
+<pre><code>吞吐量就是CPU运行用户代码时间与CPU总消耗时间的比值。  
+吞吐量 = 用户代码时间 / ( 用户代码时间 + 垃圾收集时间 )
+</code></pre><p><code>CMS</code>等收集器关注点则在缩短停顿时间。  </p>
+<pre><code>追求短停顿时间和追求可控吞吐量的区别？
+GC停顿时间短是牺牲吞吐量和新生代空间来换取的。  
+停顿时间短，则可能GC停顿频繁，整体上用户代码时间缩短，吞吐量不高。  
+停顿时间短适合用户交互程序；提高吞吐量则高效率利用CPU时间，适合后台计算任务。
+</code></pre><p><code>Parallel Scavenge</code> 收集器提供了两个参数用于精确控制吞吐量。</p>
+<ol>
+<li><code>-XX:MaxGCPauseMillis</code> 最大垃圾收集停顿时间，大于0。</li>
+<li><code>-XX:GCTimeRatio</code> 直接设置吞吐量大小，大于0，小于100，默认99，允许最大1%的垃圾收集时间。</li>
+<li><code>-XX:+UserAdaptiveSizePoliy</code> 自适应调节策略开关，使用最大停顿时间和吞吐量参数给虚拟机设立一个优化目标。</li>
+</ol>
+<h2 id="Serial-Old-收集器"><a href="#Serial-Old-收集器" class="headerlink" title="Serial Old 收集器"></a><code>Serial Old</code> 收集器</h2><p><code>Serial</code> 收集器的老年代版本，单线程收集器，使用 <code>标记-整理</code> 算法，Client模式下使用。<br>jdk1.5之前与 <code>Parallel Scavenge</code> 收集器搭配使用<br>作为CMS收集器后备预案  </p>
+<h2 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a><code>Parallel Old</code> 收集器</h2><p><code>Parallel Scavenge</code> 收集器老年代版本，使用多线程和 <code>标记-整理</code> 算法<br>吞吐量优先 收集器组合 <code>Parallel Scavenge</code> + <code>Parallel Old</code> 。</p>
+<h2 id="CMS-收集器"><a href="#CMS-收集器" class="headerlink" title="CMS 收集器"></a><code>CMS</code> 收集器</h2><p>一种以获取最短回收停顿时间为目标的收集器，基于 <code>标记-清除</code> 算法实现。</p>
+<p><strong>运作过程</strong></p>
+<ol>
+<li><p>初始标记</p>
+<p> 需要 <code>Stop The World</code> , 仅仅标记 <code>GC Roots</code> 直接关联到的对象。</p>
+</li>
+<li><p>并发标记</p>
+<p> 进行 <code>GC Roots Tracing</code> 的过程，标记引用链，与用户线程同时进行</p>
+</li>
+<li><p>重新标记</p>
+<p> 需要 <code>Stop The World</code> , 修正并发标记期间因用户线程变动的标记。</p>
+</li>
+<li><p>并发清除</p>
+<p> 对标记的内存回收，与用户线程同时进行。</p>
+</li>
+</ol>
+<p><strong>缺点</strong> </p>
+<ol>
+<li><code>CMS</code> 收集器堆CPU资源敏感。</li>
+<li>无法处理浮动垃圾，可能 <code>Concurrent Mode Failure</code>失败，临时启用 <code>Serial Old</code>重新收集老年代。</li>
+<li>产生大量的空间碎片，使用 <code>-XX:+UseCMSCompactAtFullCollection</code>开关参数，FULLGC时开启内存碎片整理。</li>
+</ol>
+<h2 id="G1-收集器"><a href="#G1-收集器" class="headerlink" title="G1 收集器"></a><code>G1</code> 收集器</h2><p><code>Garbage-First</code> 收集器。</p>
+<p><strong>特点</strong></p>
+<ol>
+<li>并行与并发</li>
+<li>分带收集</li>
+<li>空间整合</li>
+<li>可预测的停顿</li>
+</ol>
+<p><strong>运作过程</strong></p>
+<ol>
+<li>初始标记</li>
+<li>并发标记</li>
+<li>最终标记</li>
+<li>筛选回收</li>
+</ol>
+<h1 id="gc日志"><a href="#gc日志" class="headerlink" title="gc日志"></a>gc日志</h1><h1 id="垃圾收集器参数"><a href="#垃圾收集器参数" class="headerlink" title="垃圾收集器参数"></a>垃圾收集器参数</h1><h1 id="内存分配与回收策略"><a href="#内存分配与回收策略" class="headerlink" title="内存分配与回收策略"></a>内存分配与回收策略</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cjd2pjkxu000ilgtpxzz8i904" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm笔记/">jvm笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-jvm-2018-01-31-jvm-01-data-area" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" class="article-date">
+  <time datetime="2018-01-31T06:36:27.000Z" itemprop="datePublished">2018-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/">Jvm笔记-01-Java运行时数据区域与对象</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><h2 id="1-程序计数器-Program-Counter-Register"><a href="#1-程序计数器-Program-Counter-Register" class="headerlink" title="1. 程序计数器  Program Counter Register"></a>1. 程序计数器  <code>Program Counter Register</code></h2><p>通过改变计数器值选取下一条指令完成分支、循环、跳转、异常处理、线程恢复等基础功能。<br>线程私有，互不影响。</p>
+<h2 id="2-Java虚拟机栈-JVM-Stacks"><a href="#2-Java虚拟机栈-JVM-Stacks" class="headerlink" title="2. Java虚拟机栈 JVM Stacks"></a>2. Java虚拟机栈 <code>JVM Stacks</code></h2><p>线程私有，生命周期与线程相同。<br>每个方法执行时创建栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等，方法调用与完成对应入栈和出栈。<br>Java内存区粗略分为堆和栈，栈即虚拟机栈。<br>配置 <code>-Xss</code> 参数设定栈帧大小</p>
+<h2 id="3-本地方法栈-Native-Method-Stack"><a href="#3-本地方法栈-Native-Method-Stack" class="headerlink" title="3. 本地方法栈 Native Method Stack"></a>3. 本地方法栈 <code>Native Method Stack</code></h2><p>执行本地方法的栈。  </p>
+<h2 id="4-Java堆-Java-Heap"><a href="#4-Java堆-Java-Heap" class="headerlink" title="4. Java堆 Java Heap"></a>4. Java堆 <code>Java Heap</code></h2><p>线程共享，虚拟机启动时创建，几乎所有对象在这里分配内存。<br>Java堆分为新生代（<code>Eden</code>、<code>From Survivor</code>、<code>To Survivor</code>）和老年代。<br><code>-Xms</code> 最小值，<code>-Xmx</code> 最大值  </p>
+<h2 id="5-方法区-Method-Area"><a href="#5-方法区-Method-Area" class="headerlink" title="5. 方法区 Method Area"></a>5. 方法区 <code>Method Area</code></h2><p>线程共享，用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等。<br>被成为永久代 <code>Permanent Generation</code>，配置 <code>-XX:MaxPermSize</code> 上限。  </p>
+<h2 id="6-运行时常量池-Runtime-Constant-Pool"><a href="#6-运行时常量池-Runtime-Constant-Pool" class="headerlink" title="6. 运行时常量池 Runtime Constant Pool"></a>6. 运行时常量池 <code>Runtime Constant Pool</code></h2><p>运行时常量池是方法区中一部分，jdk8被放到 <code>MetaSpace</code> 空间。<br>类的版本、字段、方法、接口等描述信息，还有常量池(<code>Constant Pool Table</code> )，存放编译期生成的各种字面量和符号引用。<br>jdk7之前，字符串常量池在方法区中，使用 <code>String.intern()</code> 方法可将字符串放入。  </p>
+<h2 id="7-直接内存-Direct-Memory"><a href="#7-直接内存-Direct-Memory" class="headerlink" title="7. 直接内存  Direct Memory"></a>7. 直接内存  Direct Memory</h2><p>不是虚拟机运行时数据区的一部分，也可能OOM异常。<br>jdk1.4加入NIO，是一种基于通道 <code>Channel</code> 和缓冲区 <code>Buffer</code> 的I/O方式，可以使用 <code>Native</code> 函数库直接分配对外内存，然后通过堆中 <code>DirectByteBuffer</code> 对象作为这块内存的引用进行操作，避免Java堆与Native堆中数据复制来提高效率。  </p>
+<h1 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h1><h2 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h2><ol>
+<li>遇到new指令时，首先检查指令参数能否在常量池中定位到一个类的符号引用，并检查这个这个符号引用代表的类是否被加载、解析和初始化过。  </li>
+<li>如果没有，执行相应的类加载过程。  </li>
+<li><p>类加载通过后，虚拟机为新生对象分配内存。  </p>
+<pre><code>如何分配内存？
+对象所需内存大小在加载完成后便完全确定，所以将一块确定大小内存从Java堆中划分出来即可。  
+若内存规整，采用指针碰撞分配算法，将指针向空闲空间挪动。
+若非连续存放，须维护空闲列表，找到足够大空间划分。
+`Serial` 串行收集器、`ParNew` 多线程串行收集器等带 `Compact` 过程收集器，分配算法采用指针碰撞。
+`CMS` 这种基于 `Mark-Sweep` 算法，采用空闲列表。
+</code></pre></li>
+<li><p>内存分配完成后，将分配到的内存空间初始化为零值。   </p>
+</li>
+<li>虚拟机对对象进行必要设置，该实例所属类、类的元数据信息、对象哈希姆、对象GC分代年龄信息等，存放在对象头中。  </li>
+<li>执行 <code>&lt;init&gt;</code> 构造方法，按照程序员的意愿进行初始化，对象引用入栈。  </li>
+</ol>
+<h2 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h2><p>对象在内存中存储布局分为 3 块区域：对象头(<code>Header</code>)、实例数据(<code>Instance Data</code>)和对齐填充(<code>Padding</code>)。  </p>
+<ol>
+<li><p>对象头包括两部分信息</p>
+<p> 第一部分是存储对象自身的运行时数据 <code>Mark Word</code>。  </p>
+<pre><code>如哈希码、GC分代年龄、锁状态标识、线程持有锁、偏向线程ID、偏向时间戳等。
+</code></pre><p> 另一部分是类型指针，即对象指向它的元数据的指针。</p>
+<pre><code>虚拟机通过这个指针来确定该对象是那个类的实例。
+</code></pre></li>
+</ol>
+<ol>
+<li><p>实例数据</p>
+<pre><code>对象真正存储的有效信息，即代码中定义的各类型字段内容。
+</code></pre></li>
+<li><p>对齐填充</p>
+<pre><code>仅是占位符作用。
+</code></pre></li>
+</ol>
+<h2 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h2><p>通过栈上的引用 <code>reference</code> 来操作堆上具体对象，主流的访问方式有使用句柄和直接指针两种。  </p>
+<ol>
+<li><p>句柄访问。</p>
+<pre><code>Java堆中将划分出句柄池，&apos;reference&apos; 指向句柄地址，句柄中存放了对象实例数据与类型数据各自的具体地址信息。  
+优势：在对象被移动时只会改变句柄中实例数据指针，reference本身不需要修改。
+</code></pre></li>
+<li><p>直接指针访问。</p>
+<pre><code>&apos;reference&apos; 直接存储对象地址，Java堆中对象布局中须防止访问类型数据信息。
+优势： 访问速度快，因节省了一次指针定位的时间开销。
+HotSpot使用直接指针进行对象访问。
+</code></pre></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cjd2pjkx10006lgtpb0zgoi9b" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm笔记/">jvm笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-methodology-2018-01-26-拖延心理学" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/" class="article-date">
@@ -99,7 +402,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cjcvtjw9v001w7wtpr02sq305" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cjd2pjkzd001ylgtpuda4673i" class="article-share-link">Share</a>
       
       
       
@@ -144,7 +447,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cjcvtjw7h00057wtp067ulpp0" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cjd2pjkwz0005lgtprwzfdqyi" class="article-share-link">Share</a>
       
       
       
@@ -189,7 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjcvtjw7500027wtpokok4y9i" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjd2pjkwt0004lgtpb3fptsb2" class="article-share-link">Share</a>
       
       
       
@@ -234,7 +537,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" data-id="cjcvtjw7a00047wtp5jbsdqfz" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" data-id="cjd2pjkwp0002lgtp6v74pkke" class="article-share-link">Share</a>
       
       
       
@@ -279,7 +582,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/" data-id="cjcvtjw6x00017wtpwmty04h0" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/" data-id="cjd2pjkwi0001lgtp9zvflw4u" class="article-share-link">Share</a>
       
       
       
@@ -324,7 +627,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-05/" data-id="cjcvtjw9a001f7wtpmweew5vd" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-05/" data-id="cjd2pjkzh0020lgtpa0ctcryk" class="article-share-link">Share</a>
       
       
       
@@ -369,7 +672,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjcvtjw9200187wtphjl5u3dq" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjd2pjkzb001vlgtpci54277q" class="article-share-link">Share</a>
       
       
       
@@ -414,97 +717,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjcvtjw9000157wtplqjxbr7r" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-react-2018-01-26-react-app-02" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/26/react-2018-01-26-react-app-02/" class="article-date">
-  <time datetime="2018-01-26T07:22:17.000Z" itemprop="datePublished">2018-01-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/react-2018-01-26-react-app-02/">react-02-又是起手式:同构js</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>概览:mongodb以及mongoose的使用</p>
-        
-          <p class="article-more-link">
-            <a href="/2018/01/26/react-2018-01-26-react-app-02/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-02/" data-id="cjcvtjw8y00137wtpcu1wa66t" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-react-2018-01-26-react-app-01" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/26/react-2018-01-26-react-app-01/" class="article-date">
-  <time datetime="2018-01-26T07:20:00.000Z" itemprop="datePublished">2018-01-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/react-2018-01-26-react-app-01/">react-01-起手式:技术准备</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>概览： node express</p>
-        
-          <p class="article-more-link">
-            <a href="/2018/01/26/react-2018-01-26-react-app-01/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/" data-id="cjcvtjw93001a7wtpj40049q4" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-03/" data-id="cjd2pjkzj0023lgtpqnsgbhq8" class="article-share-link">Share</a>
       
       
       
@@ -557,7 +770,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tagcloud">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 22.25px;">C</a> <a href="/tags/algorithm/" style="font-size: 16.75px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 25px;">cpp</a> <a href="/tags/react/" style="font-size: 19.5px;">react</a> <a href="/tags/学习方法/" style="font-size: 14px;">学习方法</a> <a href="/tags/工具/" style="font-size: 14px;">工具</a>
+      <a href="/tags/C/" style="font-size: 22.8px;">C</a> <a href="/tags/algorithm/" style="font-size: 18.4px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 25px;">cpp</a> <a href="/tags/jvm笔记/" style="font-size: 16.2px;">jvm笔记</a> <a href="/tags/react/" style="font-size: 20.6px;">react</a> <a href="/tags/学习方法/" style="font-size: 14px;">学习方法</a> <a href="/tags/工具/" style="font-size: 14px;">工具</a>
     </div>
   </div>
 
@@ -567,6 +780,14 @@
     <h3 class="widget-title recent-posts">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/01/31/jvm-2018-01-31-jvm-02-gc/">jvm笔记-02-垃圾收集器与内存分配策略</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/">Jvm笔记-01-Java运行时数据区域与对象</a>
+          </li>
         
           <li>
             <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/">拖延心理学</a>
@@ -580,14 +801,6 @@
             <a href="/2018/01/26/algorithm-2018-01-26-algorithm-03-search/">算法-各种查找</a>
           </li>
         
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/">算法-各种排序</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/">算法-基础</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -597,7 +810,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title archive">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">32</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">34</span></li></ul>
     </div>
   </div>
 
