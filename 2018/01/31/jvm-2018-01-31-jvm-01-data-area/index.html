@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/index.html">
 <meta property="og:site_name" content="前前的Blog">
 <meta property="og:description" content="运行时数据区域1. 程序计数器  Program Counter Register通过改变计数器值选取下一条指令完成分支、循环、跳转、异常处理、线程恢复等基础功能。线程私有，互不影响。 2. Java虚拟机栈 JVM Stacks线程私有，生命周期与线程相同。每个方法执行时创建栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等，方法调用与完成对应入栈和出栈。Java内存区粗略分为堆和栈，栈即虚">
-<meta property="og:updated_time" content="2018-01-31T06:45:03.992Z">
+<meta property="og:updated_time" content="2018-02-06T09:27:32.010Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jvm笔记-01-Java运行时数据区域与对象">
 <meta name="twitter:description" content="运行时数据区域1. 程序计数器  Program Counter Register通过改变计数器值选取下一条指令完成分支、循环、跳转、异常处理、线程恢复等基础功能。线程私有，互不影响。 2. Java虚拟机栈 JVM Stacks线程私有，生命周期与线程相同。每个方法执行时创建栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等，方法调用与完成对应入栈和出栈。Java内存区粗略分为堆和栈，栈即虚">
@@ -94,6 +94,7 @@
         
         <h1 id="运行时数据区域"><a href="#运行时数据区域" class="headerlink" title="运行时数据区域"></a>运行时数据区域</h1><h2 id="1-程序计数器-Program-Counter-Register"><a href="#1-程序计数器-Program-Counter-Register" class="headerlink" title="1. 程序计数器  Program Counter Register"></a>1. 程序计数器  <code>Program Counter Register</code></h2><p>通过改变计数器值选取下一条指令完成分支、循环、跳转、异常处理、线程恢复等基础功能。<br>线程私有，互不影响。</p>
 <h2 id="2-Java虚拟机栈-JVM-Stacks"><a href="#2-Java虚拟机栈-JVM-Stacks" class="headerlink" title="2. Java虚拟机栈 JVM Stacks"></a>2. Java虚拟机栈 <code>JVM Stacks</code></h2><p>线程私有，生命周期与线程相同。<br>每个方法执行时创建栈帧用于存储局部变量表、操作数栈、动态连接、方法出口等，方法调用与完成对应入栈和出栈。<br>Java内存区粗略分为堆和栈，栈即虚拟机栈。<br>配置 <code>-Xss</code> 参数设定栈帧大小</p>
+<a id="more"></a>
 <h2 id="3-本地方法栈-Native-Method-Stack"><a href="#3-本地方法栈-Native-Method-Stack" class="headerlink" title="3. 本地方法栈 Native Method Stack"></a>3. 本地方法栈 <code>Native Method Stack</code></h2><p>执行本地方法的栈。  </p>
 <h2 id="4-Java堆-Java-Heap"><a href="#4-Java堆-Java-Heap" class="headerlink" title="4. Java堆 Java Heap"></a>4. Java堆 <code>Java Heap</code></h2><p>线程共享，虚拟机启动时创建，几乎所有对象在这里分配内存。<br>Java堆分为新生代（<code>Eden</code>、<code>From Survivor</code>、<code>To Survivor</code>）和老年代。<br><code>-Xms</code> 最小值，<code>-Xmx</code> 最大值  </p>
 <h2 id="5-方法区-Method-Area"><a href="#5-方法区-Method-Area" class="headerlink" title="5. 方法区 Method Area"></a>5. 方法区 <code>Method Area</code></h2><p>线程共享，用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等。<br>被成为永久代 <code>Permanent Generation</code>，配置 <code>-XX:MaxPermSize</code> 上限。  </p>
@@ -148,7 +149,7 @@ HotSpot使用直接指针进行对象访问。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cjd2ptc7900117gtpqq3f6466" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cjdbjdxpe000u30tpy75bvc9n" class="article-share-link">Share</a>
       
       
       

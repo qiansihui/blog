@@ -3,19 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>C++  02 变量和基本类型 | 前前的Blog</title>
+  <title>jvm笔记-03-虚拟机性能监控与故障处理工具 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="基本内置类型 bool 布尔值 char 字符型 8位 wchar_t 宽字符型 16位 short 短整形 16位 int 整形 16位 long 长整型 32位 float 单精度浮点型 6位有效数字 double 双精度浮点型 10位有效数字 long double 扩展精度浮点型 10位有效数字  变量初始化12int ival(1024); // 直接初始化int ival2 = 102">
-<meta name="keywords" content="cpp">
+  <meta name="description" content="概览：  jps、jhat、jinfo、jmap、jhat、jstack jps: 虚拟机进程状况工具常用来获取虚拟机进程ID（LVMID）。    选项 作用     -q 只输出LVMID   -m 输出main()的参数   -l 输出类全名或jar路径   -l 输出jvm参数    jstat: 虚拟机统计信息监视工具显示虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。 用法">
+<meta name="keywords" content="jvm笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++  02 变量和基本类型">
-<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-02-data-type/index.html">
+<meta property="og:title" content="jvm笔记-03-虚拟机性能监控与故障处理工具">
+<meta property="og:url" content="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/index.html">
 <meta property="og:site_name" content="前前的Blog">
-<meta property="og:description" content="基本内置类型 bool 布尔值 char 字符型 8位 wchar_t 宽字符型 16位 short 短整形 16位 int 整形 16位 long 长整型 32位 float 单精度浮点型 6位有效数字 double 双精度浮点型 10位有效数字 long double 扩展精度浮点型 10位有效数字  变量初始化12int ival(1024); // 直接初始化int ival2 = 102">
-<meta property="og:updated_time" content="2018-01-26T06:36:48.571Z">
+<meta property="og:description" content="概览：  jps、jhat、jinfo、jmap、jhat、jstack jps: 虚拟机进程状况工具常用来获取虚拟机进程ID（LVMID）。    选项 作用     -q 只输出LVMID   -m 输出main()的参数   -l 输出类全名或jar路径   -l 输出jvm参数    jstat: 虚拟机统计信息监视工具显示虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。 用法">
+<meta property="og:image" content="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/jstat.png">
+<meta property="og:image" content="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/jinfo.png">
+<meta property="og:updated_time" content="2018-02-06T11:02:07.510Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++  02 变量和基本类型">
-<meta name="twitter:description" content="基本内置类型 bool 布尔值 char 字符型 8位 wchar_t 宽字符型 16位 short 短整形 16位 int 整形 16位 long 长整型 32位 float 单精度浮点型 6位有效数字 double 双精度浮点型 10位有效数字 long double 扩展精度浮点型 10位有效数字  变量初始化12int ival(1024); // 直接初始化int ival2 = 102">
+<meta name="twitter:title" content="jvm笔记-03-虚拟机性能监控与故障处理工具">
+<meta name="twitter:description" content="概览：  jps、jhat、jinfo、jmap、jhat、jstack jps: 虚拟机进程状况工具常用来获取虚拟机进程ID（LVMID）。    选项 作用     -q 只输出LVMID   -m 输出main()的参数   -l 输出类全名或jar路径   -l 输出jvm参数    jstat: 虚拟机统计信息监视工具显示虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。 用法">
+<meta name="twitter:image" content="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/jstat.png">
   
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
   
@@ -68,10 +71,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-cpp-2018-01-26-cpp-02-data-type" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-jvm-2018-02-06-jvm-03-utils" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/26/cpp-2018-01-26-cpp-02-data-type/" class="article-date">
-  <time datetime="2018-01-26T06:27:41.000Z" itemprop="datePublished">2018-01-26</time>
+    <a href="/2018/02/06/jvm-2018-02-06-jvm-03-utils/" class="article-date">
+  <time datetime="2018-02-06T09:32:53.000Z" itemprop="datePublished">2018-02-06</time>
 </a>
     
   </div>
@@ -82,7 +85,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      C++  02 变量和基本类型
+      jvm笔记-03-虚拟机性能监控与故障处理工具
     </h1>
   
 
@@ -92,29 +95,55 @@
       
         <!-- Table of Contents -->
         
-        <h2 id="基本内置类型"><a href="#基本内置类型" class="headerlink" title="基本内置类型"></a>基本内置类型</h2><ul>
-<li><code>bool</code> 布尔值</li>
-<li><code>char</code> 字符型 8位</li>
-<li><code>wchar_t</code> 宽字符型 16位</li>
-<li><code>short</code> 短整形 16位</li>
-<li><code>int</code> 整形 16位</li>
-<li><code>long</code> 长整型 32位</li>
-<li><code>float</code> 单精度浮点型 6位有效数字</li>
-<li><code>double</code> 双精度浮点型 10位有效数字</li>
-<li><code>long double</code> 扩展精度浮点型 10位有效数字</li>
-</ul>
-<h2 id="变量初始化"><a href="#变量初始化" class="headerlink" title="变量初始化"></a>变量初始化</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ival</span><span class="params">(<span class="number">1024</span>)</span></span>; <span class="comment">// 直接初始化</span></span><br><span class="line"><span class="keyword">int</span> ival2 = <span class="number">1024</span>; <span class="comment">// 复制初始化</span></span><br></pre></td></tr></table></figure>
-<h2 id="const-限定符"><a href="#const-限定符" class="headerlink" title="const 限定符"></a>const 限定符</h2><p>修饰变量不可被修改，默认为文件的局部变量。<br>仅允许const引用绑定到需要临时使用的值：<code>const int &amp;r = 1024;</code></p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>类定义、头文件。。。<br>似曾相识，不写了。</p>
-
+        <p>概览：  jps、jhat、jinfo、jmap、jhat、jstack</p>
+<h1 id="jps-虚拟机进程状况工具"><a href="#jps-虚拟机进程状况工具" class="headerlink" title="jps: 虚拟机进程状况工具"></a>jps: 虚拟机进程状况工具</h1><p>常用来获取虚拟机进程ID（LVMID）。</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-q</td>
+<td>只输出LVMID</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>输出main()的参数</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>输出类全名或jar路径</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>输出jvm参数</td>
+</tr>
+</tbody>
+</table>
+<h1 id="jstat-虚拟机统计信息监视工具"><a href="#jstat-虚拟机统计信息监视工具" class="headerlink" title="jstat: 虚拟机统计信息监视工具"></a>jstat: 虚拟机统计信息监视工具</h1><p>显示虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。</p>
+<p>用法:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat [ option vmid [ interval [s|ms] [count]]]</span><br></pre></td></tr></table></figure>
+<p>举例：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat -gc 25766 250 10</span><br></pre></td></tr></table></figure>
+<img src="/2018/02/06/jvm-2018-02-06-jvm-03-utils/jstat.png">
+<p>S表示两个 <code>Survivor</code>区，老年代为O，元空间为M。</p>
+<p>YGC表示<code>Minor GC</code>次数，YGCT为年轻代的垃圾回收总耗时。</p>
+<h1 id="jinfo-Java配置信息工具"><a href="#jinfo-Java配置信息工具" class="headerlink" title="jinfo: Java配置信息工具"></a>jinfo: Java配置信息工具</h1><p>用来查看和调整虚拟机各项参数。</p>
+<img src="/2018/02/06/jvm-2018-02-06-jvm-03-utils/jinfo.png">
+<p>可以使用 <code>jinfo -flag</code> 命令查看特点参数</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo -flag CMSInitiatingOccupancyFraction 21504</span><br></pre></td></tr></table></figure>
+<h1 id="jmap-Java-内存映射工具"><a href="#jmap-Java-内存映射工具" class="headerlink" title="jmap: Java 内存映射工具"></a>jmap: Java 内存映射工具</h1>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-02-data-type/" data-id="cjdbjdxpb000s30tpueo266kp" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cjdbjdxp7000o30tp3u7h1iid" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm笔记/">jvm笔记</a></li></ul>
 
     </footer>
   </div>
@@ -164,19 +193,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/01/26/cpp-2018-01-26-cpp-03-stdlib/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          C++  03 标准库类型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/01/26/cpp-2018-01-26-cpp-01-firstblood/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/01/31/jvm-2018-01-31-jvm-02-gc/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">C++  01 初体验</div>
+      <div class="article-nav-title">jvm笔记-02-垃圾收集器与内存分配策略</div>
     </a>
   
 </nav>
@@ -212,7 +232,7 @@
       
         <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本内置类型"><span class="toc-number">1.</span> <span class="toc-text">基本内置类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变量初始化"><span class="toc-number">2.</span> <span class="toc-text">变量初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#const-限定符"><span class="toc-number">3.</span> <span class="toc-text">const 限定符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jps-虚拟机进程状况工具"><span class="toc-number">1.</span> <span class="toc-text">jps: 虚拟机进程状况工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jstat-虚拟机统计信息监视工具"><span class="toc-number">2.</span> <span class="toc-text">jstat: 虚拟机统计信息监视工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jinfo-Java配置信息工具"><span class="toc-number">3.</span> <span class="toc-text">jinfo: Java配置信息工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jmap-Java-内存映射工具"><span class="toc-number">4.</span> <span class="toc-text">jmap: Java 内存映射工具</span></a></li></ol>
           </div>
       </div>
     </div>

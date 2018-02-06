@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/index.html">
 <meta property="og:site_name" content="前前的Blog">
 <meta property="og:description" content="对象的生存与死亡如何判定一个对象的生与死 引用计数法 Reference Counting  给对象中添加一个引用计数器，被引用加1，引用失效减1，计数器为0则对象可以被回收。 缺点：很难解决对象之间互相循环引用的问题。    可达性分析法 Reachability Analysis  通过一系列 GC Roots 的对象作为起点，向下搜索，遍历路径称为引用链。当一个对象到 GC Roots 不可">
-<meta property="og:updated_time" content="2018-02-06T09:23:43.562Z">
+<meta property="og:updated_time" content="2018-02-06T09:27:35.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm笔记-02-垃圾收集器与内存分配策略">
 <meta name="twitter:description" content="对象的生存与死亡如何判定一个对象的生与死 引用计数法 Reference Counting  给对象中添加一个引用计数器，被引用加1，引用失效减1，计数器为0则对象可以被回收。 缺点：很难解决对象之间互相循环引用的问题。    可达性分析法 Reachability Analysis  通过一系列 GC Roots 的对象作为起点，向下搜索，遍历路径称为引用链。当一个对象到 GC Roots 不可">
@@ -106,6 +106,7 @@
 </ol>
 </li>
 </ol>
+<a id="more"></a>
 <h2 id="死亡面前，各种引用不平等"><a href="#死亡面前，各种引用不平等" class="headerlink" title="死亡面前，各种引用不平等"></a>死亡面前，各种引用不平等</h2><p>这样的一类对象：当内存空间足够是，保存在内存之中。若内存空间在垃圾回收之后仍不足，则可以抛弃这些对象。应用场景如系统的缓存功能。</p>
 <ol>
 <li><p>强引用</p>
@@ -285,7 +286,7 @@ GC停顿时间短是牺牲吞吐量和新生代空间来换取的。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cjd2ptc7c00147gtpzz6litig" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cjdbjdxp4000l30tpx7oyw7xy" class="article-share-link">Share</a>
       
       
       
@@ -338,6 +339,15 @@ GC停顿时间短是牺牲吞吐量和新生代空间来换取的。
 
     
 <nav id="article-nav">
+  
+    <a href="/2018/02/06/jvm-2018-02-06-jvm-03-utils/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          jvm笔记-03-虚拟机性能监控与故障处理工具
+        
+      </div>
+    </a>
   
   
     <a href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" id="article-nav-older" class="article-nav-link-wrap">
