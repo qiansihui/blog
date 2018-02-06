@@ -19,6 +19,9 @@ tags: jvm笔记
 Java内存区粗略分为堆和栈，栈即虚拟机栈。  
 配置 `-Xss` 参数设定栈帧大小
 
+<!--more-->
+
+
 ## 3. 本地方法栈 `Native Method Stack`
 
 执行本地方法的栈。  
