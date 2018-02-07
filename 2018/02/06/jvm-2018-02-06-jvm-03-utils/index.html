@@ -14,7 +14,8 @@
 <meta property="og:description" content="概览：  jps、jhat、jinfo、jmap、jhat、jstack jps: 虚拟机进程状况工具常用来获取虚拟机进程ID（LVMID）。    选项 作用     -q 只输出LVMID   -m 输出main()的参数   -l 输出类全名或jar路径   -l 输出jvm参数    jstat: 虚拟机统计信息监视工具显示虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。 用法">
 <meta property="og:image" content="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/jstat.png">
 <meta property="og:image" content="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/jinfo.png">
-<meta property="og:updated_time" content="2018-02-06T11:02:07.510Z">
+<meta property="og:image" content="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/jmap.png">
+<meta property="og:updated_time" content="2018-02-07T07:30:08.181Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm笔记-03-虚拟机性能监控与故障处理工具">
 <meta name="twitter:description" content="概览：  jps、jhat、jinfo、jmap、jhat、jstack jps: 虚拟机进程状况工具常用来获取虚拟机进程ID（LVMID）。    选项 作用     -q 只输出LVMID   -m 输出main()的参数   -l 输出类全名或jar路径   -l 输出jvm参数    jstat: 虚拟机统计信息监视工具显示虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。 用法">
@@ -45,7 +46,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -135,11 +136,18 @@
 <img src="/2018/02/06/jvm-2018-02-06-jvm-03-utils/jinfo.png">
 <p>可以使用 <code>jinfo -flag</code> 命令查看特点参数</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo -flag CMSInitiatingOccupancyFraction 21504</span><br></pre></td></tr></table></figure>
-<h1 id="jmap-Java-内存映射工具"><a href="#jmap-Java-内存映射工具" class="headerlink" title="jmap: Java 内存映射工具"></a>jmap: Java 内存映射工具</h1>
+<h1 id="jmap-Java-内存映射工具"><a href="#jmap-Java-内存映射工具" class="headerlink" title="jmap: Java 内存映射工具"></a>jmap: Java 内存映射工具</h1><p>jmap命令用于生产堆转储快照 <code>heapdump</code>，还可以查询 <code>finalize</code> 执行队列、Java堆和永久代详细信息。</p>
+<img src="/2018/02/06/jvm-2018-02-06-jvm-03-utils/jmap.png">
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -dump:format=b,file=dump.bin 26154</span><br></pre></td></tr></table></figure>
+<h1 id="jhat-虚拟机堆转储快照分析工具"><a href="#jhat-虚拟机堆转储快照分析工具" class="headerlink" title="jhat: 虚拟机堆转储快照分析工具"></a>jhat: 虚拟机堆转储快照分析工具</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhat /root/dump.bin</span><br></pre></td></tr></table></figure>
+<p>通过http查看分析结果，主要用到 <code>Heap Histogram</code>找到内存中总容量最大的对象，OQL页功能使用类似SQL语法堆内存中对象查询统计。</p>
+<h1 id="jstack-Java堆栈跟踪工具"><a href="#jstack-Java堆栈跟踪工具" class="headerlink" title="jstack: Java堆栈跟踪工具"></a>jstack: Java堆栈跟踪工具</h1><p>生成虚拟机当前的线程快照 <code>threaddump</code> 。<br>线程快照，是虚拟机内每条线程正在执行方法栈集合。<br>线程快照可以用来定位长时间停顿原因，如线程死锁、死循环、等待资源。</p>
+<p>在dump中，线程一般存在如下几种状态：<br>1、RUNNABLE，线程处于执行中<br>2、BLOCKED，线程被阻塞<br>3、WAITING，线程正在等待</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cjdbjdxp7000o30tp3u7h1iid" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cjdbjdxp7000o30tp3u7h1iid" class="article-share-link">分享</a>
       
       
       
@@ -151,7 +159,7 @@
     
  <script src="/jquery/jquery.min.js"></script>
   <div id="random_posts">
-    <h2>Recommended Posts</h2>
+    <h2>推荐文章</h2>
     <div class="random_posts_ul">
       <script>
           var random_count =4
@@ -195,7 +203,7 @@
   
   
     <a href="/2018/01/31/jvm-2018-01-31-jvm-02-gc/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">jvm笔记-02-垃圾收集器与内存分配策略</div>
     </a>
   
@@ -230,9 +238,9 @@
     
       <div class="widget" id="toc-widget-fixed">
       
-        <strong class="toc-title">Content</strong>
+        <strong class="toc-title">文章目录</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jps-虚拟机进程状况工具"><span class="toc-number">1.</span> <span class="toc-text">jps: 虚拟机进程状况工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jstat-虚拟机统计信息监视工具"><span class="toc-number">2.</span> <span class="toc-text">jstat: 虚拟机统计信息监视工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jinfo-Java配置信息工具"><span class="toc-number">3.</span> <span class="toc-text">jinfo: Java配置信息工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jmap-Java-内存映射工具"><span class="toc-number">4.</span> <span class="toc-text">jmap: Java 内存映射工具</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#jps-虚拟机进程状况工具"><span class="toc-number">1.</span> <span class="toc-text">jps: 虚拟机进程状况工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jstat-虚拟机统计信息监视工具"><span class="toc-number">2.</span> <span class="toc-text">jstat: 虚拟机统计信息监视工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jinfo-Java配置信息工具"><span class="toc-number">3.</span> <span class="toc-text">jinfo: Java配置信息工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jmap-Java-内存映射工具"><span class="toc-number">4.</span> <span class="toc-text">jmap: Java 内存映射工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jhat-虚拟机堆转储快照分析工具"><span class="toc-number">5.</span> <span class="toc-text">jhat: 虚拟机堆转储快照分析工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jstack-Java堆栈跟踪工具"><span class="toc-number">6.</span> <span class="toc-text">jstack: Java堆栈跟踪工具</span></a></li></ol>
           </div>
       </div>
     </div>
@@ -262,10 +270,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;fyszsqq@163.com
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>

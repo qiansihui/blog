@@ -40,7 +40,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -132,11 +132,18 @@
 <img src="/2018/02/06/jvm-2018-02-06-jvm-03-utils/jinfo.png">
 <p>可以使用 <code>jinfo -flag</code> 命令查看特点参数</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo -flag CMSInitiatingOccupancyFraction 21504</span><br></pre></td></tr></table></figure>
-<h1 id="jmap-Java-内存映射工具"><a href="#jmap-Java-内存映射工具" class="headerlink" title="jmap: Java 内存映射工具"></a>jmap: Java 内存映射工具</h1>
+<h1 id="jmap-Java-内存映射工具"><a href="#jmap-Java-内存映射工具" class="headerlink" title="jmap: Java 内存映射工具"></a>jmap: Java 内存映射工具</h1><p>jmap命令用于生产堆转储快照 <code>heapdump</code>，还可以查询 <code>finalize</code> 执行队列、Java堆和永久代详细信息。</p>
+<img src="/2018/02/06/jvm-2018-02-06-jvm-03-utils/jmap.png">
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -dump:format=b,file=dump.bin 26154</span><br></pre></td></tr></table></figure>
+<h1 id="jhat-虚拟机堆转储快照分析工具"><a href="#jhat-虚拟机堆转储快照分析工具" class="headerlink" title="jhat: 虚拟机堆转储快照分析工具"></a>jhat: 虚拟机堆转储快照分析工具</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jhat /root/dump.bin</span><br></pre></td></tr></table></figure>
+<p>通过http查看分析结果，主要用到 <code>Heap Histogram</code>找到内存中总容量最大的对象，OQL页功能使用类似SQL语法堆内存中对象查询统计。</p>
+<h1 id="jstack-Java堆栈跟踪工具"><a href="#jstack-Java堆栈跟踪工具" class="headerlink" title="jstack: Java堆栈跟踪工具"></a>jstack: Java堆栈跟踪工具</h1><p>生成虚拟机当前的线程快照 <code>threaddump</code> 。<br>线程快照，是虚拟机内每条线程正在执行方法栈集合。<br>线程快照可以用来定位长时间停顿原因，如线程死锁、死循环、等待资源。</p>
+<p>在dump中，线程一般存在如下几种状态：<br>1、RUNNABLE，线程处于执行中<br>2、BLOCKED，线程被阻塞<br>3、WAITING，线程正在等待</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cjdbjdxp7000o30tp3u7h1iid" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cjdbjdxp7000o30tp3u7h1iid" class="article-share-link">分享</a>
       
       
       
@@ -194,7 +201,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cjdbjdxp4000l30tpx7oyw7xy" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cjdbjdxp4000l30tpx7oyw7xy" class="article-share-link">分享</a>
       
       
       
@@ -240,7 +247,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cjdbjdxpe000u30tpy75bvc9n" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cjdbjdxpe000u30tpy75bvc9n" class="article-share-link">分享</a>
       
       
       
@@ -285,7 +292,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cjdbjdxqb001o30tphndukm2s" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cjdbjdxqb001o30tphndukm2s" class="article-share-link">分享</a>
       
       
       
@@ -330,7 +337,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cjdbjdxp2000j30tpd2jepj74" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cjdbjdxp2000j30tpd2jepj74" class="article-share-link">分享</a>
       
       
       
@@ -375,7 +382,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjdbjdxoy000g30tp4uhdbvi0" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjdbjdxoy000g30tp4uhdbvi0" class="article-share-link">分享</a>
       
       
       
@@ -420,7 +427,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" data-id="cjdbjdxov000e30tpz8act7mj" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" data-id="cjdbjdxov000e30tpz8act7mj" class="article-share-link">分享</a>
       
       
       
@@ -465,7 +472,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/" data-id="cjdbjdxoo000930tplqbemvi7" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/" data-id="cjdbjdxoo000930tplqbemvi7" class="article-share-link">分享</a>
       
       
       
@@ -510,7 +517,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-05/" data-id="cjdbjdxqx002030tprhygxyrd" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-05/" data-id="cjdbjdxqx002030tprhygxyrd" class="article-share-link">分享</a>
       
       
       
@@ -555,7 +562,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjdbjdxqr001v30tps18fpfn3" class="article-share-link">Share</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjdbjdxqr001v30tps18fpfn3" class="article-share-link">分享</a>
       
       
       
@@ -572,7 +579,7 @@
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页&raquo;</a>
   </nav>
 </section>
            
@@ -606,7 +613,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title tagcloud">Tag Cloud</h3>
+    <h3 class="widget-title tagcloud">标签云</h3>
     <div class="widget tagcloud">
       <a href="/tags/C/" style="font-size: 22.8px;">C</a> <a href="/tags/algorithm/" style="font-size: 18.4px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 25px;">cpp</a> <a href="/tags/jvm笔记/" style="font-size: 16.2px;">jvm笔记</a> <a href="/tags/react/" style="font-size: 20.6px;">react</a> <a href="/tags/学习方法/" style="font-size: 14px;">学习方法</a> <a href="/tags/工具/" style="font-size: 14px;">工具</a>
     </div>
@@ -615,7 +622,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">Recent Posts</h3>
+    <h3 class="widget-title recent-posts">最新文章</h3>
     <div class="widget">
       <ul>
         
@@ -646,7 +653,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title archive">Archives</h3>
+    <h3 class="widget-title archive">归档</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">34</span></li></ul>
     </div>
@@ -656,7 +663,7 @@
   
     
 <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
+    <h3 class="widget-title">友情链接</h3>
     <div class="widget">
         <ul>
             
@@ -672,7 +679,7 @@
     <!--微信公众号二维码-->
 
   <div class="widget-wrap">
-    <h3 class="follow-title ">WeChat</h3>
+    <h3 class="follow-title ">微信公众号</h3>
     <div class="widget wechat-widget">
         <img src="http://qiansihui.github.io/images/wechat.jpg" alt="扫码关注" width="250"/>
     </div>
@@ -688,10 +695,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;fyszsqq@163.com
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
