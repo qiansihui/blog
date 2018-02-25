@@ -40,7 +40,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -67,6 +67,269 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-jvm-2018-02-25-jvm-05-class-file" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" class="article-date">
+  <time datetime="2018-02-25T01:26:39.000Z" itemprop="datePublished">2018-02-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/">jvm-05-class文件结构</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>概览： class类文件结构、字节码指令</p>
+<h1 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a>类文件结构</h1><p>class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。</p>
+<p>1个字节=8个比特位，1个16进制数字=4个比特位。</p>
+<p>只有两种数据类型：无符号数和表。  </p>
+<p>无符号数以u1，u2，u4，u8代表1、2、4、8字节的无符号数，可以用来描述数字、索引、数量值或utf-8编码的字符串。   </p>
+<p>表由多个无符号数或其他表构成的复核数据类型，用于描述层次关系的复合结构数据。</p>
+<p>示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloJvm</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">incr</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        i++;</span><br><span class="line">        <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用16进制打开的class文件：</p>
+<img src="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/cafebabe.png">
+<h2 id="魔数与class文件版本"><a href="#魔数与class文件版本" class="headerlink" title="魔数与class文件版本"></a>魔数与class文件版本</h2><p>头4个字节为魔数，<code>0xCAFEBABE</code>。紧接着的4个字节为class文件版本号，<code>0x0034</code>为版本52即jdk8。</p>
+<h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>常量池入口为u2类型的容量计数值，从1开始。 </p>
+<p>每种常量池项目类型有着不同的数据结构，相同点是第一个数据项为tag表明是什么项目类型。</p>
+<p>可以用 <code>javap -verbose</code> 将常量池计算出来</p>
+<img src="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/javap.png">
+<h2 id="类索引、父类索引和接口索引集合"><a href="#类索引、父类索引和接口索引集合" class="headerlink" title="类索引、父类索引和接口索引集合"></a>类索引、父类索引和接口索引集合</h2><p>类索引u2+父类索引u2+接口计数器u2+接口索引</p>
+<h2 id="字段表集合"><a href="#字段表集合" class="headerlink" title="字段表集合"></a>字段表集合</h2><p>字段表用于描述接口或者类中声明的变量。包括信息有：</p>
+<ul>
+<li>字段作用域 public private protected</li>
+<li>实例变量还是类变量 static</li>
+<li>可变性 final</li>
+<li>并发可见性 volatile</li>
+<li>可否被序列化</li>
+<li>字段数据类型 基本类型、对象、数组</li>
+</ul>
+<p>字段表结构</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u2</td>
+<td>access_flags 限定符</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>name_index 简单名称</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>descriptor_index 字段和方法描述符</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>attributes_count 属性表计数</td>
+<td>1</td>
+</tr>
+<tr>
+<td>attribute_info</td>
+<td>attributes 属性</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>简单名称</strong>：字段的变量名或方法名称</p>
+<p><strong>全限定名称</strong>：包括包路径的全称如 <code>com/stu/jvm/TestClass;</code></p>
+<p><strong>方法和字段描述符</strong>：用来描述字段的数据类型、方法的参数列表和返回值。数组类型每一维度前置一个 <code>[</code>字符。<br>用描述符描述方法时，先参数列表，后返回值顺序描述</p>
+<table>
+<thead>
+<tr>
+<th>标识字符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>C</td>
+<td>char</td>
+</tr>
+<tr>
+<td>D</td>
+<td>double</td>
+</tr>
+<tr>
+<td>F</td>
+<td>float</td>
+</tr>
+<tr>
+<td>I</td>
+<td>int</td>
+</tr>
+<tr>
+<td>J</td>
+<td>long</td>
+</tr>
+<tr>
+<td>S</td>
+<td>short</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>V</td>
+<td>void</td>
+</tr>
+<tr>
+<td>L</td>
+<td>对象类型，如Ljava/lang/Object</td>
+</tr>
+</tbody>
+</table>
+<h2 id="方法表集合"><a href="#方法表集合" class="headerlink" title="方法表集合"></a>方法表集合</h2><p>方法表结构同字段表一样，仅访问标识可选项有所区别。</p>
+<h2 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h2><p>在class文件、字段表、方法表都可以有自己的属性表集合，用于描述场景专有信息。其中关键部分属性：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>使用位置</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code</td>
+<td>方法表</td>
+<td>Java代码编译后的字节码指令</td>
+</tr>
+<tr>
+<td>Exceptions</td>
+<td>方法表</td>
+<td>方法抛出的异常</td>
+</tr>
+<tr>
+<td>LineNumberTable</td>
+<td>Code属性</td>
+<td>Java源码行号和字节码指令的对应关系</td>
+</tr>
+<tr>
+<td>LocalVariableTable</td>
+<td>Code属性</td>
+<td>方法局部变量描述</td>
+</tr>
+<tr>
+<td>SourceFile</td>
+<td>类文件</td>
+<td>源文件名称</td>
+</tr>
+<tr>
+<td>ConstantValue</td>
+<td>字段表</td>
+<td>final关键字定义的常量值</td>
+</tr>
+<tr>
+<td>InnerClasses</td>
+<td>类文件</td>
+<td>内部类列表</td>
+</tr>
+<tr>
+<td>Signature</td>
+<td>类、方法表、字段表</td>
+<td>用于支持泛型情况的方法签名，记录泛型签名信息</td>
+</tr>
+</tbody>
+</table>
+<h1 id="字节码指令简介"><a href="#字节码指令简介" class="headerlink" title="字节码指令简介"></a>字节码指令简介</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" data-id="cje3fugk700016gtpw9dr40bp" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm笔记/">jvm笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-jvm-2018-02-07-jvm-04-optimize" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" class="article-date">
+  <time datetime="2018-02-07T09:59:24.000Z" itemprop="datePublished">2018-02-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/07/jvm-2018-02-07-jvm-04-optimize/">jvm-04-调优实践</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="如何利用高性能硬件"><a href="#如何利用高性能硬件" class="headerlink" title="如何利用高性能硬件"></a>如何利用高性能硬件</h1><p>使用若干个32位虚拟机建立逻辑集群来利用硬件资源。</p>
+<p>需要注意：</p>
+<ol>
+<li>全局资源竞争</li>
+<li>资源池利用</li>
+<li>32位的内存限制</li>
+<li>本地缓存的浪费</li>
+</ol>
+<p>对于CPU资源不敏感的应用，改用CMS（追求低停顿时间）垃圾收集器。</p>
+<h1 id="堆外内存导致溢出错误"><a href="#堆外内存导致溢出错误" class="headerlink" title="堆外内存导致溢出错误"></a>堆外内存导致溢出错误</h1><p><code>Direct Memory</code>收到系统进程所能管理的最大内存限制，不能在空间不足时通知系统回收，只会在 <code>Full GC</code> 时回收。</p>
+<h1 id="调用系统命令"><a href="#调用系统命令" class="headerlink" title="调用系统命令"></a>调用系统命令</h1><p>使用 <code>System.runExce()</code> 调用系统命令有一定开销。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" data-id="cje3fugkc00026gtpo23t0bou" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm笔记/">jvm笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
   
     <article id="post-jvm-2018-02-06-jvm-03-utils" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -99,7 +362,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cjdbjdxp7000o30tp3u7h1iid" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cje3fugkg00046gtp3sa4ra3c" class="article-share-link">分享</a>
       
       
       
@@ -157,7 +420,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cjdbjdxp4000l30tpx7oyw7xy" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cje3fugkp000b6gtpx1q3i1ia" class="article-share-link">分享</a>
       
       
       
@@ -203,7 +466,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cjdbjdxpe000u30tpy75bvc9n" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cje3fugkk00066gtpeiis1i0x" class="article-share-link">分享</a>
       
       
       
@@ -248,7 +511,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cjdbjdxqb001o30tphndukm2s" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cje3fugl4000r6gtpj7gpw6fh" class="article-share-link">分享</a>
       
       
       
@@ -293,7 +556,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cjdbjdxp2000j30tpd2jepj74" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cje3fugl1000m6gtpcfgti974" class="article-share-link">分享</a>
       
       
       
@@ -338,7 +601,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cjdbjdxoy000g30tp4uhdbvi0" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cje3fugkr000e6gtpqcyhbc2v" class="article-share-link">分享</a>
       
       
       
@@ -383,7 +646,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" data-id="cjdbjdxov000e30tpz8act7mj" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-02-sort/" data-id="cje3fugkj00056gtpvr87cxnn" class="article-share-link">分享</a>
       
       
       
@@ -428,7 +691,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/" data-id="cjdbjdxoo000930tplqbemvi7" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-01-basic/" data-id="cje3fugkn00096gtpvkbgxlh2" class="article-share-link">分享</a>
       
       
       
@@ -442,100 +705,10 @@
 
 
   
-    <article id="post-react-2018-01-26-react-app-05" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/26/react-2018-01-26-react-app-05/" class="article-date">
-  <time datetime="2018-01-26T07:28:44.000Z" itemprop="datePublished">2018-01-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/react-2018-01-26-react-app-05/">react-05-前端工事搭建-redux的使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>概览: redux 的使用   </p>
-        
-          <p class="article-more-link">
-            <a href="/2018/01/26/react-2018-01-26-react-app-05/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-05/" data-id="cjdbjdxqx002030tprhygxyrd" class="article-share-link">Delen</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-react-2018-01-26-react-app-04" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/26/react-2018-01-26-react-app-04/" class="article-date">
-  <time datetime="2018-01-26T07:24:56.000Z" itemprop="datePublished">2018-01-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/react-2018-01-26-react-app-04/">react-04-前端工事搭建-react客户端渲染</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>概览: react,sass,webpack的使用 , 客户端渲染   </p>
-        
-          <p class="article-more-link">
-            <a href="/2018/01/26/react-2018-01-26-react-app-04/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-04/" data-id="cjdbjdxqr001v30tps18fpfn3" class="article-share-link">Delen</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Volgende&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页&raquo;</a>
   </nav>
 </section>
            
@@ -569,18 +742,26 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title tagcloud">Tag Cloud</h3>
+    <h3 class="widget-title tagcloud">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/C/" style="font-size: 22.8px;">C</a> <a href="/tags/algorithm/" style="font-size: 18.4px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 25px;">cpp</a> <a href="/tags/jvm笔记/" style="font-size: 16.2px;">jvm笔记</a> <a href="/tags/react/" style="font-size: 20.6px;">react</a> <a href="/tags/学习方法/" style="font-size: 14px;">学习方法</a> <a href="/tags/工具/" style="font-size: 14px;">工具</a>
+      <a href="/tags/C/" style="font-size: 22.25px;">C</a> <a href="/tags/algorithm/" style="font-size: 16.75px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 25px;">cpp</a> <a href="/tags/jvm笔记/" style="font-size: 19.5px;">jvm笔记</a> <a href="/tags/react/" style="font-size: 19.5px;">react</a> <a href="/tags/学习方法/" style="font-size: 14px;">学习方法</a> <a href="/tags/工具/" style="font-size: 14px;">工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">Recente berichten</h3>
+    <h3 class="widget-title recent-posts">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/">jvm-05-class文件结构</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/07/jvm-2018-02-07-jvm-04-optimize/">jvm-04-调优实践</a>
+          </li>
         
           <li>
             <a href="/2018/02/06/jvm-2018-02-06-jvm-03-utils/">jvm笔记-03-虚拟机性能监控与故障处理工具</a>
@@ -594,14 +775,6 @@
             <a href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/">Jvm笔记-01-Java运行时数据区域与对象</a>
           </li>
         
-          <li>
-            <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/">拖延心理学</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/">算法-各种图</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -609,9 +782,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title archive">Archieven</h3>
+    <h3 class="widget-title archive">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">34</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">34</span></li></ul>
     </div>
   </div>
 
@@ -651,10 +824,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;fyszsqq@163.com
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>

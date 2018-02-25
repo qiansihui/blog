@@ -40,7 +40,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -67,6 +67,101 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-c-2018-01-26-c-05-bitset" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/c-2018-01-26-c-05-bitset/" class="article-date">
+  <time datetime="2018-01-26T06:10:36.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/26/c-2018-01-26-c-05-bitset/">C - 基础 - 位操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="二进制、位、字节"><a href="#二进制、位、字节" class="headerlink" title="二进制、位、字节"></a>二进制、位、字节</h2><ul>
+<li>一个字节包括8个位。C术语字节表示存放系统字符集大小，C字节可能8、9、16或其他。  </li>
+<li>有符号整数表示由硬件决定，1+7表示方法范围-127~+127,有+0和-0。采用二进制补码,-127~128。  </li>
+<li>浮点数表示法，二进制小数+二进制指数</li>
+</ul>
+<h2 id="位逻辑运算符"><a href="#位逻辑运算符" class="headerlink" title="位逻辑运算符"></a>位逻辑运算符</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> c = <span class="number">2</span>; <span class="comment">// 0000 0010</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> vc = ~c; <span class="comment">// 1111 1101</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"位运算符，%d 按位取反 ： %d \n"</span>, c, vc);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> d = <span class="number">1</span>;<span class="comment">// 0000 0001</span></span><br><span class="line">	vc = c &amp; d; <span class="comment">// 0000 0000</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"位运算符，%d 按位与 %d ： %d \n"</span>, c, d, vc);	<span class="comment">// 用作掩码、查看一位的值</span></span><br><span class="line"></span><br><span class="line">	vc = c | d; <span class="comment">// 0000 0011</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"位运算符，%d 按位或 %d ： %d \n"</span>, c, d, vc); <span class="comment">// 用作打开位、关闭位</span></span><br><span class="line"></span><br><span class="line">	d = <span class="number">3</span>;		<span class="comment">// 0000 0011</span></span><br><span class="line">	vc = c ^ d; <span class="comment">// 0000 0001</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"位运算符，%d 按位异或 %d ： %d \n"</span>, c, d, vc); <span class="comment">// 用作转置位</span></span><br><span class="line"></span><br><span class="line">	vc = c &lt;&lt; <span class="number">2</span>; <span class="comment">// 0000 1000  , 8</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"位运算符，%d 左移 %d ： %d \n"</span>, c, <span class="number">2</span>, vc);	<span class="comment">// 用法： 高效2的次幂 乘除法</span></span><br><span class="line"></span><br><span class="line">	vc = c &gt;&gt; <span class="number">2</span>; <span class="comment">// 0000 0000  , 0</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"位运算符，%d 右移 %d ： %d \n"</span>, c, <span class="number">2</span>, vc);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="位字段"><a href="#位字段" class="headerlink" title="位字段"></a>位字段</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span>		<span class="comment">// 位字段</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> autfd : <span class="number">1</span>;  <span class="comment">// 1位字段</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> bldfc : <span class="number">1</span>;</span><br><span class="line">&#125;prnt;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	prnt.autfd = <span class="number">0</span>;</span><br><span class="line">	prnt.bldfc = <span class="number">1</span>;</span><br><span class="line">	<span class="comment">// 可以指定位字段的位数，实例化时小心超出容量哦</span></span><br><span class="line">	<span class="comment">// 费劲心机省内存，我还是写Java去吧</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-05-bitset/" data-id="cje3fugl7000v6gtp40990kp1" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-c-2018-01-26-c-04-union" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/c-2018-01-26-c-04-union/" class="article-date">
+  <time datetime="2018-01-26T06:09:43.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/26/c-2018-01-26-c-04-union/">C - 基础 - 联合、枚举、typedef、函数指针</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="联合"><a href="#联合" class="headerlink" title="联合"></a>联合</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">union</span> hold&#123;</span><br><span class="line">	<span class="keyword">int</span> digit;</span><br><span class="line">	<span class="keyword">double</span> big;</span><br><span class="line">	<span class="keyword">char</span> letter;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cat</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> miao[<span class="number">10</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dog</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> wang[<span class="number">10</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">union</span> data &#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">cat</span> <span class="title">my_cat</span>;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">dog</span> <span class="title">my_dog</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 联合的用法：将多个类型放在同一个结构中，使用状态区别</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">my_pet</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="keyword">int</span> status; <span class="comment">// 0:cat , 1:dog</span></span><br><span class="line">	<span class="keyword">union</span> data pet;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 联合只存储一个值</span></span><br><span class="line">	<span class="keyword">union</span> hold valA;</span><br><span class="line">	valA.letter = <span class="string">'A'</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">union</span> hold valB = valA;</span><br><span class="line">	<span class="keyword">union</span> hold valC = &#123; <span class="number">88</span> &#125;;			<span class="comment">// 初始化digit成员</span></span><br><span class="line">	<span class="keyword">union</span> hold valD = &#123; .big = <span class="number">10.00</span> &#125;; <span class="comment">//指定初始化成员</span></span><br><span class="line">	<span class="comment">// 联合与结构的访问方式相同</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> color &#123; red, yellow = <span class="number">10</span>, green, blue &#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"red: %d ,yellow: %d ,green: %d , \n"</span>, red, yellow, green);</span><br><span class="line">	<span class="keyword">int</span> c = <span class="number">11</span>;</span><br><span class="line">	<span class="keyword">switch</span> (c)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> red: <span class="built_in">puts</span>(<span class="string">"oh red.\n"</span>); <span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> yellow: <span class="built_in">puts</span>(<span class="string">"oh yellow.\n"</span>); <span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> green: <span class="built_in">puts</span>(<span class="string">"oh green.\n"</span>); <span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> blue: <span class="built_in">puts</span>(<span class="string">"oh blue.\n"</span>); <span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">"这枚举还没数组好用 坑.\n"</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="typedef声明"><a href="#typedef声明" class="headerlink" title="typedef声明"></a>typedef声明</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> BYTE;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> * STRING; <span class="comment">// char指针</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">book</span> &#123;</span>	<span class="comment">// 可省去结构标记</span></span><br><span class="line">	<span class="keyword">char</span> *	title;</span><br><span class="line">	<span class="keyword">double</span> value;</span><br><span class="line">&#125; MYBOOK;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	BYTE x = <span class="string">'A'</span>;</span><br><span class="line">	STRING ss = <span class="string">"you are beautiful"</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"typedef BYTE en . %c %s \n"</span>, x,ss);</span><br><span class="line">	MYBOOK mb = &#123;</span><br><span class="line">		<span class="string">"aaa"</span>,<span class="number">10.01</span></span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"mb is %s \n"</span>, mb.title);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="函数与指针"><a href="#函数与指针" class="headerlink" title="函数与指针"></a>函数与指针</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">to_upper</span><span class="params">(<span class="keyword">char</span> *)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">to_lower</span><span class="params">(<span class="keyword">char</span> *)</span></span>;</span><br><span class="line">void show(void(*fp)(char *), char * str); //第一个参数为指向函数的指针</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">10</span>] = <span class="string">"AAaa"</span>;</span><br><span class="line">	<span class="keyword">void</span>(*funcp)(<span class="keyword">char</span> *);	<span class="comment">// 函数指针的定义、赋值</span></span><br><span class="line">	funcp = to_upper;</span><br><span class="line">	show(funcp, name);      <span class="comment">// 传递函数指针</span></span><br><span class="line">	funcp = to_lower;</span><br><span class="line">	show(funcp, name);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">to_upper</span><span class="params">(<span class="keyword">char</span> * str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (*str)</span><br><span class="line">	&#123;</span><br><span class="line">		*str = <span class="built_in">toupper</span>(*str);</span><br><span class="line">		str++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">to_lower</span><span class="params">(<span class="keyword">char</span> * str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (*str)</span><br><span class="line">	&#123;</span><br><span class="line">		*str = <span class="built_in">tolower</span>(*str);</span><br><span class="line">		str++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void show(void(*fp)(char *), char * str)</span><br><span class="line">&#123;</span><br><span class="line">	(*fp)(str);		<span class="comment">//函数指针的使用 fp(str)亦可</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"str is : %s \n"</span>, str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-04-union/" data-id="cje3fugky000k6gtpo2wmogh3" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
   
     <article id="post-c-2018-01-26-c-03-struct" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -100,7 +195,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-03-struct/" data-id="cjdbjdxok000530tp4zmx0asz" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-03-struct/" data-id="cje3fugl2000o6gtpf5xldmt3" class="article-share-link">分享</a>
       
       
       
@@ -145,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-02-io/" data-id="cjdbjdxnv000130tp5wemkikb" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-02-io/" data-id="cje3fugkw000j6gtpml0at5t3" class="article-share-link">分享</a>
       
       
       
@@ -207,7 +302,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-01-basic/" data-id="cjdbjdxoa000430tp692413ia" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/c-2018-01-26-c-01-basic/" data-id="cje3fugku000g6gtph3u4p8tk" class="article-share-link">分享</a>
       
       
       
@@ -258,7 +353,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/25/util-2018-01-25-hello-world/" data-id="cjdbjdxr1002530tp268llp5f" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/25/util-2018-01-25-hello-world/" data-id="cje3fugm3001q6gtp04ct3cse" class="article-share-link">分享</a>
       
       
       
@@ -342,7 +437,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/25/util-2018-01-25-markdown/" data-id="cjdbjdxr0002330tp0ux5z62h" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/25/util-2018-01-25-markdown/" data-id="cje3fugm6001s6gtpkbx7wnq4" class="article-share-link">分享</a>
       
       
       
@@ -359,7 +454,7 @@
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Vorige</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
   </nav>
 </section>
            
@@ -377,9 +472,17 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">Recente berichten</h3>
+    <h3 class="widget-title recent-posts">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/">jvm-05-class文件结构</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/07/jvm-2018-02-07-jvm-04-optimize/">jvm-04-调优实践</a>
+          </li>
         
           <li>
             <a href="/2018/02/06/jvm-2018-02-06-jvm-03-utils/">jvm笔记-03-虚拟机性能监控与故障处理工具</a>
@@ -391,14 +494,6 @@
         
           <li>
             <a href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/">Jvm笔记-01-Java运行时数据区域与对象</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/methodology-2018-01-26-拖延心理学/">拖延心理学</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/">算法-各种图</a>
           </li>
         
       </ul>
@@ -423,10 +518,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;fyszsqq@163.com
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>

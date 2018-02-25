@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>jvm-05-class文件结构 | 前前的Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概览： class类文件结构、字节码指令 类文件结构class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。 1个字节=8个比特位，1个16进制数字=4个比特位。 只有两种数据类型：无符号数和表。   无符号数以u1，u2，u4，u8代表1、2、4、8字节的无符号数，可以用来描述数字、索引、数量值或utf-8编码的字符串。    表由多个无符号数或其他表构成的复">
+<meta name="keywords" content="jvm笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm-05-class文件结构">
+<meta property="og:url" content="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/index.html">
+<meta property="og:site_name" content="前前的Blog">
+<meta property="og:description" content="概览： class类文件结构、字节码指令 类文件结构class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。 1个字节=8个比特位，1个16进制数字=4个比特位。 只有两种数据类型：无符号数和表。   无符号数以u1，u2，u4，u8代表1、2、4、8字节的无符号数，可以用来描述数字、索引、数量值或utf-8编码的字符串。    表由多个无符号数或其他表构成的复">
+<meta property="og:image" content="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/cafebabe.png">
+<meta property="og:image" content="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/javap.png">
+<meta property="og:updated_time" content="2018-02-25T23:40:57.393Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jvm-05-class文件结构">
+<meta name="twitter:description" content="概览： class类文件结构、字节码指令 类文件结构class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。 1个字节=8个比特位，1个16进制数字=4个比特位。 只有两种数据类型：无符号数和表。   无符号数以u1，u2，u4，u8代表1、2、4、8字节的无符号数，可以用来描述数字、索引、数量值或utf-8编码的字符串。    表由多个无符号数或其他表构成的复">
+<meta name="twitter:image" content="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/cafebabe.png">
+  
+    <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">前前的Blog</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jvm-2018-02-25-jvm-05-class-file" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" class="article-date">
+  <time datetime="2018-02-25T01:26:39.000Z" itemprop="datePublished">2018-02-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jvm-05-class文件结构
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>概览： class类文件结构、字节码指令</p>
+<h1 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a>类文件结构</h1><p>class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。</p>
+<p>1个字节=8个比特位，1个16进制数字=4个比特位。</p>
+<p>只有两种数据类型：无符号数和表。  </p>
+<p>无符号数以u1，u2，u4，u8代表1、2、4、8字节的无符号数，可以用来描述数字、索引、数量值或utf-8编码的字符串。   </p>
+<p>表由多个无符号数或其他表构成的复核数据类型，用于描述层次关系的复合结构数据。</p>
+<p>示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloJvm</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">incr</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        i++;</span><br><span class="line">        <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用16进制打开的class文件：</p>
+<img src="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/cafebabe.png">
+<h2 id="魔数与class文件版本"><a href="#魔数与class文件版本" class="headerlink" title="魔数与class文件版本"></a>魔数与class文件版本</h2><p>头4个字节为魔数，<code>0xCAFEBABE</code>。紧接着的4个字节为class文件版本号，<code>0x0034</code>为版本52即jdk8。</p>
+<h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>常量池入口为u2类型的容量计数值，从1开始。 </p>
+<p>每种常量池项目类型有着不同的数据结构，相同点是第一个数据项为tag表明是什么项目类型。</p>
+<p>可以用 <code>javap -verbose</code> 将常量池计算出来</p>
+<img src="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/javap.png">
+<h2 id="类索引、父类索引和接口索引集合"><a href="#类索引、父类索引和接口索引集合" class="headerlink" title="类索引、父类索引和接口索引集合"></a>类索引、父类索引和接口索引集合</h2><p>类索引u2+父类索引u2+接口计数器u2+接口索引</p>
+<h2 id="字段表集合"><a href="#字段表集合" class="headerlink" title="字段表集合"></a>字段表集合</h2><p>字段表用于描述接口或者类中声明的变量。包括信息有：</p>
+<ul>
+<li>字段作用域 public private protected</li>
+<li>实例变量还是类变量 static</li>
+<li>可变性 final</li>
+<li>并发可见性 volatile</li>
+<li>可否被序列化</li>
+<li>字段数据类型 基本类型、对象、数组</li>
+</ul>
+<p>字段表结构</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u2</td>
+<td>access_flags 限定符</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>name_index 简单名称</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>descriptor_index 字段和方法描述符</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>attributes_count 属性表计数</td>
+<td>1</td>
+</tr>
+<tr>
+<td>attribute_info</td>
+<td>attributes 属性</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>简单名称</strong>：字段的变量名或方法名称</p>
+<p><strong>全限定名称</strong>：包括包路径的全称如 <code>com/stu/jvm/TestClass;</code></p>
+<p><strong>方法和字段描述符</strong>：用来描述字段的数据类型、方法的参数列表和返回值。数组类型每一维度前置一个 <code>[</code>字符。<br>用描述符描述方法时，先参数列表，后返回值顺序描述</p>
+<table>
+<thead>
+<tr>
+<th>标识字符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>C</td>
+<td>char</td>
+</tr>
+<tr>
+<td>D</td>
+<td>double</td>
+</tr>
+<tr>
+<td>F</td>
+<td>float</td>
+</tr>
+<tr>
+<td>I</td>
+<td>int</td>
+</tr>
+<tr>
+<td>J</td>
+<td>long</td>
+</tr>
+<tr>
+<td>S</td>
+<td>short</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>boolean</td>
+</tr>
+<tr>
+<td>V</td>
+<td>void</td>
+</tr>
+<tr>
+<td>L</td>
+<td>对象类型，如Ljava/lang/Object</td>
+</tr>
+</tbody>
+</table>
+<h2 id="方法表集合"><a href="#方法表集合" class="headerlink" title="方法表集合"></a>方法表集合</h2><p>方法表结构同字段表一样，仅访问标识可选项有所区别。</p>
+<h2 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h2><p>在class文件、字段表、方法表都可以有自己的属性表集合，用于描述场景专有信息。其中关键部分属性：</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>使用位置</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code</td>
+<td>方法表</td>
+<td>Java代码编译后的字节码指令</td>
+</tr>
+<tr>
+<td>Exceptions</td>
+<td>方法表</td>
+<td>方法抛出的异常</td>
+</tr>
+<tr>
+<td>LineNumberTable</td>
+<td>Code属性</td>
+<td>Java源码行号和字节码指令的对应关系</td>
+</tr>
+<tr>
+<td>LocalVariableTable</td>
+<td>Code属性</td>
+<td>方法局部变量描述</td>
+</tr>
+<tr>
+<td>SourceFile</td>
+<td>类文件</td>
+<td>源文件名称</td>
+</tr>
+<tr>
+<td>ConstantValue</td>
+<td>字段表</td>
+<td>final关键字定义的常量值</td>
+</tr>
+<tr>
+<td>InnerClasses</td>
+<td>类文件</td>
+<td>内部类列表</td>
+</tr>
+<tr>
+<td>Signature</td>
+<td>类、方法表、字段表</td>
+<td>用于支持泛型情况的方法签名，记录泛型签名信息</td>
+</tr>
+</tbody>
+</table>
+<h1 id="字节码指令简介"><a href="#字节码指令简介" class="headerlink" title="字节码指令简介"></a>字节码指令简介</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" data-id="cje3fugk700016gtpw9dr40bp" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm笔记/">jvm笔记</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">jvm-04-调优实践</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#类文件结构"><span class="toc-number">1.</span> <span class="toc-text">类文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#魔数与class文件版本"><span class="toc-number">1.1.</span> <span class="toc-text">魔数与class文件版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常量池"><span class="toc-number">1.2.</span> <span class="toc-text">常量池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类索引、父类索引和接口索引集合"><span class="toc-number">1.3.</span> <span class="toc-text">类索引、父类索引和接口索引集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字段表集合"><span class="toc-number">1.4.</span> <span class="toc-text">字段表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法表集合"><span class="toc-number">1.5.</span> <span class="toc-text">方法表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性表集合"><span class="toc-number">1.6.</span> <span class="toc-text">属性表集合</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字节码指令简介"><span class="toc-number">2.</span> <span class="toc-text">字节码指令简介</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'qiansihui',
+    repo: 'qiansihui.github.io',
+    oauth: {
+    client_id: 'd42bc31612b69e9bed4d',
+    client_secret: '25895beb3ddbbf0f5b330308a71a5fae2715a9ae',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>

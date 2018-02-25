@@ -12,7 +12,7 @@
 <meta property="og:url" content="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/index.html">
 <meta property="og:site_name" content="前前的Blog">
 <meta property="og:description" content="对象的生存与死亡如何判定一个对象的生与死 引用计数法 Reference Counting  给对象中添加一个引用计数器，被引用加1，引用失效减1，计数器为0则对象可以被回收。 缺点：很难解决对象之间互相循环引用的问题。    可达性分析法 Reachability Analysis  通过一系列 GC Roots 的对象作为起点，向下搜索，遍历路径称为引用链。当一个对象到 GC Roots 不可">
-<meta property="og:updated_time" content="2018-02-06T09:27:35.139Z">
+<meta property="og:updated_time" content="2018-02-07T09:38:08.383Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm笔记-02-垃圾收集器与内存分配策略">
 <meta name="twitter:description" content="对象的生存与死亡如何判定一个对象的生与死 引用计数法 Reference Counting  给对象中添加一个引用计数器，被引用加1，引用失效减1，计数器为0则对象可以被回收。 缺点：很难解决对象之间互相循环引用的问题。    可达性分析法 Reachability Analysis  通过一系列 GC Roots 的对象作为起点，向下搜索，遍历路径称为引用链。当一个对象到 GC Roots 不可">
@@ -42,7 +42,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -286,7 +286,7 @@ GC停顿时间短是牺牲吞吐量和新生代空间来换取的。
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cjdbjdxp4000l30tpx7oyw7xy" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cje3fugkp000b6gtpx1q3i1ia" class="article-share-link">分享</a>
       
       
       
@@ -341,7 +341,7 @@ GC停顿时间短是牺牲吞吐量和新生代空间来换取的。
 <nav id="article-nav">
   
     <a href="/2018/02/06/jvm-2018-02-06-jvm-03-utils/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
+      <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
           jvm笔记-03-虚拟机性能监控与故障处理工具
@@ -351,7 +351,7 @@ GC停顿时间短是牺牲吞吐量和新生代空间来换取的。
   
   
     <a href="/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">Jvm笔记-01-Java运行时数据区域与对象</div>
     </a>
   
@@ -418,10 +418,10 @@ GC停顿时间短是牺牲吞吐量和新生代空间来换取的。
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;fyszsqq@163.com
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>

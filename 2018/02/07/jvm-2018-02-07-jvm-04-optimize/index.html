@@ -3,21 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>react-01-起手式:技术准备 | 前前的Blog</title>
+  <title>jvm-04-调优实践 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概览： node express">
-<meta name="keywords" content="react">
+  <meta name="description" content="如何利用高性能硬件使用若干个32位虚拟机建立逻辑集群来利用硬件资源。 需要注意：  全局资源竞争 资源池利用 32位的内存限制 本地缓存的浪费  对于CPU资源不敏感的应用，改用CMS（追求低停顿时间）垃圾收集器。 堆外内存导致溢出错误Direct Memory收到系统进程所能管理的最大内存限制，不能在空间不足时通知系统回收，只会在 Full GC 时回收。 调用系统命令使用 System.run">
+<meta name="keywords" content="jvm笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="react-01-起手式:技术准备">
-<meta property="og:url" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/index.html">
+<meta property="og:title" content="jvm-04-调优实践">
+<meta property="og:url" content="http://qiansihui.github.io/2018/02/07/jvm-2018-02-07-jvm-04-optimize/index.html">
 <meta property="og:site_name" content="前前的Blog">
-<meta property="og:description" content="概览： node express">
-<meta property="og:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/server01.png">
-<meta property="og:updated_time" content="2018-01-26T10:59:24.450Z">
+<meta property="og:description" content="如何利用高性能硬件使用若干个32位虚拟机建立逻辑集群来利用硬件资源。 需要注意：  全局资源竞争 资源池利用 32位的内存限制 本地缓存的浪费  对于CPU资源不敏感的应用，改用CMS（追求低停顿时间）垃圾收集器。 堆外内存导致溢出错误Direct Memory收到系统进程所能管理的最大内存限制，不能在空间不足时通知系统回收，只会在 Full GC 时回收。 调用系统命令使用 System.run">
+<meta property="og:updated_time" content="2018-02-11T07:50:21.829Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="react-01-起手式:技术准备">
-<meta name="twitter:description" content="概览： node express">
-<meta name="twitter:image" content="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/server01.png">
+<meta name="twitter:title" content="jvm-04-调优实践">
+<meta name="twitter:description" content="如何利用高性能硬件使用若干个32位虚拟机建立逻辑集群来利用硬件资源。 需要注意：  全局资源竞争 资源池利用 32位的内存限制 本地缓存的浪费  对于CPU资源不敏感的应用，改用CMS（追求低停顿时间）垃圾收集器。 堆外内存导致溢出错误Direct Memory收到系统进程所能管理的最大内存限制，不能在空间不足时通知系统回收，只会在 Full GC 时回收。 调用系统命令使用 System.run">
   
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
   
@@ -70,10 +68,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-react-2018-01-26-react-app-01" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-jvm-2018-02-07-jvm-04-optimize" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/26/react-2018-01-26-react-app-01/" class="article-date">
-  <time datetime="2018-01-26T07:20:00.000Z" itemprop="datePublished">2018-01-26</time>
+    <a href="/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" class="article-date">
+  <time datetime="2018-02-07T09:59:24.000Z" itemprop="datePublished">2018-02-07</time>
 </a>
     
   </div>
@@ -84,7 +82,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      react-01-起手式:技术准备
+      jvm-04-调优实践
     </h1>
   
 
@@ -94,42 +92,26 @@
       
         <!-- Table of Contents -->
         
-        <p>概览： node express</p>
-<a id="more"></a>
-<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>名词定义:  投票热点=由用户发起的投票,包含热点详情,投票记录,用户评论</p>
+        <h1 id="如何利用高性能硬件"><a href="#如何利用高性能硬件" class="headerlink" title="如何利用高性能硬件"></a>如何利用高性能硬件</h1><p>使用若干个32位虚拟机建立逻辑集群来利用硬件资源。</p>
+<p>需要注意：</p>
 <ol>
-<li>用户管理: 注册/登录/修改</li>
-<li>投票热点管理: 创建/修改/删除/投票/评论</li>
-<li>评论管理: 创建/评论的评论</li>
-<li>消息管理: 评论的消息</li>
+<li>全局资源竞争</li>
+<li>资源池利用</li>
+<li>32位的内存限制</li>
+<li>本地缓存的浪费</li>
 </ol>
-<h3 id="技术方案及难点"><a href="#技术方案及难点" class="headerlink" title="技术方案及难点"></a>技术方案及难点</h3><p>后端用express+mongodb提供restful接口 , 前端用react+redux+webpack,前后端数据交互   </p>
-<ol>
-<li>cookie及session使用</li>
-<li>图片上传</li>
-</ol>
-<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><ol>
-<li>使用express创建后端项目 express-server <code>express express-server</code>   <img src="/2018/01/26/react-2018-01-26-react-app-01/server01.png">
-</li>
-</ol>
-<p>bin：存放启动项目的脚本文件，默认www。<br>node_modules：存放所有的项目依赖库，默认body-parser、cookie-parser、debug、jade、express、morgan、serve-favicon。   </p>
-<pre><code>bodyParser：用于解析客户端请求的body中的内容，内部使用JSON编码处理,，url编码处理以及对于文件的上传处理。
-cookieParser：中间件用于获取web浏览器发送的cookie中的内容。
-debug：小的调试工具，打印的是开发者自己在 控制台 打印的信息。
-jade：一个高性能的模板引擎，它深受 Haml 影响，它是用 JavaScript 实现的，并且可以供 Node 使用。
-morgan：打印的nodejs 服务器接受到的请求的信息。
-serve-favicon：favicon服务中间件和缓存。
-</code></pre><p>public：静态资源文件夹，默认images、javascripts、stylesheets。<br>routes：路由文件相当于MVC中的Controller，默认index.js、users.js。<br>views：页面文件，相当于MVC中的view，Ejs模板或者jade模板，默认error.jade、index.jade、layout.jade。<br>package.json：项目依赖配置及开发者信息。<br>app.js：应用核心配置文件，项目入口，相当于php项目中的 index.php、index.html。   </p>
-<p>使用 <code>npm install</code> 下载依赖 <code>npm start</code> 启动项目 , 浏览器打开 <code>localhost:3000</code>即可访问</p>
+<p>对于CPU资源不敏感的应用，改用CMS（追求低停顿时间）垃圾收集器。</p>
+<h1 id="堆外内存导致溢出错误"><a href="#堆外内存导致溢出错误" class="headerlink" title="堆外内存导致溢出错误"></a>堆外内存导致溢出错误</h1><p><code>Direct Memory</code>收到系统进程所能管理的最大内存限制，不能在空间不足时通知系统回收，只会在 <code>Full GC</code> 时回收。</p>
+<h1 id="调用系统命令"><a href="#调用系统命令" class="headerlink" title="调用系统命令"></a>调用系统命令</h1><p>使用 <code>System.runExce()</code> 调用系统命令有一定开销。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/react-2018-01-26-react-app-01/" data-id="cje3fugm9001v6gtp9cl45rte" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" data-id="cje3fugkc00026gtpo23t0bou" class="article-share-link">分享</a>
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/">react</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm笔记/">jvm笔记</a></li></ul>
 
     </footer>
   </div>
@@ -179,19 +161,19 @@ serve-favicon：favicon服务中间件和缓存。
     
 <nav id="article-nav">
   
-    <a href="/2018/01/26/react-2018-01-26-react-app-02/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          react-02-又是起手式:同构js
+          jvm-05-class文件结构
         
       </div>
     </a>
   
   
-    <a href="/2018/01/26/cpp-2018-01-26-cpp-14-operator/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/02/06/jvm-2018-02-06-jvm-03-utils/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">C++  14 重载操作符与转换</div>
+      <div class="article-nav-title">jvm笔记-03-虚拟机性能监控与故障处理工具</div>
     </a>
   
 </nav>
@@ -227,7 +209,7 @@ serve-favicon：favicon服务中间件和缓存。
       
         <strong class="toc-title">文章目录</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#需求"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#技术方案及难点"><span class="toc-number">2.</span> <span class="toc-text">技术方案及难点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#开始"><span class="toc-number">3.</span> <span class="toc-text">开始</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#如何利用高性能硬件"><span class="toc-number">1.</span> <span class="toc-text">如何利用高性能硬件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#堆外内存导致溢出错误"><span class="toc-number">2.</span> <span class="toc-text">堆外内存导致溢出错误</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#调用系统命令"><span class="toc-number">3.</span> <span class="toc-text">调用系统命令</span></a></li></ol>
           </div>
       </div>
     </div>
