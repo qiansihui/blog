@@ -5,19 +5,19 @@
   
   <title>jvm-05-class文件结构 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概览： class类文件结构、字节码指令 类文件结构class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。 1个字节=8个比特位，1个16进制数字=4个比特位。 只有两种数据类型：无符号数和表。   无符号数以u1，u2，u4，u8代表1、2、4、8字节的无符号数，可以用来描述数字、索引、数量值或utf-8编码的字符串。    表由多个无符号数或其他表构成的复">
+  <meta name="description" content="概览： class类文件结构、字节码指令">
 <meta name="keywords" content="jvm笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm-05-class文件结构">
 <meta property="og:url" content="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/index.html">
 <meta property="og:site_name" content="前前的Blog">
-<meta property="og:description" content="概览： class类文件结构、字节码指令 类文件结构class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。 1个字节=8个比特位，1个16进制数字=4个比特位。 只有两种数据类型：无符号数和表。   无符号数以u1，u2，u4，u8代表1、2、4、8字节的无符号数，可以用来描述数字、索引、数量值或utf-8编码的字符串。    表由多个无符号数或其他表构成的复">
+<meta property="og:description" content="概览： class类文件结构、字节码指令">
 <meta property="og:image" content="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/cafebabe.png">
 <meta property="og:image" content="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/javap.png">
-<meta property="og:updated_time" content="2018-02-25T23:40:57.393Z">
+<meta property="og:updated_time" content="2018-02-26T07:02:37.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-05-class文件结构">
-<meta name="twitter:description" content="概览： class类文件结构、字节码指令 类文件结构class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。 1个字节=8个比特位，1个16进制数字=4个比特位。 只有两种数据类型：无符号数和表。   无符号数以u1，u2，u4，u8代表1、2、4、8字节的无符号数，可以用来描述数字、索引、数量值或utf-8编码的字符串。    表由多个无符号数或其他表构成的复">
+<meta name="twitter:description" content="概览： class类文件结构、字节码指令">
 <meta name="twitter:image" content="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/cafebabe.png">
   
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
@@ -45,7 +45,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -96,6 +96,7 @@
         <!-- Table of Contents -->
         
         <p>概览： class类文件结构、字节码指令</p>
+<a id="more"></a>
 <h1 id="类文件结构"><a href="#类文件结构" class="headerlink" title="类文件结构"></a>类文件结构</h1><p>class文件是8位字节为单位的二进制流，如果使用16进制打开，2个16进制数字为1个字节。</p>
 <p>1个字节=8个比特位，1个16进制数字=4个比特位。</p>
 <p>只有两种数据类型：无符号数和表。  </p>
@@ -263,11 +264,74 @@
 </tr>
 </tbody>
 </table>
-<h1 id="字节码指令简介"><a href="#字节码指令简介" class="headerlink" title="字节码指令简介"></a>字节码指令简介</h1>
+<h1 id="字节码指令简介"><a href="#字节码指令简介" class="headerlink" title="字节码指令简介"></a>字节码指令简介</h1><p>指令执行流程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    PC寄存器值加<span class="number">1</span>；</span><br><span class="line">    从字节码流中取出操作码；</span><br><span class="line">    <span class="keyword">if</span> ( 需要操作数 ) 从字节码流中取出操作数；</span><br><span class="line">    执行操作码定义的操作；</span><br><span class="line">&#125; <span class="keyword">while</span> ( 字节码流 &gt; <span class="number">0</span> )</span><br></pre></td></tr></table></figure>
+<h2 id="字节码和数据类型"><a href="#字节码和数据类型" class="headerlink" title="字节码和数据类型"></a>字节码和数据类型</h2><p>大多数指令包含对应操作数据类型信息。</p>
+<p><code>i = int ; l = long ; s = short ; b = byte ; c = char ; f = float ; d = double ; a = reference ;</code></p>
+<h2 id="加载和存储指令"><a href="#加载和存储指令" class="headerlink" title="加载和存储指令"></a>加载和存储指令</h2><p>加载和存储指令用于将数据和栈帧中局部变量表和操作数栈之间来回传输。</p>
+<ul>
+<li>将局部变量加载到操作栈： iload、iload<n>、lload、fload…</n></li>
+<li>将数值从操作数栈存储到局部变量表： istore、lstore…</li>
+<li>将常量加载到操作数栈：bipush、sipush、ldc、ldc_w、iconst<em>m1、lconst</em><l>…</l></li>
+<li>扩充局部变量表访问索引：wide</li>
+</ul>
+<h2 id="运算指令"><a href="#运算指令" class="headerlink" title="运算指令"></a>运算指令</h2><p>用于堆两个操作数栈上的值进行特定运算，并把结果重新存入操作栈顶。分为对整型数据进行运算 和 对浮点型数据运算指令。</p>
+<ul>
+<li>加法: iadd、ladd…</li>
+<li>减法：isub、lsub…</li>
+<li>乘法：imul、lmul…</li>
+<li>除法：idiv、ldiv…</li>
+<li>求余: irem、lrem…</li>
+<li>取反: ineg、lneg…</li>
+<li>位移：ishl、ishr、iushr…</li>
+<li>按位或： ior、lor…</li>
+<li>按位与： iand、land…</li>
+<li>按位异或： ixor、lor…</li>
+<li>自增： iinc</li>
+<li>比较： dcmpg、dcmpl…</li>
+</ul>
+<h2 id="类型转换指令"><a href="#类型转换指令" class="headerlink" title="类型转换指令"></a>类型转换指令</h2><p>用于将两种不同数值类型进行互相转换。</p>
+<ul>
+<li>宽化类型转换，无需显示的转换指令</li>
+<li>窄化类型转换：i2b、i2c、i2s… 很可能导致数值精度丢失</li>
+</ul>
+<h2 id="对象创建与访问指令"><a href="#对象创建与访问指令" class="headerlink" title="对象创建与访问指令"></a>对象创建与访问指令</h2><ul>
+<li>创建类实例：new</li>
+<li>创建数组：newarray、anewarray、multianewarray</li>
+<li>访问类字段和实例字段：getfield、putfield、getstatic、putstatic</li>
+<li>加载数组元素到操作数栈：baload、caload、iaload…</li>
+<li>将操作数栈值存储到数组元素：bastore、iastore…</li>
+<li>取数组长度：arraylength</li>
+<li>检查类实例类型：instanceof、checkcast</li>
+</ul>
+<h2 id="操作数栈管理指令"><a href="#操作数栈管理指令" class="headerlink" title="操作数栈管理指令"></a>操作数栈管理指令</h2><ul>
+<li>将操作数栈栈顶的一个或两个元素出栈：pop、pop2</li>
+<li>复制栈顶数值并复制重新压入栈顶：dup、dup2、dup_x1、dup_x2…</li>
+<li>栈顶两个数值呼唤: swap</li>
+</ul>
+<h2 id="控制转移指令"><a href="#控制转移指令" class="headerlink" title="控制转移指令"></a>控制转移指令</h2><p>让虚拟机有条件或无条件的从指定位置而不是控制转移指令的下一条指令继续执行程序，可看作修改PC寄存器的值。</p>
+<ul>
+<li>条件分支：ifeq、iflt、ifle、ifnull…</li>
+<li>复核条件分支： tableswitch、lookupswitch</li>
+<li>无条件分支：goto、goto_w、jsr、ret</li>
+</ul>
+<h2 id="方法调用和返回指令"><a href="#方法调用和返回指令" class="headerlink" title="方法调用和返回指令"></a>方法调用和返回指令</h2><ul>
+<li>调用方法实例：invokevirtual</li>
+<li>调用接口方法：invokeinterface</li>
+<li>调用需要特殊处理的实例方法，如初始化方法、私有方法和父类方法：invokespecial</li>
+<li>调用类方法：invokestatic</li>
+<li>调用运行时动态解析出的方法：invokedynamic</li>
+</ul>
+<p>方法调用与数据类型无关，返回指令则有关如：return、ireturn、lreturn、areturn…</p>
+<h2 id="异常处理指令"><a href="#异常处理指令" class="headerlink" title="异常处理指令"></a>异常处理指令</h2><p>athrow指令实现，处理异常catch语句采用异常表完成。</p>
+<h2 id="同步指令"><a href="#同步指令" class="headerlink" title="同步指令"></a>同步指令</h2><p>虚拟机支持方法级别的同步和方法内部一段指令序列的同步，同步结构使用管程 <code>Monitor</code> 实现。</p>
+<p>方法级的同步是隐式的，虚拟机通过方法表结构中的 <code>ACC_SYNCHRONIZED</code> 得知一个方法是否为同步方法。方法调用时，执行线程须先成功持有管城，其他线程无法获取同一管程。方法完成或异常退出是释放管程。</p>
+<p>同步一段指令，有 <code>monitorenter</code> 和 <code>monitorexit</code> 指令支持 <code>synchronized</code> 关键字语义。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" data-id="cje3fugk700016gtpw9dr40bp" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" data-id="cje3fugk700016gtpw9dr40bp" class="article-share-link">Delen</a>
       
       
       
@@ -279,7 +343,7 @@
     
  <script src="/jquery/jquery.min.js"></script>
   <div id="random_posts">
-    <h2>推荐文章</h2>
+    <h2>Recommended Posts</h2>
     <div class="random_posts_ul">
       <script>
           var random_count =4
@@ -323,7 +387,7 @@
   
   
     <a href="/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">下一篇</strong>
+      <strong class="article-nav-caption">Ouder</strong>
       <div class="article-nav-title">jvm-04-调优实践</div>
     </a>
   
@@ -358,9 +422,9 @@
     
       <div class="widget" id="toc-widget-fixed">
       
-        <strong class="toc-title">文章目录</strong>
+        <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#类文件结构"><span class="toc-number">1.</span> <span class="toc-text">类文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#魔数与class文件版本"><span class="toc-number">1.1.</span> <span class="toc-text">魔数与class文件版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常量池"><span class="toc-number">1.2.</span> <span class="toc-text">常量池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类索引、父类索引和接口索引集合"><span class="toc-number">1.3.</span> <span class="toc-text">类索引、父类索引和接口索引集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字段表集合"><span class="toc-number">1.4.</span> <span class="toc-text">字段表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法表集合"><span class="toc-number">1.5.</span> <span class="toc-text">方法表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性表集合"><span class="toc-number">1.6.</span> <span class="toc-text">属性表集合</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字节码指令简介"><span class="toc-number">2.</span> <span class="toc-text">字节码指令简介</span></a></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#类文件结构"><span class="toc-number">1.</span> <span class="toc-text">类文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#魔数与class文件版本"><span class="toc-number">1.1.</span> <span class="toc-text">魔数与class文件版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常量池"><span class="toc-number">1.2.</span> <span class="toc-text">常量池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类索引、父类索引和接口索引集合"><span class="toc-number">1.3.</span> <span class="toc-text">类索引、父类索引和接口索引集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字段表集合"><span class="toc-number">1.4.</span> <span class="toc-text">字段表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法表集合"><span class="toc-number">1.5.</span> <span class="toc-text">方法表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性表集合"><span class="toc-number">1.6.</span> <span class="toc-text">属性表集合</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字节码指令简介"><span class="toc-number">2.</span> <span class="toc-text">字节码指令简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#字节码和数据类型"><span class="toc-number">2.1.</span> <span class="toc-text">字节码和数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加载和存储指令"><span class="toc-number">2.2.</span> <span class="toc-text">加载和存储指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运算指令"><span class="toc-number">2.3.</span> <span class="toc-text">运算指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换指令"><span class="toc-number">2.4.</span> <span class="toc-text">类型转换指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象创建与访问指令"><span class="toc-number">2.5.</span> <span class="toc-text">对象创建与访问指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作数栈管理指令"><span class="toc-number">2.6.</span> <span class="toc-text">操作数栈管理指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制转移指令"><span class="toc-number">2.7.</span> <span class="toc-text">控制转移指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法调用和返回指令"><span class="toc-number">2.8.</span> <span class="toc-text">方法调用和返回指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理指令"><span class="toc-number">2.9.</span> <span class="toc-text">异常处理指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同步指令"><span class="toc-number">2.10.</span> <span class="toc-text">同步指令</span></a></li></ol></li></ol>
           </div>
       </div>
     </div>
@@ -390,10 +454,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      联系方式&nbsp;|&nbsp;fyszsqq@163.com
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
