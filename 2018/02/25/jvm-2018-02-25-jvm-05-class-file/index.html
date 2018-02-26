@@ -45,7 +45,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -331,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" data-id="cje3fugk700016gtpw9dr40bp" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" data-id="cje48o5vl001restp9v3kni7s" class="article-share-link">分享</a>
       
       
       
@@ -343,7 +343,7 @@
     
  <script src="/jquery/jquery.min.js"></script>
   <div id="random_posts">
-    <h2>Recommended Posts</h2>
+    <h2>推荐文章</h2>
     <div class="random_posts_ul">
       <script>
           var random_count =4
@@ -385,9 +385,18 @@
     
 <nav id="article-nav">
   
+    <a href="/2018/02/26/jvm-2018-02-26-jvm-07-classloader/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          jvm-07-虚拟机类加载机制
+        
+      </div>
+    </a>
+  
   
     <a href="/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">jvm-04-调优实践</div>
     </a>
   
@@ -422,7 +431,7 @@
     
       <div class="widget" id="toc-widget-fixed">
       
-        <strong class="toc-title">Content</strong>
+        <strong class="toc-title">文章目录</strong>
         <div class="toc-widget-list">
               <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#类文件结构"><span class="toc-number">1.</span> <span class="toc-text">类文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#魔数与class文件版本"><span class="toc-number">1.1.</span> <span class="toc-text">魔数与class文件版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常量池"><span class="toc-number">1.2.</span> <span class="toc-text">常量池</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类索引、父类索引和接口索引集合"><span class="toc-number">1.3.</span> <span class="toc-text">类索引、父类索引和接口索引集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字段表集合"><span class="toc-number">1.4.</span> <span class="toc-text">字段表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法表集合"><span class="toc-number">1.5.</span> <span class="toc-text">方法表集合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性表集合"><span class="toc-number">1.6.</span> <span class="toc-text">属性表集合</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字节码指令简介"><span class="toc-number">2.</span> <span class="toc-text">字节码指令简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#字节码和数据类型"><span class="toc-number">2.1.</span> <span class="toc-text">字节码和数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加载和存储指令"><span class="toc-number">2.2.</span> <span class="toc-text">加载和存储指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运算指令"><span class="toc-number">2.3.</span> <span class="toc-text">运算指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型转换指令"><span class="toc-number">2.4.</span> <span class="toc-text">类型转换指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对象创建与访问指令"><span class="toc-number">2.5.</span> <span class="toc-text">对象创建与访问指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作数栈管理指令"><span class="toc-number">2.6.</span> <span class="toc-text">操作数栈管理指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#控制转移指令"><span class="toc-number">2.7.</span> <span class="toc-text">控制转移指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法调用和返回指令"><span class="toc-number">2.8.</span> <span class="toc-text">方法调用和返回指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理指令"><span class="toc-number">2.9.</span> <span class="toc-text">异常处理指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同步指令"><span class="toc-number">2.10.</span> <span class="toc-text">同步指令</span></a></li></ol></li></ol>
           </div>
@@ -454,10 +463,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;fyszsqq@163.com
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
