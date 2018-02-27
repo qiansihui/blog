@@ -40,7 +40,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -67,6 +67,53 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-cpp-2018-01-26-cpp-11-iterator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/26/cpp-2018-01-26-cpp-11-iterator/" class="article-date">
+  <time datetime="2018-01-26T06:31:50.000Z" itemprop="datePublished">2018-01-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/26/cpp-2018-01-26-cpp-11-iterator/">C++  11 泛型算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="插入迭代器"><a href="#插入迭代器" class="headerlink" title="插入迭代器"></a>插入迭代器</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iterator&gt;     // std::front_inserter</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 插入迭代器</span></span><br><span class="line">	<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt; ilist;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ivec;</span><br><span class="line">	ivec.push_back(<span class="number">1</span>);</span><br><span class="line">	ivec.push_back(<span class="number">42</span>);</span><br><span class="line">	ivec.push_back(<span class="number">3</span>);</span><br><span class="line">	<span class="comment">// 利用插入迭代器拷贝 , 将ivec元素依次插入到ilist前面</span></span><br><span class="line">	copy(ivec.begin(), ivec.end(), front_inserter(ilist)); </span><br><span class="line">	<span class="comment">// ilist输出为 3， 42 ，1</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;::iterator i = ilist.begin(); i != ilist.end(); ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"index i : "</span> &lt;&lt; *i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 从ivec找到元素42的位置，拷贝42与之后的元素 42,3</span></span><br><span class="line">	ilist.clear();</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it = find(ivec.begin(), ivec.end(), <span class="number">42</span>);</span><br><span class="line">	copy(it, ivec.end(), front_inserter(ilist)); <span class="comment">// 拷贝指定范围</span></span><br><span class="line">	<span class="comment">// ilist输出为42 ，3</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">list</span>&lt;<span class="keyword">int</span>&gt;::iterator i = ilist.begin(); i != ilist.end(); ++i)</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"index i : "</span> &lt;&lt; *i &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="流迭代器"><a href="#流迭代器" class="headerlink" title="流迭代器"></a>流迭代器</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iterator&gt;     // std::front_inserter</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sales_item.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 流迭代器定义</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"int类型流迭代器，输入数字："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	istream_iterator&lt;<span class="keyword">int</span>&gt; cin_it(<span class="built_in">cin</span>); <span class="comment">// 从输入流中读取int值</span></span><br><span class="line">	istream_iterator&lt;<span class="keyword">int</span>&gt; eof; <span class="comment">// 输入流终止符</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (cin_it != eof)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">int</span> input = *cin_it++;</span><br><span class="line">		<span class="keyword">if</span> (input == <span class="number">0</span>)<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"input:"</span> &lt;&lt; input &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 会显示输入的上一个？</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cin</span>.clear();</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"对象类型流迭代器，输入字符串 整数 浮点数："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	istream_iterator&lt;Sales_item&gt; item_iter(<span class="built_in">cin</span>), item_eof;</span><br><span class="line">	Sales_item sum;</span><br><span class="line">	sum = *item_iter++;</span><br><span class="line">	<span class="keyword">while</span> (item_iter != item_eof)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (item_iter -&gt; same_isbn(sum))</span><br><span class="line">		&#123;</span><br><span class="line">			sum = sum + *item_iter;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">cout</span> &lt;&lt; sum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			sum = *item_iter;</span><br><span class="line">		&#125;</span><br><span class="line">		++item_iter;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; sum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>流迭代器 与算法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iterator&gt;     // std::front_inserter</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 流迭代器 与算法</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"int类型流迭代器，输入数字："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	istream_iterator&lt;<span class="keyword">int</span>&gt; cin_it(<span class="built_in">cin</span>); <span class="comment">// 从输入流中读取int值</span></span><br><span class="line">	istream_iterator&lt;<span class="keyword">int</span>&gt; eof; <span class="comment">// 输入流终止符</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec(cin_it, eof); <span class="comment">//将输入数字转入容器</span></span><br><span class="line">	sort(vec.begin(), vec.end());</span><br><span class="line">	ostream_iterator&lt;<span class="keyword">int</span>&gt; output(<span class="built_in">cout</span>, <span class="string">" "</span>); <span class="comment">// 以空格为输出元素分隔符</span></span><br><span class="line">	unique_copy(vec.begin(), vec.end(), output); <span class="comment">// 容器去重拷贝到输出流</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="反向迭代器"><a href="#反向迭代器" class="headerlink" title="反向迭代器"></a>反向迭代器</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iterator&gt;     // std::front_inserter</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"反向迭代器："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ivec;</span><br><span class="line">	ivec.push_back(<span class="number">1</span>);</span><br><span class="line">	ivec.push_back(<span class="number">2</span>);</span><br><span class="line">	ivec.push_back(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">	ostream_iterator&lt;<span class="keyword">int</span>&gt; output(<span class="built_in">cout</span>,<span class="string">","</span>);</span><br><span class="line">	copy(ivec.begin(), ivec.end(), output); <span class="comment">// 打印数组不错哎</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"用反向迭代器逆序输出: "</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::reverse_iterator it = ivec.rbegin();</span><br><span class="line">		it != ivec.rend(); ++it)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; *it &lt;&lt; <span class="string">","</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"用反向迭代器拷贝到输出流："</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	copy(ivec.rbegin(), ivec.rend(), output);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-11-iterator/" data-id="cje5949qd001py4tpsjyv4xw6" class="article-share-link">Delen</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
   
     <article id="post-cpp-2018-01-26-cpp-10-map" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -99,7 +146,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-10-map/" data-id="cje48o5uq000testp9wy4ieoi" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-10-map/" data-id="cje5949q7001gy4tp96ncwru9" class="article-share-link">Delen</a>
       
       
       
@@ -145,7 +192,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-09-container/" data-id="cje48o5un000oestpinvxbf4o" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-09-container/" data-id="cje5949qa001ky4tp5kxqbkj3" class="article-share-link">Delen</a>
       
       
       
@@ -243,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-08-io/" data-id="cje48o5uk000jestpst245chd" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-08-io/" data-id="cje5949q8001iy4tp3ghaajje" class="article-share-link">Delen</a>
       
       
       
@@ -298,7 +345,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-07-function/" data-id="cje48o5um000mestpn1q1qzbx" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-07-function/" data-id="cje5949q2001ay4tpkb4mfyz8" class="article-share-link">Delen</a>
       
       
       
@@ -345,7 +392,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-06-statement/" data-id="cje48o5uj000iestpxpfupzww" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-06-statement/" data-id="cje5949q3001cy4tpnvow1mdc" class="article-share-link">Delen</a>
       
       
       
@@ -401,7 +448,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-05-expression/" data-id="cje48o5uh000festpraogvm6d" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-05-expression/" data-id="cje5949q5001ey4tps0m7el64" class="article-share-link">Delen</a>
       
       
       
@@ -445,7 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-04-array-pointer/" data-id="cje48o5ug000eestpz0fywjr1" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-04-array-pointer/" data-id="cje5949q00017y4tpotskc4h9" class="article-share-link">Delen</a>
       
       
       
@@ -496,7 +543,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-03-stdlib/" data-id="cje48o5uc000bestp65gx2g1i" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-03-stdlib/" data-id="cje5949px0011y4tpbksqxdtm" class="article-share-link">Delen</a>
       
       
       
@@ -552,52 +599,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-02-data-type/" data-id="cje48o5ub0009estpptbb5c2e" class="article-share-link">分享</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp/">cpp</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-cpp-2018-01-26-cpp-01-firstblood" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/26/cpp-2018-01-26-cpp-01-firstblood/" class="article-date">
-  <time datetime="2018-01-26T06:25:46.000Z" itemprop="datePublished">2018-01-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/26/cpp-2018-01-26-cpp-01-firstblood/">C++  01 初体验</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        <h2 id="神奇的输入输出流"><a href="#神奇的输入输出流" class="headerlink" title="神奇的输入输出流"></a>神奇的输入输出流</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello C艹"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter tow number:"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">int</span> v1, v2;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span> &gt;&gt; v1 &gt;&gt; v2;	<span class="comment">// 输入</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; v1 &lt;&lt; <span class="string">" + "</span> &lt;&lt; v2 &lt;&lt; <span class="string">" = "</span> &lt;&lt; v1 + v2 &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="comment">// 输出结果</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="面对对象的类"><a href="#面对对象的类" class="headerlink" title="面对对象的类"></a>面对对象的类</h2><p>对象操作<br><code>Sales_item.h</code>内容见 <a href="https://github.com/moneys/IT-diary/blob/master/code/C%2B%2B/Sales_item.h" target="_blank" rel="noopener">Sales_item.h</a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sales_item.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 读写 Sales_item对象</span></span><br><span class="line">	Sales_item book;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span> &gt;&gt; book;	<span class="comment">// 通过重载 &gt;&gt; 符号实现</span></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; book &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="comment">// 通过重载 &lt;&lt; 符号实现</span></span><br><span class="line"></span><br><span class="line">	Sales_item item1, item2;</span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2;</span><br><span class="line">	<span class="keyword">if</span> (item1.same_isbn(item2))		<span class="comment">// 成员函数调用</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; item1 + item2 &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="comment">// 项目相加，重载 + 符号</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">std</span>::<span class="built_in">cerr</span> &lt;&lt; <span class="string">"Date must refer to same ISBN"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-01-firstblood/" data-id="cje48o5u30006estp350jwh9l" class="article-share-link">分享</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/cpp-2018-01-26-cpp-02-data-type/" data-id="cje5949pu000yy4tp617qfek2" class="article-share-link">Delen</a>
       
       
       
@@ -614,7 +616,7 @@
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Vorige</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Volgende&raquo;</a>
   </nav>
 </section>
            
@@ -632,9 +634,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">最新文章</h3>
+    <h3 class="widget-title recent-posts">Recente berichten</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/02/27/jvm-2018-02-27-jvm-08-class-engine/">jvm-08-虚拟机字节码执行引擎</a>
+          </li>
         
           <li>
             <a href="/2018/02/26/jvm-2018-02-26-jvm-07-classloader/">jvm-07-虚拟机类加载机制</a>
@@ -650,10 +656,6 @@
         
           <li>
             <a href="/2018/02/06/jvm-2018-02-06-jvm-03-utils/">jvm笔记-03-虚拟机性能监控与故障处理工具</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/31/jvm-2018-01-31-jvm-02-gc/">jvm笔记-02-垃圾收集器与内存分配策略</a>
           </li>
         
       </ul>
@@ -678,10 +680,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      联系方式&nbsp;|&nbsp;fyszsqq@163.com
+      Contact&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
