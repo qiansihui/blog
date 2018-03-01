@@ -5,17 +5,17 @@
   
   <title>jvm-08-虚拟机字节码执行引擎 | 前前的Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概览：虚拟机的方法调用和字节码执行，运行时栈帧结构，基于栈的字节码解析执行引擎 输入的是字节码文件，处理过程是字节码解析的等效过程，输出执行结果。 运行时栈帧结构栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，是虚拟机栈的栈元素。栈帧存储了方法的局部变量表、操作数栈、动态连接和方法返回地址信息。 局部变量表局部变量表是一组变量值存储空间，用于存放方法参数和方法内局部变量。  局部变量表容量以">
+  <meta name="description" content="概览：虚拟机的方法调用和字节码执行，运行时栈帧结构，基于栈的字节码解析执行引擎 输入的是字节码文件，处理过程是字节码解析的等效过程，输出执行结果。">
 <meta name="keywords" content="jvm笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm-08-虚拟机字节码执行引擎">
 <meta property="og:url" content="http://qiansihui.github.io/2018/02/27/jvm-2018-02-27-jvm-08-class-engine/index.html">
 <meta property="og:site_name" content="前前的Blog">
-<meta property="og:description" content="概览：虚拟机的方法调用和字节码执行，运行时栈帧结构，基于栈的字节码解析执行引擎 输入的是字节码文件，处理过程是字节码解析的等效过程，输出执行结果。 运行时栈帧结构栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，是虚拟机栈的栈元素。栈帧存储了方法的局部变量表、操作数栈、动态连接和方法返回地址信息。 局部变量表局部变量表是一组变量值存储空间，用于存放方法参数和方法内局部变量。  局部变量表容量以">
-<meta property="og:updated_time" content="2018-02-27T06:08:00.802Z">
+<meta property="og:description" content="概览：虚拟机的方法调用和字节码执行，运行时栈帧结构，基于栈的字节码解析执行引擎 输入的是字节码文件，处理过程是字节码解析的等效过程，输出执行结果。">
+<meta property="og:updated_time" content="2018-03-01T00:07:34.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-08-虚拟机字节码执行引擎">
-<meta name="twitter:description" content="概览：虚拟机的方法调用和字节码执行，运行时栈帧结构，基于栈的字节码解析执行引擎 输入的是字节码文件，处理过程是字节码解析的等效过程，输出执行结果。 运行时栈帧结构栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，是虚拟机栈的栈元素。栈帧存储了方法的局部变量表、操作数栈、动态连接和方法返回地址信息。 局部变量表局部变量表是一组变量值存储空间，用于存放方法参数和方法内局部变量。  局部变量表容量以">
+<meta name="twitter:description" content="概览：虚拟机的方法调用和字节码执行，运行时栈帧结构，基于栈的字节码解析执行引擎 输入的是字节码文件，处理过程是字节码解析的等效过程，输出执行结果。">
   
     <link rel="alternate" href="/atom.xml" title="前前的Blog" type="application/atom+xml">
   
@@ -42,7 +42,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -94,6 +94,7 @@
         
         <p>概览：虚拟机的方法调用和字节码执行，运行时栈帧结构，基于栈的字节码解析执行引擎</p>
 <p>输入的是字节码文件，处理过程是字节码解析的等效过程，输出执行结果。</p>
+<a id="more"></a>
 <h1 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h1><p>栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，是虚拟机栈的栈元素。栈帧存储了方法的局部变量表、操作数栈、动态连接和方法返回地址信息。</p>
 <h2 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h2><p>局部变量表是一组变量值存储空间，用于存放方法参数和方法内局部变量。</p>
 <ul>
@@ -177,11 +178,24 @@
 <li>掌控方法分派规则</li>
 </ol>
 <p>程序员可以通过super关键字或MethodHandle掌控方法分派的具体版本。</p>
-<h1 id="基于栈的字节码解析执行引擎"><a href="#基于栈的字节码解析执行引擎" class="headerlink" title="基于栈的字节码解析执行引擎"></a>基于栈的字节码解析执行引擎</h1><h2 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h2><h2 id="基于栈的指令集与基于寄存器的指令集"><a href="#基于栈的指令集与基于寄存器的指令集" class="headerlink" title="基于栈的指令集与基于寄存器的指令集"></a>基于栈的指令集与基于寄存器的指令集</h2><h2 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h2>
+<h1 id="基于栈的字节码解析执行引擎"><a href="#基于栈的字节码解析执行引擎" class="headerlink" title="基于栈的字节码解析执行引擎"></a>基于栈的字节码解析执行引擎</h1><p>虚拟机是如何执行方法中的字节码指令的。</p>
+<h2 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h2><p>编译过程： 程序源码 -&gt; 词法分析 -&gt; 单词流 -&gt; 语法分析 -&gt; 抽象语法树</p>
+<p>传统编译分支：  抽象语法树 -&gt; 优化器 -&gt; 中间代码 -&gt; 生成器 -&gt; 目标代码</p>
+<p>解释执行分支：  抽象语法树 -&gt; 指令流 -&gt; 解释器 -&gt; 解释执行</p>
+<h2 id="基于栈的指令集与基于寄存器的指令集"><a href="#基于栈的指令集与基于寄存器的指令集" class="headerlink" title="基于栈的指令集与基于寄存器的指令集"></a>基于栈的指令集与基于寄存器的指令集</h2><ol>
+<li>基于栈的指令集</li>
+</ol>
+<p>优点：可移植，不受硬件约束；代码更紧凑；实现叫简单；<br>缺点：执行速度稍慢，需要指令数较多</p>
+<ol>
+<li>基于寄存器的指令集</li>
+</ol>
+<p>优点：执行速度快<br>缺点：依赖寄存器硬件</p>
+<h2 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h2><p>整个运算过程中的中间变量都以操作数的出栈、入栈为信息交换途径。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/27/jvm-2018-02-27-jvm-08-class-engine/" data-id="cje5949ps000wy4tpb3c57p9g" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/02/27/jvm-2018-02-27-jvm-08-class-engine/" data-id="cje5949ps000wy4tpb3c57p9g" class="article-share-link">分享</a>
       
       
       
@@ -237,7 +251,7 @@
   
   
     <a href="/2018/02/26/jvm-2018-02-26-jvm-07-classloader/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">下一篇</strong>
       <div class="article-nav-title">jvm-07-虚拟机类加载机制</div>
     </a>
   
@@ -304,10 +318,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;fyszsqq@163.com
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>

@@ -40,7 +40,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiansihui.github.io"></form>
@@ -90,98 +90,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- Table of Contents -->
-        
         <p>概览：虚拟机的方法调用和字节码执行，运行时栈帧结构，基于栈的字节码解析执行引擎</p>
 <p>输入的是字节码文件，处理过程是字节码解析的等效过程，输出执行结果。</p>
-<h1 id="运行时栈帧结构"><a href="#运行时栈帧结构" class="headerlink" title="运行时栈帧结构"></a>运行时栈帧结构</h1><p>栈帧是用于支持虚拟机进行方法调用和方法执行的数据结构，是虚拟机栈的栈元素。栈帧存储了方法的局部变量表、操作数栈、动态连接和方法返回地址信息。</p>
-<h2 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h2><p>局部变量表是一组变量值存储空间，用于存放方法参数和方法内局部变量。</p>
-<ul>
-<li>局部变量表容量以变量槽 <code>Slot</code> 为最小单位，一般为4字节32位。long和double占用两个连续的 <code>Slot</code> </li>
-<li>虚拟机通过索引定位方式使用局部变量表</li>
-<li>方法执行时，虚拟机使用局部变量表完成参数传递，若实例方法，第0位索引为实例引用 <code>this</code></li>
-<li>局部变量没有类变量那样的准备阶段</li>
-</ul>
-<h2 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h2><p>操作栈，是一个后入先出的栈。栈元素为任意Java数据类型。</p>
-<ul>
-<li>方法执行过程中，各种字节码指令往操作数栈写入和提取内容，即出栈、入栈操作。</li>
-<li>操作数栈元素数据类型与字节码指令序列严格匹配。</li>
-<li>虚拟机优化处理，零两个栈帧共享部分操作数栈区域。</li>
-</ul>
-<h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>栈帧包括一个指向运行时常量池中该栈帧所属方法的引用，持有这个应用是为了支持方法调用过程中的动态连接。</p>
-<ul>
-<li>字节码中方法调用以常量池中指向方法的符号引用作为参数。</li>
-<li>符号引用一部分会在类加载阶段或第一次使用时转化为直接引用，静态解析。</li>
-<li>另一部分将在每一次运行期间转化为直接引用，称为动态连接。</li>
-</ul>
-<h2 id="方法返回"><a href="#方法返回" class="headerlink" title="方法返回"></a>方法返回</h2><p>方法的两种退出方式：</p>
-<ol>
-<li>正常完成出口：遇到返回的字节码指令，将返回值传递给上层方法调用者。</li>
-<li>异常完成出口：方法执行中遇到异常，且在方法的异常表中无匹配的异常处理器</li>
-</ol>
-<h1 id="方法调用"><a href="#方法调用" class="headerlink" title="方法调用"></a>方法调用</h1><p>不等同方法执行，任务是确定被调用方法的版本。</p>
-<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>类解析阶段，会将非虚方法的符号引用转化为直接引用。符合“编译期可知，运行期不变”的方法，包括静态方法和私有方法两类。</p>
-<p>5条方法调用字节码指令：</p>
-<ol>
-<li>invokestatic: 调用静态方法</li>
-<li>invokespecial: 调用实力构造器方法、私有方法和父方法</li>
-<li>invokevirtual: 调用所有虚方法</li>
-<li>invokeinterface: 调用接口方法</li>
-<li>invokedynamic: 先运行时动态解析出调用点限定符所引用的方法，再执行</li>
-</ol>
-<p>解析调用为静态过程，分派调用则可能是静态或动态。</p>
-<h2 id="分派"><a href="#分派" class="headerlink" title="分派"></a>分派</h2><p>因为重载和重写的原因，虚拟机如何确定正确的目标方法</p>
-<ol>
-<li>静态分派</li>
-</ol>
-<p><code>Human man = new Man()</code></p>
-<p>Human为静态类型，Man为实际类型。编译阶段，Javac编译器根据参数静态类型决定使用哪个重载版本。</p>
-<p>所有依赖静态类型来定位方法执行版本的分派动作为静态分派。典型应用是方法重载。</p>
-<ol>
-<li>动态分派</li>
-</ol>
-<p>运行期根据实际类型确定方法执行版本的分派过程，和重写有关。</p>
-<p>invokevitual 指定的多态查找过程：</p>
-<pre><code>2.1 找到操作数栈顶的第一个元素所指向对象的实际类型，记作C
-2.2 若C中找到常量描述符和简单名称都相符的方法，有则返回
-2.3 按照继承关系自下往上对父类进行搜索匹配
-2.4 否则，抛出异常。
-</code></pre><ol>
-<li>单分派和多份派</li>
-</ol>
-<p>方法的接收者和方法的参数统称为方法的宗量。</p>
-<p>根据分派基于多少种宗量，将分派划分为单分派和多份派两种。</p>
-<ol>
-<li>虚拟机动态分派的实现</li>
-</ol>
-<p>动态分派优化手段：使用虚方法表所以代替元数据查找以提高性能。</p>
-<h2 id="动态类型语言支持"><a href="#动态类型语言支持" class="headerlink" title="动态类型语言支持"></a>动态类型语言支持</h2><ol>
-<li>动态类型语言</li>
-</ol>
-<p>动态类型语言关键特征是类型检查主体过程是在运行期而不是编译器。</p>
-<ol>
-<li>jdk7与动态类型</li>
-</ol>
-<p>方法符号引用再编译时产生，而动态类型语言只有在运行期才能确定接收者类型。虚拟机上动态类型语言实现方式有：编译时留占位符类型，运行时动态生成字节码实现具体类型到占位符类型适配。</p>
-<ol>
-<li>java.lang.invoke包</li>
-</ol>
-<p>目的：在单词依靠符号一用来确定调用的目标方法这种方式之外，提供新的动态确定目标方法的机制，成为 <code>MethodHandle</code>。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodHandleTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassA</span></span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">println</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">            System.out.println(s);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        Object obj = System.currentTimeMillis() % <span class="number">2</span> == <span class="number">0</span> ? System.out : <span class="keyword">new</span> ClassA();</span><br><span class="line">        getPrintlnMH(obj).invokeExact(<span class="string">"hello"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> MethodHandle <span class="title">getPrintlnMH</span><span class="params">(Object receiver)</span> <span class="keyword">throws</span> NoSuchMethodException, IllegalAccessException </span>&#123;</span><br><span class="line">        MethodType methodType = MethodType.methodType(<span class="keyword">void</span>.class, String.class);</span><br><span class="line">        <span class="keyword">return</span> MethodHandles</span><br><span class="line">                .lookup()</span><br><span class="line">                .findVirtual(receiver.getClass(), <span class="string">"println"</span>, methodType)</span><br><span class="line">                .bindTo(receiver);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>invokedynamic指令</li>
-</ol>
-<p>每一处含有 <code>invokedynamic</code> 指令位置称做 动态调用点</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InvokeDynamicTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        INDY_BootstrapMethod().invokeExact(<span class="string">"hello"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testMethod</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello s:"</span> + s);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CallSite <span class="title">BootstrapMethod</span><span class="params">(MethodHandles.Lookup lookup, String name, MethodType methodType)</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ConstantCallSite(lookup.findStatic(InvokeDynamicTest.class, name, methodType));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> MethodType <span class="title">MT_BootstrapMethod</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> MethodType.fromMethodDescriptorString(</span><br><span class="line">                <span class="string">"(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;"</span>,</span><br><span class="line">                <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> MethodHandle <span class="title">MH_BootstrapMethod</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> MethodHandles.lookup().findStatic(InvokeDynamicTest.class, <span class="string">"BootstrapMethod"</span>, MT_BootstrapMethod());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> MethodHandle <span class="title">INDY_BootstrapMethod</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        CallSite callSite = (CallSite) MH_BootstrapMethod().invokeWithArguments(</span><br><span class="line">                MethodHandles.lookup(),</span><br><span class="line">                <span class="string">"testMethod"</span>,</span><br><span class="line">                MethodType.fromMethodDescriptorString(<span class="string">"(Ljava/lang/String;)V"</span>, <span class="keyword">null</span>));</span><br><span class="line">        <span class="keyword">return</span> callSite.dynamicInvoker();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>掌控方法分派规则</li>
-</ol>
-<p>程序员可以通过super关键字或MethodHandle掌控方法分派的具体版本。</p>
-<h1 id="基于栈的字节码解析执行引擎"><a href="#基于栈的字节码解析执行引擎" class="headerlink" title="基于栈的字节码解析执行引擎"></a>基于栈的字节码解析执行引擎</h1><h2 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h2><h2 id="基于栈的指令集与基于寄存器的指令集"><a href="#基于栈的指令集与基于寄存器的指令集" class="headerlink" title="基于栈的指令集与基于寄存器的指令集"></a>基于栈的指令集与基于寄存器的指令集</h2><h2 id="基于栈的解释器执行过程"><a href="#基于栈的解释器执行过程" class="headerlink" title="基于栈的解释器执行过程"></a>基于栈的解释器执行过程</h2>
+        
+          <p class="article-more-link">
+            <a href="/2018/02/27/jvm-2018-02-27-jvm-08-class-engine/#more">继续阅读全文 »</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/27/jvm-2018-02-27-jvm-08-class-engine/" data-id="cje5949ps000wy4tpb3c57p9g" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/02/27/jvm-2018-02-27-jvm-08-class-engine/" data-id="cje5949ps000wy4tpb3c57p9g" class="article-share-link">分享</a>
       
       
       
@@ -226,7 +145,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/26/jvm-2018-02-26-jvm-07-classloader/" data-id="cje5949pq000sy4tpa20lluoa" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/02/26/jvm-2018-02-26-jvm-07-classloader/" data-id="cje5949pq000sy4tpa20lluoa" class="article-share-link">分享</a>
       
       
       
@@ -271,7 +190,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" data-id="cje5949pz0015y4tpuvvq25hi" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/02/25/jvm-2018-02-25-jvm-05-class-file/" data-id="cje5949pz0015y4tpuvvq25hi" class="article-share-link">分享</a>
       
       
       
@@ -324,7 +243,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" data-id="cje5949pr000uy4tp9tvdxgqs" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/02/07/jvm-2018-02-07-jvm-04-optimize/" data-id="cje5949pr000uy4tp9tvdxgqs" class="article-share-link">分享</a>
       
       
       
@@ -369,7 +288,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cje5949pi000ky4tps1daciux" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/02/06/jvm-2018-02-06-jvm-03-utils/" data-id="cje5949pi000ky4tps1daciux" class="article-share-link">分享</a>
       
       
       
@@ -427,7 +346,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cje5949pn000py4tp57mcprxv" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-02-gc/" data-id="cje5949pn000py4tp57mcprxv" class="article-share-link">分享</a>
       
       
       
@@ -473,7 +392,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cje5949pl000ny4tpjqtw21ma" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/31/jvm-2018-01-31-jvm-01-data-area/" data-id="cje5949pl000ny4tpjqtw21ma" class="article-share-link">分享</a>
       
       
       
@@ -518,7 +437,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cje5949qm0022y4tpnihf90d3" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/methodology-2018-01-26-拖延心理学/" data-id="cje5949qm0022y4tpnihf90d3" class="article-share-link">分享</a>
       
       
       
@@ -563,7 +482,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cje5949pf000fy4tpjuv1d9bg" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-04-graph/" data-id="cje5949pf000fy4tpjuv1d9bg" class="article-share-link">分享</a>
       
       
       
@@ -608,7 +527,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cje5949p00005y4tpcl31pia3" class="article-share-link">Delen</a>
+      <a data-url="http://qiansihui.github.io/2018/01/26/algorithm-2018-01-26-algorithm-03-search/" data-id="cje5949p00005y4tpcl31pia3" class="article-share-link">分享</a>
       
       
       
@@ -625,7 +544,7 @@
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Volgende&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">下一页&raquo;</a>
   </nav>
 </section>
            
@@ -659,7 +578,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title tagcloud">Tag Cloud</h3>
+    <h3 class="widget-title tagcloud">标签云</h3>
     <div class="widget tagcloud">
       <a href="/tags/C/" style="font-size: 20.6px;">C</a> <a href="/tags/algorithm/" style="font-size: 16.2px;">algorithm</a> <a href="/tags/cpp/" style="font-size: 25px;">cpp</a> <a href="/tags/jvm笔记/" style="font-size: 22.8px;">jvm笔记</a> <a href="/tags/react/" style="font-size: 18.4px;">react</a> <a href="/tags/学习方法/" style="font-size: 14px;">学习方法</a> <a href="/tags/工具/" style="font-size: 14px;">工具</a>
     </div>
@@ -668,7 +587,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">Recente berichten</h3>
+    <h3 class="widget-title recent-posts">最新文章</h3>
     <div class="widget">
       <ul>
         
@@ -699,7 +618,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title archive">Archieven</h3>
+    <h3 class="widget-title archive">归档</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">34</span></li></ul>
     </div>
@@ -741,10 +660,10 @@
   <div class="outer">
     <div id="footer-left">
       &copy; 2014 - 2018 qianqian&nbsp;|&nbsp;
-      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
     </div>
      <div id="footer-right">
-      Contact&nbsp;|&nbsp;fyszsqq@163.com
+      联系方式&nbsp;|&nbsp;fyszsqq@163.com
     </div>
   </div>
 </footer>
